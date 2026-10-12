@@ -1,0 +1,42 @@
+{
+  "name": "nimbus-mart",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "prisma generate && nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@lucide/vue": "^1.55.0",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "nuxt": "^4.6.1",
+    "pg": "^8.23.1",
+    "swiper": "^11.2.10",
+    "vue": "^3.5.43",
+    "vue-router": "^5.4.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.17.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/pg": "^8.11.0",
+    "dotenv": "^18.0.7",
+    "eslint": "^10.12.0",
+    "prisma": "^7.10.0",
+    "tailwindcss": "^4.1.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.0",
+    "vue-tsc": "^3.0.0"
+  }
+}

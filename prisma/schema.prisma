@@ -1,0 +1,297 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../server/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PLACED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMode {
+  DEMO
+}
+
+enum CurrencyPosition {
+  BEFORE
+  AFTER
+}
+
+enum HeroBgStyle {
+  BLUE
+  AMBER
+  INK
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  name         String
+  phone        String?
+  role         Role      @default(CUSTOMER)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+
+  sessions  Session[]
+  cartItems CartItem[]
+  orders    Order[]
+  wishlists Wishlist[]
+  auditLogs AuditLog[] @relation("AuditActor")
+
+  @@map("users")
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  userId    String    @map("user_id")
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz()
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  nameAr    String   @map("name_ar")
+  nameEn    String?  @map("name_en")
+  icon      String   @default("shirt")
+  parentId  String?  @map("parent_id")
+  sortOrder Int      @default(0) @map("sort_order")
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
+  products Product[]
+
+  @@index([parentId])
+  @@map("categories")
+}
+
+model Product {
+  id               String        @id @default(cuid())
+  slug             String        @unique
+  categoryId       String        @map("category_id")
+  titleAr          String        @map("title_ar")
+  titleEn          String?       @map("title_en")
+  descriptionAr    String        @map("description_ar")
+  descriptionEn    String?       @map("description_en")
+  priceCents       BigInt        @map("price_cents")
+  compareAtCents   BigInt?       @map("compare_at_cents")
+  status           ProductStatus @default(ACTIVE)
+  searchNormalized String        @default("") @map("search_normalized")
+  createdAt        DateTime      @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt        DateTime      @updatedAt @map("updated_at") @db.Timestamptz()
+
+  category   Category       @relation(fields: [categoryId], references: [id])
+  images     ProductImage[]
+  variants   Variant[]
+  wishlisted Wishlist[]
+
+  @@index([categoryId, status])
+  @@index([searchNormalized])
+  @@map("products")
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String   @map("product_id")
+  url       String
+  sort      Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("product_images")
+}
+
+model Variant {
+  id         String   @id @default(cuid())
+  productId  String   @map("product_id")
+  sku        String   @unique
+  size       String?
+  color      String?
+  colorHex   String?  @map("color_hex")
+  priceCents BigInt?  @map("price_cents")
+  stock      Int      @default(0)
+  imageUrl   String?  @map("image_url")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  @@index([productId])
+  @@map("variants")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  variantId String   @map("variant_id")
+  userId    String?  @map("user_id")
+  sessionId String?  @map("session_id")
+  quantity  Int
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, variantId])
+  @@unique([sessionId, variantId])
+  @@index([sessionId])
+  @@map("cart_items")
+}
+
+model Order {
+  id                    String      @id @default(cuid())
+  orderNumber           String      @unique @map("order_number")
+  userId                String?     @map("user_id")
+  email                 String
+  name                  String
+  phone                 String
+  governorate           String
+  addressLine           String      @map("address_line")
+  notes                 String?     @db.Text
+  status                OrderStatus @default(PLACED)
+  paymentMode           PaymentMode @default(DEMO) @map("payment_mode")
+  subtotalCents         BigInt      @map("subtotal_cents")
+  shippingCents         BigInt      @default(0) @map("shipping_cents")
+  totalCents            BigInt      @map("total_cents")
+  currencyCode          String      @default("EGP") @map("currency_code")
+  displayCurrencyCode   String      @default("EGP") @map("display_currency_code")
+  fxRate                Decimal     @default(1) @map("fx_rate") @db.Decimal(18, 8)
+  displaySubtotalMinor  BigInt?     @map("display_subtotal_minor")
+  displayTotalMinor     BigInt?     @map("display_total_minor")
+  idempotencyKey        String      @unique @map("idempotency_key")
+  createdAt             DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt             DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
+
+  user  User?       @relation(fields: [userId], references: [id])
+  items OrderItem[]
+
+  @@index([userId])
+  @@map("orders")
+}
+
+model OrderItem {
+  id                   String  @id @default(cuid())
+  orderId              String  @map("order_id")
+  variantId            String  @map("variant_id")
+  productTitleSnapshot String  @map("product_title_snapshot")
+  variantSnapshot      String  @map("variant_snapshot")
+  unitPriceCents       BigInt  @map("unit_price_cents")
+  quantity             Int
+  lineTotalCents       BigInt  @map("line_total_cents")
+  displayUnitPriceMinor BigInt? @map("display_unit_price_minor")
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variant Variant @relation(fields: [variantId], references: [id])
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Wishlist {
+  userId    String   @map("user_id")
+  productId String   @map("product_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([userId, productId])
+  @@map("wishlists")
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?  @map("actor_user_id")
+  action      String
+  entity      String
+  entityId    String?  @map("entity_id")
+  before      Json?
+  after       Json?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  actor User? @relation("AuditActor", fields: [actorUserId], references: [id])
+
+  @@index([entity, entityId])
+  @@map("audit_logs")
+}
+
+model CurrencyRate {
+  id              String           @id @default(cuid())
+  code            String           @unique
+  rate            Decimal          @db.Decimal(18, 8)
+  symbol          String
+  position        CurrencyPosition @default(AFTER)
+  decimals        Int              @default(2)
+  roundingStepCents BigInt?         @map("rounding_step_cents")
+  enabled         Boolean          @default(true)
+  isBase          Boolean          @default(false) @map("is_base")
+  updatedAt       DateTime         @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("currency_rates")
+}
+
+model HeroSlide {
+  id         String      @id @default(cuid())
+  titleAr    String      @map("title_ar")
+  subtitleAr String?     @map("subtitle_ar")
+  ctaLabelAr String      @map("cta_label_ar")
+  ctaHref    String      @map("cta_href")
+  imageUrl   String?     @map("image_url")
+  bgStyle    HeroBgStyle @default(BLUE) @map("bg_style")
+  sortOrder  Int         @default(0) @map("sort_order")
+  enabled    Boolean     @default(true)
+  updatedAt  DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("hero_slides")
+}
+
+model SiteSetting {
+  id               String   @id @default(cuid())
+  key              String   @unique
+  promoHeadingAr   String?  @map("promo_heading_ar")
+  promoBodyAr      String?  @map("promo_body_ar")
+  promoCtaLabelAr  String?  @map("promo_cta_label_ar")
+  promoCtaHref     String?  @map("promo_cta_href")
+  promoGradient    String?  @map("promo_gradient")
+  promoImageUrl    String?  @map("promo_image_url")
+  promoSecondHeadingAr String? @map("promo_second_heading_ar")
+  promoSecondBodyAr    String? @map("promo_second_body_ar")
+  promoSecondCtaLabelAr String? @map("promo_second_cta_label_ar")
+  promoSecondCtaHref    String? @map("promo_second_cta_href")
+  promoSecondGradient   String? @map("promo_second_gradient")
+  promoSecondImageUrl   String? @map("promo_second_image_url")
+  footerBlurbAr    String?  @map("footer_blurb_ar")
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("site_settings")
+}

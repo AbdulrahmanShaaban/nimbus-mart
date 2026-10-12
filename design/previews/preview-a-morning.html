@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nimbus Mart — Preview A · سوق الصباح</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<style>
+:root{
+  --bg:#F4F4F1; --surface:#fff; --ink:#12161B; --muted:#63686D;
+  --primary:#0E6A8A; --primary-dark:#0A5269; --accent:#E08A1E; --accent-dark:#C67410;
+  --line:#E2E1DB; --band:#0E6A8A; --band-text:#fff;
+  --radius:14px; --radius-sm:10px;
+  --shadow:0 2px 10px rgba(18,22,27,.06); --shadow-lg:0 10px 30px rgba(18,22,27,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Alexandria',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+
+/* Utility bar */
+.utility{background:var(--ink);color:#fff;font-size:13px}
+.utility .container{display:flex;align-items:center;gap:18px;height:40px}
+.utility .spacer{flex:1}
+.cur-btn,.lang-btn{display:flex;align-items:center;gap:6px;cursor:pointer;opacity:.9;transition:opacity .15s}
+.cur-btn:hover,.lang-btn:hover{opacity:1}
+.flag{width:18px;height:12px;border-radius:2px;background:linear-gradient(#CE1126 33%,#fff 33% 66%,#000 66%);display:inline-block}
+.btn-login{border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:5px 16px;font-size:13px;font-weight:600;transition:all .18s;background:transparent;color:#fff;cursor:pointer;font-family:inherit}
+.btn-login:hover{background:#fff;color:var(--ink);border-color:#fff}
+
+/* Header */
+.header{background:var(--surface);position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
+.header .container{display:flex;align-items:center;gap:20px;height:76px}
+.logo{font-weight:800;font-size:26px;letter-spacing:-.5px;color:var(--primary)}
+.logo span{color:var(--accent)}
+.search{flex:1;max-width:560px;position:relative}
+.search input{width:100%;height:46px;border-radius:999px;border:1.5px solid var(--line);padding:0 48px 0 20px;font-family:inherit;font-size:14px;background:var(--bg);transition:border-color .18s,box-shadow .18s}
+.search input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(14,106,138,.15)}
+.search .icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.header-actions{display:flex;align-items:center;gap:14px}
+.icon-btn{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;position:relative;transition:all .18s;color:var(--ink)}
+.icon-btn:hover{border-color:var(--primary);color:var(--primary)}
+.badge-count{position:absolute;top:-4px;left:-4px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* Category band */
+.catband{background:var(--band);color:var(--band-text)}
+.catband .container{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.catband .container::-webkit-scrollbar{display:none}
+.catband a{padding:13px 16px;font-size:14px;font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;transition:border-color .18s,color .18s;opacity:.92}
+.catband a:hover,.catband a.active{border-bottom-color:var(--accent);opacity:1}
+
+/* Hero */
+.hero{padding:32px 0 8px}
+.hero-swiper{border-radius:var(--radius);overflow:hidden}
+.hero-slide{background:linear-gradient(135deg,#DDEEF3 0%,#F4F4F1 60%);min-height:380px;display:flex;align-items:center;padding:48px 64px;position:relative}
+.hero-slide.alt{background:linear-gradient(135deg,#F7E8D2 0%,#F4F4F1 60%)}
+.hero-text{max-width:52%;z-index:2}
+.hero-text h2{font-size:clamp(28px,4vw,52px);font-weight:800;line-height:1.25;color:var(--ink)}
+.hero-text p{margin:14px 0 24px;color:var(--muted);font-size:16px}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:13px 30px;border-radius:999px;border:none;cursor:pointer;font-family:inherit;transition:background .18s,transform .18s}
+.hero-cta:hover{background:var(--accent-dark);transform:translateY(-1px)}
+.hero-shapes{position:absolute;left:40px;top:50%;transform:translateY(-50%);width:38%;height:80%;display:flex;align-items:center;justify-content:center}
+.shape{position:absolute;border-radius:24px}
+.shape.s1{width:180px;height:180px;background:var(--primary);opacity:.85;border-radius:50% 50% 50% 8px;transform:rotate(-12deg)}
+.shape.s2{width:140px;height:140px;background:var(--accent);opacity:.75;right:30px;bottom:20px;border-radius:8px 50% 50% 50%;transform:rotate(18deg)}
+.shape.s3{width:90px;height:90px;background:#fff;opacity:.9;right:120px;top:10px;border-radius:50%;box-shadow:var(--shadow)}
+.swiper-pagination-bullet{background:var(--muted);opacity:.4}
+.swiper-pagination-bullet-active{background:var(--primary);opacity:1}
+.swiper-button-next,.swiper-button-prev{color:var(--primary);background:var(--surface);width:44px;height:44px;border-radius:50%;box-shadow:var(--shadow)}
+.swiper-button-next::after,.swiper-button-prev::after{font-size:16px;font-weight:700}
+
+/* Section head */
+.section{padding:40px 0}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px}
+.section-head h3{font-size:24px;font-weight:800}
+.section-head a{color:var(--primary);font-weight:600;font-size:14px}
+
+/* Category circles */
+.cat-circles{display:flex;gap:28px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px}
+.cat-circles::-webkit-scrollbar{display:none}
+.cat-circle{text-align:center;min-width:110px;cursor:pointer}
+.cat-circle .disc{width:96px;height:96px;border-radius:50%;background:var(--surface);border:2px solid var(--line);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:36px;transition:border-color .18s,transform .18s,box-shadow .18s}
+.cat-circle:hover .disc{border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.cat-circle span{font-size:13px;font-weight:600;color:var(--ink)}
+
+/* Product grid */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.card-img{position:relative;aspect-ratio:1;background:#EAF0F2;display:flex;align-items:center;justify-content:center;font-size:56px}
+.tag{position:absolute;top:12px;right:12px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
+.tag.sale{background:var(--accent);left:12px;right:auto}
+.card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-title{font-size:14px;font-weight:600;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:42px}
+.stars{color:#D8D5CC;font-size:13px;letter-spacing:2px}
+.stars b{color:var(--muted);font-weight:400;font-size:12px;letter-spacing:0;margin-right:4px}
+.swatches{display:flex;gap:6px}
+.swatch{width:16px;height:16px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:border-color .15s}
+.swatch:hover,.swatch.sel{border-color:var(--ink)}
+.price-row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px}
+.price{font-weight:800;font-size:17px;color:var(--ink)}
+.price s{font-weight:400;font-size:12px;color:var(--muted);margin-right:6px}
+.price small{font-size:11px;color:var(--muted);font-weight:500}
+.btn-cart{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:12px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .18s}
+.btn-cart:hover{background:var(--accent-dark)}
+
+/* Promo banner */
+.promo{margin:24px 0 48px;border-radius:var(--radius);overflow:hidden;background:linear-gradient(120deg,#0E6A8A 0%,#14869E 55%,#E08A1E 160%);color:#fff;display:grid;grid-template-columns:1fr 1fr;min-height:280px}
+.promo-text{padding:48px 56px;display:flex;flex-direction:column;justify-content:center}
+.promo-text h3{font-size:clamp(24px,3vw,40px);font-weight:800;line-height:1.3}
+.promo-text p{margin:12px 0 22px;opacity:.9;font-size:15px}
+.promo-cta{align-self:flex-start;background:#fff;color:var(--primary);font-weight:700;padding:12px 28px;border-radius:999px;border:none;cursor:pointer;font-family:inherit;font-size:14px;transition:transform .18s}
+.promo-cta:hover{transform:translateY(-1px)}
+.promo-art{position:relative;display:flex;align-items:center;justify-content:center}
+.promo-art .blob{width:220px;height:220px;background:rgba(255,255,255,.15);border-radius:50% 50% 8px 50%;transform:rotate(20deg)}
+
+/* Footer */
+footer{background:var(--ink);color:#fff;padding:40px 0 24px;margin-top:20px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
+.foot-grid h4{font-size:14px;font-weight:700;margin-bottom:12px;color:#fff}
+.foot-grid p,.foot-grid a{color:rgba(255,255,255,.65);font-size:13px;display:block;margin-bottom:8px;transition:color .15s}
+.foot-grid a:hover{color:#fff}
+.foot-note{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;font-size:12px;color:rgba(255,255,255,.5);text-align:center}
+.demo-banner{background:#FEF3C7;color:#92400E;font-size:12px;font-weight:600;text-align:center;padding:8px}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .promo{grid-template-columns:1fr}
+  .promo-art{display:none}
+  .hero-text{max-width:100%}
+  .hero-shapes{display:none}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">موك-أب تصميمي — محتوى تجريبي، لا مبيعات حقيقية · Preview A: سوق الصباح</div>
+
+<div class="utility">
+  <div class="container">
+    <div class="cur-btn"><span class="flag"></span> EGP ▾</div>
+    <div class="lang-btn">EN 🌐</div>
+    <div class="spacer"></div>
+    <button class="btn-login">تسجيل الدخول</button>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container">
+    <div class="logo">NIMBUS<span>.</span></div>
+    <div class="search">
+      <input type="text" placeholder="ابحث عن منتجات، ماركات وأكثر">
+      <span class="icon">🔍</span>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" title="المفضلة">♡</button>
+      <button class="icon-btn" title="السلة">🛒<span class="badge-count">3</span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="catband">
+  <div class="container">
+    <a href="#" class="active">الكل</a>
+    <a href="#">أزياء</a>
+    <a href="#">إلكترونيات</a>
+    <a href="#">المنزل والمطبخ</a>
+    <a href="#">الجمال والعناية</a>
+    <a href="#">رياضة</a>
+    <a href="#">أطفال</a>
+    <a href="#">المزيد …</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="swiper hero-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="hero-slide">
+            <div class="hero-text">
+              <h2>تسوّق خفيف كالسحاب<br>على مدار السنة</h2>
+              <p>آلاف المنتجات المختارة بعناية، بأسعار واضحة وتحويل فوري للعملة.</p>
+              <button class="hero-cta">تسوّق الآن ←</button>
+            </div>
+            <div class="hero-shapes"><div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="hero-slide alt">
+            <div class="hero-text">
+              <h2>موسم المنزل والمطبخ</h2>
+              <p>قطع عملية تناسب يومك — اختيارات محدّثة أسبوعياً.</p>
+              <button class="hero-cta">اكتشف المجموعة ←</button>
+            </div>
+            <div class="hero-shapes"><div class="shape s2"></div><div class="shape s1"></div><div class="shape s3"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h3>تسوّق حسب الفئة</h3><a href="#">عرض الكل</a></div>
+    <div class="cat-circles">
+      <div class="cat-circle"><div class="disc">👕</div><span>أزياء</span></div>
+      <div class="cat-circle"><div class="disc">📱</div><span>إلكترونيات</span></div>
+      <div class="cat-circle"><div class="disc">🍳</div><span>المطبخ</span></div>
+      <div class="cat-circle"><div class="disc">💄</div><span>الجمال</span></div>
+      <div class="cat-circle"><div class="disc">🏋️</div><span>رياضة</span></div>
+      <div class="cat-circle"><div class="disc">🧸</div><span>أطفال</span></div>
+      <div class="cat-circle"><div class="disc">🏠</div><span>المنزل</span></div>
+      <div class="cat-circle"><div class="disc">⌚</div><span>إكسسوارات</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:8px">
+  <div class="container">
+    <div class="section-head"><h3>وصل حديثاً</h3><a href="#">عرض الكل</a></div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-img">⌚<span class="tag">وصل حديثاً</span></div>
+        <div class="card-body">
+          <div class="card-title">ساعة ذكية بشاشة AMOLED وتتبع نشاط يومي بطول عمر بطارية</div>
+          <div class="stars">★★★★★ <b>(0)</b></div>
+          <div class="swatches"><span class="swatch sel" style="background:#12161B"></span><span class="swatch" style="background:#0E6A8A"></span><span class="swatch" style="background:#E08A1E"></span></div>
+          <div class="price-row"><div class="price">EGP 1,850 <small>.00</small></div></div>
+          <button class="btn-cart">أضف إلى السلة</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">🎧<span class="tag sale">خصم 20%</span></div>
+        <div class="card-body">
+          <div class="card-title">سماعات لاسلكية بعزل ضوضاء نشط و40 ساعة استماع</div>
+          <div class="stars">★★★★★ <b>(0)</b></div>
+          <div class="swatches"><span class="swatch sel" style="background:#fff;border:1.5px solid #ccc"></span><span class="swatch" style="background:#12161B"></span></div>
+          <div class="price-row"><div class="price">EGP 750 <small>.00</small><s>EGP 940.00</s></div></div>
+          <button class="btn-cart">أضف إلى السلة</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">🎒<span class="tag">وصل حديثاً</span></div>
+        <div class="card-body">
+          <div class="card-title">حقيبة ظهر مقاومة للماء بجيب مبطن للابتوب 15.6</div>
+          <div class="stars">★★★★★ <b>(0)</b></div>
+          <div class="swatches"><span class="swatch sel" style="background:#0E6A8A"></span><span class="swatch" style="background:#12161B"></span><span class="swatch" style="background:#6B7280"></span></div>
+          <div class="price-row"><div class="price">EGP 420 <small>.00</small></div></div>
+          <button class="btn-cart">أضف إلى السلة</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">☕<span class="tag sale">خصم 15%</span></div>
+        <div class="card-body">
+          <div class="card-title">مطحنة قهوة يدوية بمقاسات طحن متعددة وسعة 25 جرام</div>
+          <div class="stars">★★★★★ <b>(0)</b></div>
+          <div class="swatches"><span class="swatch sel" style="background:#E08A1E"></span><span class="swatch" style="background:#12161B"></span></div>
+          <div class="price-row"><div class="price">EGP 320 <small>.00</small><s>EGP 375.00</s></div></div>
+          <button class="btn-cart">أضف إلى السلة</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="promo">
+    <div class="promo-text">
+      <h3>أثاث أخف… وركن مطبخ أذكى</h3>
+      <p>اكتشف مجموعة مختارة للأجهزة الصغيرة وقطع المطبخ العملية.</p>
+      <button class="promo-cta">تسوّق المجموعة ←</button>
+    </div>
+    <div class="promo-art"><div class="blob"></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <h4 style="font-size:20px;font-weight:800;color:#fff">NIMBUS<span style="color:var(--accent)">.</span></h4>
+        <p style="margin-top:10px">تسوّقٌ خفيف كالسحاب — نموذج متجر إلكتروني تجريبي بتحويل عملة مباشر.</p>
+      </div>
+      <div><h4>المتجر</h4><a href="#">الرئيسية</a><a href="#">الفئات</a><a href="#">وصل حديثاً</a><a href="#">العروض</a></div>
+      <div><h4>الحساب</h4><a href="#">تسجيل الدخول</a><a href="#">طلباتي</a><a href="#">المفضلة</a></div>
+      <div><h4>الدعم</h4><a href="#">الأسئلة الشائعة</a><a href="#">سياسة الاسترجاع</a><a href="#">تواصل معنا</a></div>
+    </div>
+    <div class="foot-note">© 2026 Nimbus Mart — موك-أب تجريبي. الأسعار بعملة EGP مع إمكانية معاينة بعملات أخرى. لا توجد مدفوعات حقيقية.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+new Swiper('.hero-swiper',{loop:true,speed:300,autoplay:{delay:4000,disableOnInteraction:false},pagination:{el:'.swiper-pagination'},navigation:{nextEl:'.swiper-button-next',prevEl:'.swiper-button-prev'}});
+</script>
+</body>
+</html>

@@ -1,0 +1,1477 @@
+{
+  "url": "https://www.goodsandu.com/ar",
+  "extractedAt": "2026-10-11T15:45:10.696Z",
+  "viewports": {
+    "desktop": {
+      "title": "Goods&U | Premium Shopping Destination",
+      "lang": "ar",
+      "dir": "ltr",
+      "docHeight": 4953,
+      "body": {
+        "tag": "body",
+        "sample": "تسجيل الدخولENEGPتسجيل الدخولENEGPالأزيا",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "h1": {
+        "tag": "h1",
+        "sample": "فخامة بتنطق في كل زاوية",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "56px",
+        "fontWeight": "900",
+        "lineHeight": "72.8px",
+        "letterSpacing": "-1.4px",
+        "textTransform": "none",
+        "color": "rgb(51, 51, 51)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "h2": {
+        "tag": "h2",
+        "sample": "موصى به لك",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "32px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "h3": {
+        "tag": "h3",
+        "sample": "زمزمية أطفال بتصميم شريحة آيس كريم وبطيخ",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "p": {
+        "tag": "p",
+        "sample": "لمسة من الرقي لبيتك مع أحدث الديكورات وا",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "18px",
+        "fontWeight": "700",
+        "lineHeight": "28.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(85, 85, 85)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "a": {
+        "tag": "a",
+        "sample": "",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(7, 60, 225)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "button": {
+        "tag": "button",
+        "sample": "",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "oklab(0 0 0 / 0.3)"
+      },
+      "nav": {
+        "tag": "a",
+        "sample": "",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(7, 60, 225)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "palette": [
+        {
+          "color": "rgb(12, 40, 123)",
+          "count": 924
+        },
+        {
+          "color": "lab(91.6229 -0.159115 -2.26791)",
+          "count": 262
+        },
+        {
+          "color": "rgb(7, 60, 226)",
+          "count": 206
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "count": 142
+        },
+        {
+          "color": "rgb(7, 60, 225)",
+          "count": 92
+        },
+        {
+          "color": "lab(65.9269 -0.832707 -8.17473)",
+          "count": 37
+        },
+        {
+          "color": "lab(96.1596 -0.0823438 -1.13575)",
+          "count": 28
+        },
+        {
+          "color": "rgb(227, 250, 4)",
+          "count": 25
+        },
+        {
+          "color": "rgb(80, 80, 81)",
+          "count": 15
+        },
+        {
+          "color": "rgb(85, 85, 85)",
+          "count": 7
+        },
+        {
+          "color": "lab(0 0 0 / 0)",
+          "count": 7
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "count": 6
+        },
+        {
+          "color": "rgb(137, 207, 240)",
+          "count": 5
+        },
+        {
+          "color": "rgb(251, 255, 0)",
+          "count": 4
+        },
+        {
+          "color": "rgb(152, 255, 152)",
+          "count": 4
+        },
+        {
+          "color": "rgb(11, 188, 55)",
+          "count": 4
+        },
+        {
+          "color": "rgb(212, 245, 60)",
+          "count": 4
+        },
+        {
+          "color": "rgb(10, 33, 103)",
+          "count": 4
+        },
+        {
+          "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+          "count": 3
+        },
+        {
+          "color": "rgb(247, 135, 154)",
+          "count": 3
+        },
+        {
+          "color": "rgb(255, 209, 220)",
+          "count": 3
+        },
+        {
+          "color": "rgb(244, 194, 194)",
+          "count": 3
+        },
+        {
+          "color": "rgb(48, 48, 48)",
+          "count": 3
+        },
+        {
+          "color": "lab(98.2596 -0.247031 -0.706708)",
+          "count": 2
+        }
+      ],
+      "fontsUsed": [
+        {
+          "family": "Alexandria",
+          "weight": "400",
+          "count": 462
+        },
+        {
+          "family": "Alexandria",
+          "weight": "900",
+          "count": 136
+        },
+        {
+          "family": "Alexandria",
+          "weight": "700",
+          "count": 62
+        },
+        {
+          "family": "Alexandria",
+          "weight": "600",
+          "count": 26
+        },
+        {
+          "family": "Alexandria",
+          "weight": "500",
+          "count": 14
+        },
+        {
+          "family": "Alexandria",
+          "weight": "800",
+          "count": 6
+        }
+      ],
+      "rootVars": {
+        "--background": "#fff",
+        "--foreground": "#0c287b",
+        "--card": "#fff",
+        "--card-foreground": "#0c287b",
+        "--popover": "#fff",
+        "--popover-foreground": "#0c287b",
+        "--primary": "#073ce2",
+        "--primary-foreground": "#fff",
+        "--brand-yellow": "#e3fa04",
+        "--brand-blue": "#073ce1",
+        "--secondary": "#f3f4f6",
+        "--secondary-foreground": "#171717",
+        "--muted": "#f5f5f5",
+        "--muted-foreground": "#737373",
+        "--accent": "#f5f5f5",
+        "--accent-foreground": "#171717",
+        "--destructive": "#e40014",
+        "--border": "#e5e7eb",
+        "--input": "#e5e7eb",
+        "--ring": "#073ce2",
+        "--radius": ".75rem",
+        "--sidebar": "#fafafa",
+        "--sidebar-foreground": "#0a0a0a",
+        "--sidebar-primary": "#171717",
+        "--sidebar-primary-foreground": "#fafafa",
+        "--sidebar-accent": "#f5f5f5",
+        "--sidebar-accent-foreground": "#171717",
+        "--sidebar-border": "#e5e5e5",
+        "--sidebar-ring": "#a1a1a1",
+        "--swiper-theme-color": "#007aff"
+      },
+      "sections": [
+        {
+          "tag": "header",
+          "id": null,
+          "class": "w-full bg-white sticky top-0 z-50 shadow-[0px_2px_10px_0px_#00000005] border-non",
+          "y": 0,
+          "height": 160,
+          "width": 1440,
+          "background": "rgb(255, 255, 255)",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "gridCols": null,
+          "innerMaxWidth": "1330px",
+          "innerWidth": 1330,
+          "position": "sticky",
+          "heading": ""
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "class": "overflow-x-hidden",
+          "y": 160,
+          "height": 4357,
+          "width": 1440,
+          "background": "rgba(0, 0, 0, 0)",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "gridCols": null,
+          "innerMaxWidth": "none",
+          "innerWidth": 1440,
+          "position": "static",
+          "heading": "فخامة بتنطق في كل زاوية"
+        },
+        {
+          "tag": "footer",
+          "id": null,
+          "class": "w-full bg-[#F3F4F6] mt-1 border-t border-gray-100 ",
+          "y": 4521,
+          "height": 432,
+          "width": 1440,
+          "background": "rgb(243, 244, 246)",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "gridCols": null,
+          "innerMaxWidth": "1330px",
+          "innerWidth": 1330,
+          "position": "static",
+          "heading": "روابط مهمة"
+        }
+      ],
+      "libs": {
+        "gsap": false,
+        "scrollTrigger": false,
+        "lenis": false,
+        "locomotive": false,
+        "three": false,
+        "motion": false,
+        "barba": false,
+        "swup": false,
+        "webflow": false,
+        "next": true,
+        "nuxt": false,
+        "astro": false,
+        "wordpress": false,
+        "shopify": false,
+        "framer": false
+      },
+      "scrollTriggers": [],
+      "tweens": [],
+      "cssAnimations": [
+        {
+          "name": "background-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-bottom-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-left-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-right-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-top-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "scale",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "background-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-bottom-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-left-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-right-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "border-top-color",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "scale",
+          "duration": 300,
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "transform",
+          "duration": 300,
+          "easing": "ease",
+          "iterations": 1
+        },
+        {
+          "name": "ping",
+          "duration": 1000,
+          "easing": "linear",
+          "iterations": null
+        },
+        {
+          "name": "anim",
+          "duration": 500,
+          "easing": "ease-in-out",
+          "iterations": 1
+        }
+      ],
+      "willChangeCount": 0,
+      "metaThemeColor": "#0C287B"
+    },
+    "mobile": {
+      "title": "Goods&U | Premium Shopping Destination",
+      "lang": "ar",
+      "dir": "ltr",
+      "docHeight": 5216,
+      "body": {
+        "tag": "body",
+        "sample": "تسجيل الدخولENEGPتسجيل الدخولENEGPالأزيا",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "h1": {
+        "tag": "h1",
+        "sample": "فخامة بتنطق في كل زاوية",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "32px",
+        "fontWeight": "900",
+        "lineHeight": "41.6px",
+        "letterSpacing": "-0.8px",
+        "textTransform": "none",
+        "color": "rgb(51, 51, 51)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "h2": {
+        "tag": "h2",
+        "sample": "موصى به لك",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "19px",
+        "fontWeight": "700",
+        "lineHeight": "19px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "h3": {
+        "tag": "h3",
+        "sample": "زمزمية أطفال بتصميم شريحة آيس كريم وبطيخ",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "11px",
+        "fontWeight": "700",
+        "lineHeight": "15.7143px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "p": {
+        "tag": "p",
+        "sample": "لمسة من الرقي لبيتك مع أحدث الديكورات وا",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(85, 85, 85)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "a": {
+        "tag": "a",
+        "sample": "",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(7, 60, 225)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "button": {
+        "tag": "button",
+        "sample": "",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(12, 40, 123)",
+        "background": "oklab(0 0 0 / 0.3)"
+      },
+      "nav": {
+        "tag": "a",
+        "sample": "",
+        "fontFamily": "Alexandria, \"Alexandria Fallback\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(7, 60, 225)",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "palette": [
+        {
+          "color": "rgb(12, 40, 123)",
+          "count": 924
+        },
+        {
+          "color": "lab(91.6229 -0.159115 -2.26791)",
+          "count": 262
+        },
+        {
+          "color": "rgb(7, 60, 226)",
+          "count": 206
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "count": 144
+        },
+        {
+          "color": "rgb(7, 60, 225)",
+          "count": 92
+        },
+        {
+          "color": "lab(65.9269 -0.832707 -8.17473)",
+          "count": 37
+        },
+        {
+          "color": "lab(96.1596 -0.0823438 -1.13575)",
+          "count": 28
+        },
+        {
+          "color": "rgb(227, 250, 4)",
+          "count": 25
+        },
+        {
+          "color": "rgb(80, 80, 81)",
+          "count": 15
+        },
+        {
+          "color": "rgb(85, 85, 85)",
+          "count": 7
+        },
+        {
+          "color": "lab(0 0 0 / 0)",
+          "count": 7
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "count": 6
+        },
+        {
+          "color": "rgb(137, 207, 240)",
+          "count": 5
+        },
+        {
+          "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+          "count": 4
+        },
+        {
+          "color": "rgb(251, 255, 0)",
+          "count": 4
+        },
+        {
+          "color": "rgb(152, 255, 152)",
+          "count": 4
+        },
+        {
+          "color": "rgb(11, 188, 55)",
+          "count": 4
+        },
+        {
+          "color": "rgb(212, 245, 60)",
+          "count": 4
+        },
+        {
+          "color": "rgb(10, 33, 103)",
+          "count": 4
+        },
+        {
+          "color": "rgb(247, 135, 154)",
+          "count": 3
+        },
+        {
+          "color": "rgb(255, 209, 220)",
+          "count": 3
+        },
+        {
+          "color": "rgb(244, 194, 194)",
+          "count": 3
+        },
+        {
+          "color": "rgb(48, 48, 48)",
+          "count": 3
+        },
+        {
+          "color": "lab(98.2596 -0.247031 -0.706708)",
+          "count": 2
+        }
+      ],
+      "fontsUsed": [
+        {
+          "family": "Alexandria",
+          "weight": "400",
+          "count": 462
+        },
+        {
+          "family": "Alexandria",
+          "weight": "900",
+          "count": 136
+        },
+        {
+          "family": "Alexandria",
+          "weight": "700",
+          "count": 62
+        },
+        {
+          "family": "Alexandria",
+          "weight": "600",
+          "count": 26
+        },
+        {
+          "family": "Alexandria",
+          "weight": "500",
+          "count": 14
+        },
+        {
+          "family": "Alexandria",
+          "weight": "800",
+          "count": 6
+        }
+      ],
+      "rootVars": {
+        "--background": "#fff",
+        "--foreground": "#0c287b",
+        "--card": "#fff",
+        "--card-foreground": "#0c287b",
+        "--popover": "#fff",
+        "--popover-foreground": "#0c287b",
+        "--primary": "#073ce2",
+        "--primary-foreground": "#fff",
+        "--brand-yellow": "#e3fa04",
+        "--brand-blue": "#073ce1",
+        "--secondary": "#f3f4f6",
+        "--secondary-foreground": "#171717",
+        "--muted": "#f5f5f5",
+        "--muted-foreground": "#737373",
+        "--accent": "#f5f5f5",
+        "--accent-foreground": "#171717",
+        "--destructive": "#e40014",
+        "--border": "#e5e7eb",
+        "--input": "#e5e7eb",
+        "--ring": "#073ce2",
+        "--radius": ".75rem",
+        "--sidebar": "#fafafa",
+        "--sidebar-foreground": "#0a0a0a",
+        "--sidebar-primary": "#171717",
+        "--sidebar-primary-foreground": "#fafafa",
+        "--sidebar-accent": "#f5f5f5",
+        "--sidebar-accent-foreground": "#171717",
+        "--sidebar-border": "#e5e5e5",
+        "--sidebar-ring": "#a1a1a1",
+        "--swiper-theme-color": "#007aff"
+      },
+      "sections": [
+        {
+          "tag": "div",
+          "id": null,
+          "class": "block md:hidden w-full z-50 relative",
+          "y": 0,
+          "height": 60,
+          "width": 390,
+          "background": "rgba(0, 0, 0, 0)",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "gridCols": null,
+          "innerMaxWidth": "none",
+          "innerWidth": 390,
+          "position": "relative",
+          "heading": ""
+        },
+        {
+          "tag": "header",
+          "id": null,
+          "class": "w-full bg-white sticky top-0 z-50 shadow-[0px_2px_10px_0px_#00000005] border-non",
+          "y": 60,
+          "height": 136,
+          "width": 390,
+          "background": "rgb(255, 255, 255)",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "gridCols": null,
+          "innerMaxWidth": "1330px",
+          "innerWidth": 390,
+          "position": "sticky",
+          "heading": ""
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "class": "overflow-x-hidden",
+          "y": 196,
+          "height": 4046,
+          "width": 390,
+          "background": "rgba(0, 0, 0, 0)",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "gridCols": null,
+          "innerMaxWidth": "none",
+          "innerWidth": 390,
+          "position": "static",
+          "heading": "فخامة بتنطق في كل زاوية"
+        },
+        {
+          "tag": "footer",
+          "id": null,
+          "class": "w-full bg-[#F3F4F6] mt-1 border-t border-gray-100 ",
+          "y": 4246,
+          "height": 970,
+          "width": 390,
+          "background": "rgb(243, 244, 246)",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "gridCols": null,
+          "innerMaxWidth": "1330px",
+          "innerWidth": 390,
+          "position": "static",
+          "heading": "روابط مهمة"
+        }
+      ],
+      "libs": {
+        "gsap": false,
+        "scrollTrigger": false,
+        "lenis": false,
+        "locomotive": false,
+        "three": false,
+        "motion": false,
+        "barba": false,
+        "swup": false,
+        "webflow": false,
+        "next": true,
+        "nuxt": false,
+        "astro": false,
+        "wordpress": false,
+        "shopify": false,
+        "framer": false
+      },
+      "scrollTriggers": [],
+      "tweens": [],
+      "cssAnimations": [
+        {
+          "name": "transform",
+          "duration": 300,
+          "easing": "ease",
+          "iterations": 1
+        },
+        {
+          "name": "ping",
+          "duration": 1000,
+          "easing": "linear",
+          "iterations": null
+        },
+        {
+          "name": "anim",
+          "duration": 800,
+          "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "anim",
+          "duration": 800,
+          "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+          "iterations": 1
+        },
+        {
+          "name": "anim",
+          "duration": 600,
+          "easing": "linear(0 0%, 0.0097 1.694915254237288%, 0.036 3.389830508474576%, 0.0756 5.084745762711864%, 0.1251 6.779661016949152%, 0.1819 8.474576271186441%, 0.2435 10.16949152542373%, 0.3079 11.864406779661019%, 0.3734 13.559322033898308%, 0.4385 15.254237288135595%, 0.5021 16.949152542372882%, 0.5634 18.64406779661017%, 0.6215 20.338983050847457%, 0.676 22.033898305084744%, 0.7265 23.72881355932203%, 0.7728 25.42372881355932%, 0.8149 27.118644067796605%, 0.8526 28.813559322033893%, 0.8862 30.50847457627118%, 0.9157 32.20338983050847%, 0.9414 33.89830508474576%, 0.9634 35.593220338983045%, 0.9821 37.28813559322033%, 0.9977 38.98305084745762%, 1.0104 40.677966101694906%, 1.0206 42.37288135593219%, 1.0285 44.06779661016948%, 1.0345 45.76271186440677%, 1.0387 47.457627118644055%, 1.0414 49.15254237288134%, 1.0428 50.84745762711863%, 1.0432 52.54237288135592%, 1.0427 54.237288135593204%, 1.0415 55.93220338983049%, 1.0397 57.62711864406778%, 1.0376 59.322033898305065%, 1.0351 61.01694915254235%, 1.0324 62.71186440677964%, 1.0296 64.40677966101693%, 1.0268 66.10169491525421%, 1.024 67.7966101694915%, 1.0212 69.49152542372879%, 1.0186 71.18644067796608%, 1.0161 72.88135593220336%, 1.0138 74.57627118644065%, 1.0116 76.27118644067794%, 1.0096 77.96610169491522%, 1.0078 79.66101694915251%, 1.0062 81.3559322033898%, 1.0048 83.05084745762709%, 1.0035 84.74576271186437%, 1.0024 86.44067796610166%, 1.0015 88.13559322033895%, 1.0007 89.83050847457623%, 1 91.52542372881354%, 0.9995 93.22033898305082%, 0.9991 94.91525423728811%, 0.9987 96.61016949152541%, 0.9985 98.30508474576271%, 1 100%)",
+          "iterations": 1
+        },
+        {
+          "name": "anim",
+          "duration": 1200,
+          "easing": "linear(0 0%, 0.0033 0.8403361344537815%, 0.0126 1.680672268907563%, 0.0274 2.5210084033613445%, 0.0467 3.3613445378151257%, 0.0701 4.201680672268907%, 0.097 5.042016806722688%, 0.1267 5.882352941176469%, 0.1589 6.72268907563025%, 0.1929 7.563025210084032%, 0.2284 8.403361344537814%, 0.265 9.243697478991596%, 0.3024 10.084033613445378%, 0.3402 10.92436974789916%, 0.3781 11.764705882352942%, 0.4159 12.605042016806724%, 0.4533 13.445378151260506%, 0.4901 14.285714285714288%, 0.5263 15.12605042016807%, 0.5615 15.966386554621852%, 0.5957 16.806722689075634%, 0.6288 17.647058823529417%, 0.6606 18.4873949579832%, 0.6912 19.32773109243698%, 0.7204 20.168067226890763%, 0.7482 21.008403361344545%, 0.7746 21.848739495798327%, 0.7996 22.68907563025211%, 0.8231 23.52941176470589%, 0.8452 24.369747899159673%, 0.8659 25.210084033613455%, 0.8852 26.050420168067237%, 0.9031 26.89075630252102%, 0.9197 27.7310924369748%, 0.935 28.571428571428584%, 0.9491 29.411764705882366%, 0.9619 30.252100840336148%, 0.9736 31.09243697478993%, 0.9841 31.932773109243712%, 0.9937 32.77310924369749%, 1.0022 33.61344537815127%, 1.0098 34.45378151260505%, 1.0164 35.294117647058826%, 1.0223 36.134453781512605%, 1.0274 36.97478991596638%, 1.0317 37.81512605042016%, 1.0353 38.65546218487394%, 1.0384 39.49579831932772%, 1.0408 40.3361344537815%, 1.0427 41.176470588235276%, 1.0442 42.016806722689054%, 1.0452 42.85714285714283%, 1.0457 43.69747899159661%, 1.046 44.53781512605039%, 1.0459 45.37815126050417%, 1.0455 46.21848739495795%, 1.0449 47.058823529411725%, 1.044 47.89915966386551%, 1.043 48.7394957983193%, 1.0418 49.579831932773075%, 1.0404 50.420168067226854%, 1.039 51.26050420168064%, 1.0374 52.100840336134425%, 1.0358 52.9411764705882%, 1.0341 53.78151260504198%, 1.0324 54.62184873949577%, 1.0307 55.46218487394955%, 1.029 56.30252100840333%, 1.0272 57.14285714285711%, 1.0255 57.983193277310896%, 1.0238 58.82352941176468%, 1.0221 59.66386554621846%, 1.0205 60.50420168067224%, 1.0189 61.344537815126024%, 1.0174 62.18487394957981%, 1.0159 63.02521008403359%, 1.0145 63.86554621848737%, 1.0131 64.70588235294115%, 1.0118 65.54621848739492%, 1.0106 66.3865546218487%, 1.0094 67.22689075630248%, 1.0083 68.06722689075626%, 1.0073 68.90756302521004%, 1.0064 69.74789915966382%, 1.0055 70.5882352941176%, 1.0046 71.42857142857137%, 1.0038 72.26890756302515%, 1.0031 73.10924369747893%, 1.0025 73.94957983193271%, 1.0019 74.78991596638649%, 1.0013 75.63025210084027%, 1.0008 76.47058823529404%, 1.0004 77.31092436974782%, 1 78.1512605042016%, 0.9996 78.99159663865538%, 0.9993 79.83193277310916%, 0.999 80.67226890756294%, 0.9988 81.51260504201672%, 0.9986 82.3529411764705%, 0.9984 83.19327731092429%, 0.9983 84.03361344537808%, 0.9981 84.87394957983186%, 0.9981 85.71428571428564%, 0.998 86.55462184873943%, 0.9979 87.39495798319322%, 0.9979 88.235294117647%, 0.9979 89.07563025210078%, 0.9979 89.91596638655457%, 0.9979 90.75630252100837%, 0.9979 91.59663865546214%, 0.998 92.43697478991592%, 0.998 93.27731092436971%, 0.9981 94.11764705882351%, 0.9981 94.95798319327729%, 0.9982 95.79831932773106%, 0.9983 96.63865546218486%, 0.9983 97.47899159663865%, 0.9984 98.31932773109243%, 0.9985 99.15966386554621%, 1 100%)",
+          "iterations": 1
+        },
+        {
+          "name": "anim",
+          "duration": 600,
+          "easing": "ease-in-out",
+          "iterations": 1
+        }
+      ],
+      "willChangeCount": 0,
+      "metaThemeColor": "#0C287B"
+    }
+  },
+  "fontFaces": [
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria Fallback",
+      "srcs": []
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria Fallback",
+      "srcs": []
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "800",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria Fallback",
+      "srcs": []
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "400",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "500",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "600",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/e7ef6f2b114b8258-s.0j1p7czfab4im.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/aa864abbb6263c2e-s.05ue.k_noiwr7.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria",
+      "weight": "700",
+      "style": "normal",
+      "srcs": [
+        "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+      ]
+    },
+    {
+      "family": "Alexandria Fallback",
+      "srcs": []
+    }
+  ],
+  "network": {
+    "fonts": [
+      "https://www.goodsandu.com/_next/static/media/57696fb0c8dcfe1f-s.p.0q8ap6lvl~lms.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/media/8f2ca9bed5019488-s.0k6rmjnr3ru99.woff2?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+    ],
+    "scripts": [
+      "https://www.goodsandu.com/_next/static/chunks/14l~.r2kq13je.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0~k6u5_j-9bf2.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/06vjrhvuf_x0g.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/07l~6~k50zeyn.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0enffg4eh8p10.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/turbopack-0srpq1ghlk7on.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0soai4av~wh70.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0-.wbb-l7eg0y.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0oitju14ppzz~.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/16n21181scf0..js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0bboy1v54ji_y.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/16b235-a19htl.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/13dbqo6xggm0y.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/07ijke1efs5zm.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0lxhz0vz_6ow~.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0pg9x892ygvrw.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0vzvdk-4zw19b.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/15oq1a9ps-5a0.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0lcj6sbp3ti1b.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0qkeg8cpy--qr.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0p_ebpoig7e90.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0dr6d.j-wml42.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0rd1.-rpn~qrl.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0zfen5d5m_uxh.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/1167eb8mq9hbb.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/07gs3qw9rhjt3.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0zqu6bfn36bcv.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0jidhf9m4adus.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0m9nowc1f2g8-.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0sf9x.c_ysuem.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/146hcftmwpbqm.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/036nhirxzddf4.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0rzzygyli577m.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0_s8v0lcplhc4.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0l80a.irbmt8z.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/0.t-g7q.fc069.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/179afnlxh2ntv.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC",
+      "https://www.goodsandu.com/_next/static/chunks/13y8x70x-fwfv.js?dpl=dpl_4T1jjgMzVmHd5HrCjGFZMbm3fVHC"
+    ],
+    "media": [],
+    "imageCount": 42
+  }
+}

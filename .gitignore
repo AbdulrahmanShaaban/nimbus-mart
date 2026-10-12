@@ -1,0 +1,11 @@
+node_modules
+.nuxt
+.output
+.env
+dist
+*.log
+.DS_Store
+coverage
+server/generated
+design/reference/goodsandu/css
+design/reference/goodsandu/rendered.html
