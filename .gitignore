@@ -9,3 +9,6 @@ coverage
 server/generated
 design/reference/goodsandu/css
 design/reference/goodsandu/rendered.html
+
+.vercel
+.env*

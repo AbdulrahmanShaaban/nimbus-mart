@@ -1,6 +1,6 @@
 # PLAN — Nimbus Mart
 
-**Status: BUILD COMPLETE + FIDELITY AUDIT DONE — all gates green (2026-10-12).**
+**Status: BUILD COMPLETE + FIDELITY AUDIT DONE + LIVE ON GITHUB & VERCEL (2026-10-12).**
 Design gate passed (user picked **Preview B** «السوق النابض» v3, Goods&U structural parity).
 Storefront + admin fully implemented against Neon Postgres; verification gates green.
 Fidelity audit vs `https://www.goodsandu.com/ar` completed (all deltas fixed, screenshots saved);
@@ -118,11 +118,38 @@ Reference: `https://www.goodsandu.com/ar`, extraction cached at `design/referenc
 smoke 62/62, `pnpm build` EXIT 0; console clean (only pre-existing lazy-image advisory);
 `docOverflow: 0` at 1440 and 500; nav `navOverflow: 0`.
 
+## GitHub + Vercel deployment (2026-10-12, on explicit user request)
+
+- **Git:** `git init -b main` → 155 files committed (secrets excluded: `.env`,
+  `server/generated/`, goodsandu third-party `css/` + `rendered.html` gitignored;
+  analysis notes + 16 screenshots committed) → pushed to
+  `https://github.com/AbdulrahmanShaaban/nimbus-mart.git` (`main` tracking set).
+- **README:** official-Nuxt-docs-style `README.md` (setup, commands, env vars table,
+  seed demo accounts, docs links) committed + pushed.
+- **Build script:** `package.json` build = `prisma generate && nuxt build` so Vercel
+  regenerates the gitignored Prisma client each build (verified in build log).
+- **Vercel project:** `abdelrahman-shaabans-projects/nimbus-mart` (framework preset
+  Nuxt, Node 24, GitHub repo connected → future pushes auto-deploy). Env vars added
+  production-scoped BEFORE first build: `DATABASE_URL`, `NUXT_SESSION_SECRET` (both
+  Secret; `.env` never committed; `prisma.config.ts` requires `DATABASE_URL` at
+  config load).
+- **First production deploy:** `vercel deploy --prod --yes` → READY,
+  Nitro preset `vercel`, build 29.9s, 10.7 MB (3.15 MB gzip).
+  URLs: `https://nimbus-mart.vercel.app` (alias) and deployment URL
+  `https://nimbus-mart-k5vbf73n2-abdelrahman-shaabans-projects.vercel.app`.
+- **Production verification:** 8 URL checks — `/`, `/api/content/home`, `/products`,
+  `/products/green-black-glasses`, `/search?q=قمص`, `/cart`, `/login` → 200;
+  unknown path → 404. SSR content: `lang="ar"` ✓, `dir="rtl"` ✓, real-sales meta
+  description ✓, FAB `mailto:support@nimbusmart.eg` ✓, no demo wording ✓.
+
 ## Known minor follow-ups (non-blocking)
 
 - Chrome advisory: lazy product images lack explicit width/height (containers are
   aspect-square; CLS-safe) — CONVENTIONS forbids img dimension attrs; revisit only if
   a real CLS regression shows.
 - Footer social links are `#` placeholders (no real brand URLs supplied).
-- Production deploy (Vercel) intentionally NOT done — commit/push/deploy only on explicit
-  request; `NUXT_SESSION_SECRET` must be rotated for any real deploy.
+- `NUXT_SESSION_SECRET` currently the deploy-time value added from local `.env`
+  (dev-origin secret) — rotate via `vercel env add NUXT_SESSION_SECRET production`
+  with a fresh random string before treating the store as customer-facing.
+- Demo accounts seeded in shared Neon DB (admin/demo credentials in `README.md`) —
+  fine for portfolio demo; rotate/remove before real traffic.
