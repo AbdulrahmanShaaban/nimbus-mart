@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ShoppingBag } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import { EGYPT_GOVERNORATES } from '#shared/utils/governorates'
 
-useHead({ title: 'إتمام الطلب — نِمبوس مارت' })
+const { t } = useI18n()
+
+useHead(() => ({ title: `${t('checkout.title')} — ${t('header.brand')}` }))
 
 const { cart, cartLoaded, refresh, subtotalCents } = useCart()
 const { formatBase } = useCurrency()
@@ -50,19 +53,19 @@ function validate(): boolean {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
   const phonePattern = /^01[0-5]\d{8}$/
 
-  if (!form.email.trim()) errors.email = 'البريد الإلكتروني مطلوب'
-  else if (!emailPattern.test(form.email.trim())) errors.email = 'بريد إلكتروني غير صحيح'
+  if (!form.email.trim()) errors.email = t('checkout.emailRequired')
+  else if (!emailPattern.test(form.email.trim())) errors.email = t('checkout.emailInvalid')
 
-  if (!form.name.trim()) errors.name = 'الاسم مطلوب'
-  else if (form.name.trim().length < 2) errors.name = 'الاسم قصير جداً'
+  if (!form.name.trim()) errors.name = t('checkout.nameRequired')
+  else if (form.name.trim().length < 2) errors.name = t('checkout.nameShort')
 
-  if (!form.phone.trim()) errors.phone = 'رقم الموبايل مطلوب'
-  else if (!phonePattern.test(form.phone.trim())) errors.phone = 'رقم موبايل غير صحيح'
+  if (!form.phone.trim()) errors.phone = t('checkout.phoneRequired')
+  else if (!phonePattern.test(form.phone.trim())) errors.phone = t('checkout.phoneInvalid')
 
-  if (!form.governorate) errors.governorate = 'اختر المحافظة'
+  if (!form.governorate) errors.governorate = t('checkout.governorateRequired')
 
-  if (!form.addressLine.trim()) errors.addressLine = 'العنوان مطلوب'
-  else if (form.addressLine.trim().length < 5) errors.addressLine = 'العنوان قصير جداً'
+  if (!form.addressLine.trim()) errors.addressLine = t('checkout.addressRequired')
+  else if (form.addressLine.trim().length < 5) errors.addressLine = t('checkout.addressShort')
 
   valid =
     !errors.email &&
@@ -84,11 +87,11 @@ function errParts(error: unknown): { status: number | null; statusMessage: strin
 }
 
 function arabicFor(code: string): string {
-  if (code === 'EMPTY_CART') return 'سلتك فارغة، أضف منتجات أولاً.'
-  if (code === 'OUT_OF_STOCK') return 'أحد المنتجات نفد مخزونه، راجع السلة.'
-  if (code === 'VALIDATION_ERROR') return 'راجع البيانات المدخلة وحاول مرة أخرى.'
-  if (code === 'VALID_PHONE') return 'رقم موبايل غير صحيح'
-  return 'تعذّر إتمام الطلب، حاول مرة أخرى.'
+  if (code === 'EMPTY_CART') return t('checkout.errEmptyCart')
+  if (code === 'OUT_OF_STOCK') return t('checkout.errOutOfStock')
+  if (code === 'VALIDATION_ERROR') return t('checkout.errValidation')
+  if (code === 'VALID_PHONE') return t('checkout.phoneInvalid')
+  return t('checkout.errGeneric')
 }
 
 async function submit() {
@@ -129,22 +132,22 @@ async function submit() {
 
 <template>
   <div class="mx-auto max-w-[1330px] px-4 py-8 md:px-6 md:py-12">
-    <h1 class="mb-6 text-2xl font-extrabold text-navy md:text-3xl">إتمام الطلب</h1>
+    <h1 class="mb-6 text-2xl font-extrabold text-navy md:text-3xl">{{ t('checkout.title') }}</h1>
 
     <EmptyState
       v-if="cartLoaded && items.length === 0"
-      title="لا يمكن إتمام الطلب"
-      hint="سلتك فارغة، أضف منتجات إلى السلة أولاً."
-      action-label="تسوّق الآن"
+      :title="t('checkout.emptyTitle')"
+      :hint="t('checkout.emptyHint')"
+      :action-label="t('common.shopNow')"
       action-href="/products"
       :icon="ShoppingBag"
     />
 
     <div v-else class="grid gap-8 lg:grid-cols-[1fr_340px]">
       <form class="flex flex-col gap-5 rounded-2xl border border-line bg-white p-6" novalidate @submit.prevent="submit">
-        <h2 class="text-base font-extrabold text-navy">بيانات التوصيل</h2>
+        <h2 class="text-base font-extrabold text-navy">{{ t('checkout.deliveryTitle') }}</h2>
 
-        <FormField label="الاسم بالكامل" for-id="checkout-name" :error="errors.name">
+        <FormField :label="t('checkout.name')" for-id="checkout-name" :error="errors.name">
           <input
             id="checkout-name"
             v-model="form.name"
@@ -155,7 +158,7 @@ async function submit() {
           >
         </FormField>
 
-        <FormField label="البريد الإلكتروني" for-id="checkout-email" :error="errors.email">
+        <FormField :label="t('checkout.email')" for-id="checkout-email" :error="errors.email">
           <input
             id="checkout-email"
             v-model="form.email"
@@ -167,7 +170,7 @@ async function submit() {
           >
         </FormField>
 
-        <FormField label="رقم الموبايل" for-id="checkout-phone" :error="errors.phone">
+        <FormField :label="t('checkout.phone')" for-id="checkout-phone" :error="errors.phone">
           <input
             id="checkout-phone"
             v-model="form.phone"
@@ -181,7 +184,7 @@ async function submit() {
           >
         </FormField>
 
-        <FormField label="المحافظة" for-id="checkout-governorate" :error="errors.governorate">
+        <FormField :label="t('checkout.governorate')" for-id="checkout-governorate" :error="errors.governorate">
           <select
             id="checkout-governorate"
             v-model="form.governorate"
@@ -192,7 +195,7 @@ async function submit() {
           </select>
         </FormField>
 
-        <FormField label="العنوان بالتفصيل" for-id="checkout-address" :error="errors.addressLine">
+        <FormField :label="t('checkout.address')" for-id="checkout-address" :error="errors.addressLine">
           <textarea
             id="checkout-address"
             v-model="form.addressLine"
@@ -203,7 +206,7 @@ async function submit() {
           />
         </FormField>
 
-        <FormField label="ملاحظات (اختياري)" for-id="checkout-notes">
+        <FormField :label="t('checkout.notes')" for-id="checkout-notes">
           <textarea
             id="checkout-notes"
             v-model="form.notes"
@@ -225,16 +228,16 @@ async function submit() {
           class="flex h-12 w-full items-center justify-center rounded-xl bg-neon text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-brand"
           :disabled="submitting || items.length === 0"
         >
-          {{ submitting ? 'جاري إتمام الطلب…' : 'تأكيد الطلب' }}
+          {{ submitting ? t('checkout.submitting') : t('checkout.submit') }}
         </button>
         <p class="text-center text-xs text-mutedtext">
-          شحن سريع لكل محافظات مصر • إرجاع مجاني خلال 14 يوم
+          {{ t('checkout.note') }}
         </p>
       </form>
 
       <aside>
         <div class="rounded-2xl border border-line bg-white p-6 lg:sticky lg:top-44">
-          <h2 class="mb-4 text-base font-extrabold text-navy">طلبك</h2>
+          <h2 class="mb-4 text-base font-extrabold text-navy">{{ t('checkout.yourOrder') }}</h2>
           <ul class="mb-4 flex max-h-72 flex-col gap-3 overflow-y-auto pe-1">
             <li v-for="item in items" :key="item.id" class="flex items-center gap-3 text-sm">
               <span class="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-[#FAFAFA]">
@@ -255,7 +258,7 @@ async function submit() {
           </ul>
           <div class="border-t border-line pt-4">
             <div class="flex items-center justify-between">
-              <span class="font-bold text-navy">الإجمالي الفرعي</span>
+              <span class="font-bold text-navy">{{ t('checkout.subtotal') }}</span>
               <span class="text-lg font-black text-navy">{{ subtotal }}</span>
             </div>
           </div>

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { KeyRound, CircleAlert } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 
-useHead({ title: 'تسجيل الدخول — نِمبوس مارت' })
+const { t } = useI18n()
+
+useHead(() => ({ title: `${t('login.title')} — ${t('header.brand')}` }))
 
 const route = useRoute()
 const { login } = useAuth()
@@ -23,14 +26,14 @@ function validate(): boolean {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
   let valid = true
   if (!form.email.trim()) {
-    errors.email = 'البريد الإلكتروني مطلوب'
+    errors.email = t('login.emailRequired')
     valid = false
   } else if (!emailPattern.test(form.email.trim())) {
-    errors.email = 'بريد إلكتروني غير صحيح'
+    errors.email = t('login.emailInvalid')
     valid = false
   }
   if (!form.password) {
-    errors.password = 'كلمة المرور مطلوبة'
+    errors.password = t('login.passwordRequired')
     valid = false
   }
   return valid
@@ -45,7 +48,7 @@ async function submit() {
     await login(form.email.trim(), form.password)
     await navigateTo(redirectTarget.value)
   } catch {
-    errors.form = 'بيانات الدخول غير صحيحة، حاول مرة أخرى.'
+    errors.form = t('login.invalidCredentials')
   } finally {
     submitting.value = false
   }
@@ -58,12 +61,12 @@ async function submit() {
       <span class="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-navy text-neon">
         <KeyRound :size="24" aria-hidden="true" />
       </span>
-      <h1 class="text-2xl font-extrabold text-navy">تسجيل الدخول</h1>
-      <p class="mt-2 text-sm text-mutedtext">أهلاً بعودتك إلى نِمبوس مارت</p>
+      <h1 class="text-2xl font-extrabold text-navy">{{ t('login.title') }}</h1>
+      <p class="mt-2 text-sm text-mutedtext">{{ t('login.welcome') }}</p>
     </div>
 
     <form class="flex flex-col gap-5 rounded-2xl border border-line bg-white p-6" novalidate @submit.prevent="submit">
-      <FormField label="البريد الإلكتروني" for-id="login-email" :error="errors.email">
+      <FormField :label="t('login.email')" for-id="login-email" :error="errors.email">
         <input
           id="login-email"
           v-model="form.email"
@@ -75,7 +78,7 @@ async function submit() {
         >
       </FormField>
 
-      <FormField label="كلمة المرور" for-id="login-password" :error="errors.password">
+      <FormField :label="t('login.password')" for-id="login-password" :error="errors.password">
         <input
           id="login-password"
           v-model="form.password"
@@ -100,16 +103,16 @@ async function submit() {
         class="flex h-12 w-full items-center justify-center rounded-xl bg-neon text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-brand"
         :disabled="submitting"
       >
-        {{ submitting ? 'جاري الدخول…' : 'دخول' }}
+        {{ submitting ? t('login.submitting') : t('login.submit') }}
       </button>
 
       <p class="text-center text-sm text-mutedtext">
-        ليس لديك حساب؟
+        {{ t('login.noAccount') }}
         <NuxtLink
           :to="{ path: '/register', query: { redirect: redirectTarget } }"
           class="font-bold text-brand hover:underline focus-visible:outline-2 focus-visible:outline-brand"
         >
-          أنشئ حساباً جديداً
+          {{ t('login.createAccount') }}
         </NuxtLink>
       </p>
     </form>

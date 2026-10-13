@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 withDefaults(defineProps<{ count?: number }>(), { count: 8 })
+
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" role="status" aria-live="polite">
-    <span class="sr-only">جاري التحميل…</span>
+    <span class="sr-only">{{ t('common.loading') }}</span>
     <div
       v-for="index in count"
       :key="index"

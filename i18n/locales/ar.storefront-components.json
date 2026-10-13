@@ -1,0 +1,40 @@
+{
+  "pc": {
+    "wishAdd": "أضف إلى المفضلة",
+    "wishRemove": "إزالة من المفضلة",
+    "viewProduct": "عرض {title}",
+    "addFailed": "تعذّرت الإضافة"
+  },
+  "pb": {
+    "filtersShow": "تصفية النتائج",
+    "filtersHide": "إخفاء الفلاتر",
+    "allCategories": "كل التصنيفات",
+    "price": "السعر ({currency})",
+    "priceMinPlaceholder": "من",
+    "priceMinAria": "الحد الأدنى للسعر",
+    "priceMaxPlaceholder": "إلى",
+    "priceMaxAria": "الحد الأعلى للسعر",
+    "sortLabel": "الترتيب",
+    "sortAria": "ترتيب النتائج",
+    "sortNewest": "الأحدث",
+    "sortPriceAsc": "السعر: من الأقل للأعلى",
+    "sortPriceDesc": "السعر: من الأعلى للأقل",
+    "saleOnly": "التخفيضات فقط",
+    "loadErrorTitle": "تعذّر تحميل المنتجات",
+    "loadErrorHint": "حدث خطأ أثناء جلب البيانات، حاول مرة أخرى.",
+    "emptyTitle": "لا توجد منتجات مطابقة",
+    "emptyHint": "جرّب تغيير الفلاتر أو كلمة البحث khác.",
+    "emptyAction": "مسح الفلاتر",
+    "paginationAria": "تصفح صفحات المنتجات",
+    "pageOf": "صفحة {page} من {total}"
+  },
+  "cd": {
+    "title": "عروض تنتهي قريباً",
+    "subtitle": "لفترة محدودة — الحق قبل النفاذ",
+    "days": "أيام",
+    "hours": "ساعات",
+    "minutes": "دقائق",
+    "seconds": "ثواني",
+    "timeRemaining": "الوقت المتبقي للعرض"
+  }
+}

@@ -71,6 +71,67 @@ pdp-390-v2, products-390, products-390-v2, products-390-v3}.png`;
 zero overflow; filter toggle exercised open/closed at 390; `pnpm lint` +
 `pnpm typecheck` EXIT 0.
 
+## Storefront AR/EN i18n — COMPLETE (2026-10-13, this session)
+
+User request: language switcher (AR/EN) + translate everything **including admin**.
+`Skills: arabic-rtl (primary) + nuxt (secondary) | Parallel: yes | Design gate: no`
+
+Scope: **everything** — AppHeader language switcher, all shared components, all 14 storefront
+pages, all 10 admin pages + layout, server API DTOs (En fields), DB (En content columns).
+Executed as orchestrator + 3 parallel agents (components / storefront pages / admin pages).
+
+**Architecture:**
+- `@nuxtjs/i18n` **v10.6.0** + `vue-i18n@11.4.14` (direct dep); `strategy: 'no_prefix'`,
+  `defaultLocale: 'ar'`, cookie `nm_locale`, `detectBrowserLanguage: { useCookie,
+  redirectOn: 'root', alwaysRedirect: false }`; locales `ar` (`ar-EG`, rtl) + `en` (`en-US`, ltr).
+- **v10 gotchas learned:** (1) inline `i18n.vueI18n` object in `nuxt.config.ts` crashes
+  (`findPath()` gets object → `input.replace is not a function`) → moved to
+  `i18n/i18n.config.ts` with `defineI18nConfig(() => ({ legacy: false, fallbackLocale: 'ar',
+  globalInjection: true }))`; (2) `files: [...]` array (not `file`) for multi-file locales;
+  (3) `<html lang/dir>` not auto-applied → `app.vue` calls `useLocaleHead({ dir: true,
+  lang: true, seo: true })` + `useHead(() => i18nHead.value)`; (4) `t(key, {}, { default })`
+  overload fails typecheck → `te(key) ? t(key) : fallback` (StatusBadge, audit).
+
+**Locale files (3 pairs of fragments + core, wired into `nuxt.config.ts` `files` arrays):**
+- `i18n/locales/{ar,en}.storefront-components.json` — 32 keys (ns `pc`/`pb`/`cd`).
+- `i18n/locales/{ar,en}.storefront-pages.json` — 167 keys (ns `home/products/product/
+  category/cart/checkout/account/login/register/wishlist/search`).
+- `i18n/locales/{ar,en}.admin.json` — 245 keys (ns `nav/dashboard/products/productForm/
+  orders/users/currencies/audit`).
+- All pairs verified: valid JSON + exact key-tree match.
+
+**Helpers:**
+- `useLocalized().pick(ar, en)` — falls back to Ar when En missing (bilingual DTO fields).
+- `useAdminDateFormat()` in `admin-status.ts` — tag `ar-EG-u-nu-latn` vs `en-GB-u-nu-latn`,
+  Africa/Cairo, gregory; replaces all local `Intl.DateTimeFormat` helpers.
+- `adminFetchMessage(e, fallback?)` — translated error fallback (`t('common.operationFailed')`).
+- Status labels: `t('status.' + status)`; arrow/chevron flip: `locale === 'en' ? ArrowRight : ArrowLeft`.
+
+**DB (En content):** migration `20261013120000_add_i18n_en_content` — `HeroSlide`
+`titleEn/subtitleEn/ctaLabelEn`, `SiteSetting` + 7 En columns; applied to Neon.
+`scripts/seed-i18n-en.ts` executed OK (needs `PrismaPg` adapter + `import 'dotenv/config'`,
+Prisma 7 pattern). `prisma/seed.ts` also seeds En values.
+
+**Server:** En fields added to `serialize.ts` (categoryNameEn, category nameEn),
+`content/{home,footer}.get.ts`, `products/[slug].get.ts`, `admin/hero-slides/*`,
+`admin/settings.*`, `admin/stats.get.ts` (lowStock `titleEn`), `admin/products/index.get.ts`
+(categoryNameEn). `app/types/api.ts` DTOs extended.
+
+**AppHeader switcher:** desktop Globe pill `EN`/`ع`, mobile icon button + hamburger row;
+click verified both directions via CDP.
+
+**Verification (all green, this session):**
+| Gate | Result |
+| --- | --- |
+| `pnpm lint` | 0 errors |
+| `pnpm typecheck` | 0 errors (typecheck crash FIXED by moving i18n config out of nuxt.config) |
+| `pnpm test` | 17/17 |
+| `pnpm build` | EXIT 0 (1m55s) |
+| `pnpm exec tsx scripts/smoke.ts` | **62/62** (after cleaning leftover demo-user cart from an interrupted run) |
+| `scripts/i18n-shot.mjs` (CDP, 10 checks) | correct lang/dir/titles on home/products/login/cart/404 in both locales; switcher works both ways; **zero key leaks**; `nm_locale=en` cookie SSR → `ltr`+EN; Accept-Language detection works |
+| Screenshots | `design/shots/i18n-*.png` (AR+EN × 1440/390) — reviewed: CategoryGrid EN names fixed via `pick()`, full RTL Arabic home correct |
+| 404 title | fixed: `products/[slug].vue` now uses `t('error.notFound.title')` when statusCode 404 → "Page not found — Nimbus Mart" |
+
 ## What was built
 
 - **Stack (actual):** Nuxt 4.6.1, Vue 3.5.43, vue-router 5.4.0, TypeScript 5.9.3
@@ -194,3 +255,6 @@ smoke 62/62, `pnpm build` EXIT 0; console clean (only pre-existing lazy-image ad
   with a fresh random string before treating the store as customer-facing.
 - Demo accounts seeded in shared Neon DB (admin/demo credentials in `README.md`) —
   fine for portfolio demo; rotate/remove before real traffic.
+- ~~i18n header switcher~~ — DONE this session (desktop Globe pill + mobile row, verified via CDP).
+- ~~i18n typecheck env fix~~ — DONE this session (moved `i18n.vueI18n` inline object →
+  `i18n/i18n.config.ts`; `pnpm typecheck` now runs clean, 0 errors).

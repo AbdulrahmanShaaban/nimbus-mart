@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { Package, ShoppingCart, Users, Wallet, TriangleAlert } from '@lucide/vue'
-import { adminFormatDate, adminFetchMessage, adminStatusClass, adminStatusLabel } from '~/utils/admin-status'
+import { useI18n } from 'vue-i18n'
+import { adminFetchMessage, adminStatusClass, useAdminDateFormat } from '~/utils/admin-status'
+import { useLocalized } from '~/composables/useLocalized'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
-useHead({ title: 'لوحة التحكم — Nimbus' })
+
+const { t } = useI18n()
+const { pick } = useLocalized()
+const { adminFormatDate } = useAdminDateFormat()
+
+useHead(() => ({ title: `${t('dashboard.title')} — ${t('header.brand')}` }))
 
 interface StatsResponse {
   products: number
@@ -11,7 +18,7 @@ interface StatsResponse {
   customers: number
   revenueCents: string
   lowStock: number
-  lowStockItems: { sku: string; titleAr: string; stock: number }[]
+  lowStockItems: { sku: string; titleAr: string; titleEn: string | null; stock: number }[]
   recentOrders: {
     orderNumber: string
     name: string
@@ -32,38 +39,38 @@ const { data, pending, error, refresh } = await useAsyncData(
 const stats = computed(() => data.value)
 
 const cards = computed(() => [
-  { label: 'المنتجات', value: stats.value ? String(stats.value.products) : '—', icon: Package },
-  { label: 'الطلبات', value: stats.value ? String(stats.value.orders) : '—', icon: ShoppingCart },
-  { label: 'العملاء', value: stats.value ? String(stats.value.customers) : '—', icon: Users },
-  { label: 'الإيرادات', value: stats.value ? formatBase(stats.value.revenueCents) : '—', icon: Wallet },
+  { label: t('nav.products'), value: stats.value ? String(stats.value.products) : '—', icon: Package },
+  { label: t('nav.orders'), value: stats.value ? String(stats.value.orders) : '—', icon: ShoppingCart },
+  { label: t('nav.users'), value: stats.value ? String(stats.value.customers) : '—', icon: Users },
+  { label: t('dashboard.revenue'), value: stats.value ? formatBase(stats.value.revenueCents) : '—', icon: Wallet },
 ])
 </script>
 
 <template>
   <div class="space-y-6">
     <div class="flex items-center justify-between">
-      <h1 class="text-2xl font-extrabold text-navy">لوحة التحكم</h1>
+      <h1 class="text-2xl font-extrabold text-navy">{{ t('dashboard.title') }}</h1>
       <button
         type="button"
         class="rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
         @click="refresh()"
       >
-        تحديث
+        {{ t('dashboard.refresh') }}
       </button>
     </div>
 
     <div v-if="pending" class="rounded-xl border border-line bg-white p-8 text-center text-sm text-mutedtext">
-      جارٍ تحميل الإحصائيات...
+      {{ t('dashboard.loading') }}
     </div>
 
     <div v-else-if="error" class="rounded-xl border border-red-200 bg-red-50 p-6 text-sm text-red-700" role="alert">
-      <p>{{ adminFetchMessage(error) }}</p>
+      <p>{{ adminFetchMessage(error, t('common.operationFailed')) }}</p>
       <button
         type="button"
         class="mt-3 rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
@@ -86,30 +93,30 @@ const cards = computed(() => [
         <div class="mb-2 flex items-center gap-2 text-amber-800">
           <TriangleAlert class="h-5 w-5" :aria-hidden="true" />
           <h2 class="text-sm font-bold">
-            تنبيه مخزون منخفض — {{ stats.lowStock }} متغير بمخزون 3 أو أقل
+            {{ t('dashboard.lowStock', { count: stats.lowStock }) }}
           </h2>
         </div>
         <ul class="space-y-1 text-sm text-amber-900">
           <li v-for="item in stats.lowStockItems" :key="item.sku" class="flex items-center justify-between gap-3">
-            <span>{{ item.titleAr }} — <bdi dir="ltr">{{ item.sku }}</bdi></span>
-            <span class="font-semibold">المتبقي: {{ item.stock }}</span>
+            <span>{{ pick(item.titleAr, item.titleEn) }} — <bdi dir="ltr">{{ item.sku }}</bdi></span>
+            <span class="font-semibold">{{ t('dashboard.remaining', { stock: item.stock }) }}</span>
           </li>
         </ul>
       </div>
 
       <section class="overflow-hidden rounded-xl border border-line bg-white">
-        <h2 class="border-b border-line bg-surface/50 px-4 py-3 text-sm font-bold text-navy">آخر الطلبات</h2>
+        <h2 class="border-b border-line bg-surface/50 px-4 py-3 text-sm font-bold text-navy">{{ t('dashboard.recentOrders') }}</h2>
         <div v-if="stats.recentOrders.length === 0" class="px-4 py-8 text-center text-sm text-mutedtext">
-          لا توجد طلبات بعد.
+          {{ t('dashboard.noOrders') }}
         </div>
         <table v-else class="w-full text-sm">
           <thead>
             <tr class="bg-surface/50">
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">رقم الطلب</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">العميل</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الإجمالي</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الحالة</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">التاريخ</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('dashboard.orderNumber') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('dashboard.customer') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('dashboard.total') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('dashboard.status') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('dashboard.date') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -133,7 +140,7 @@ const cards = computed(() => [
                   class="inline-flex rounded-full px-2 py-0.5 text-xs font-semibold"
                   :class="adminStatusClass(o.status)"
                 >
-                  {{ adminStatusLabel(o.status) }}
+                  {{ t('status.' + o.status) }}
                 </span>
               </td>
               <td class="px-4 py-3 text-mutedtext">{{ adminFormatDate(o.createdAt) }}</td>

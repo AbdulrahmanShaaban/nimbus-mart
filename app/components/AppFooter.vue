@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { MessageCircle, Camera, Send, AtSign, Phone, Mail, MapPin, CreditCard, Truck, ShieldCheck } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { FooterContentDto } from '~/types/api'
+
+const { t } = useI18n()
+const { pick } = useLocalized()
 
 const { data: footerData } = await useAsyncData(
   'site-footer',
   () => $fetch<FooterContentDto>('/api/content/footer'),
 )
 
-const blurbAr = computed(
-  () => footerData.value?.blurbAr ?? 'نِمبوس مارت — متجرك الإلكتروني الموثوق بأسعار منافسة وتوصيل سريع لكل محافظات مصر.',
-)
+const blurb = computed(() => pick(footerData.value?.blurbAr, footerData.value?.blurbEn) || t('footer.blurb'))
 
 const footerCategories = computed(() => footerData.value?.categories ?? [])
 </script>
@@ -21,27 +23,27 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
         <div>
           <NuxtLink to="/" class="mb-4 flex items-center gap-1.5 text-xl font-black text-navy focus-visible:outline-2 focus-visible:outline-brand">
             <span class="h-2.5 w-2.5 rounded-full bg-neon" aria-hidden="true" />
-            نِمبوس مارت
+            {{ t('footer.brand') }}
           </NuxtLink>
-          <p class="text-sm leading-relaxed text-bodytext">{{ blurbAr }}</p>
+          <p class="text-sm leading-relaxed text-bodytext">{{ blurb }}</p>
           <ul class="mt-5 flex gap-3">
             <li>
-              <a href="#" aria-label="واتساب" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
+              <a href="#" :aria-label="t('footer.whatsapp')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
                 <MessageCircle :size="17" aria-hidden="true" />
               </a>
             </li>
             <li>
-              <a href="#" aria-label="إنستجرام" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
+              <a href="#" :aria-label="t('footer.instagram')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
                 <Camera :size="17" aria-hidden="true" />
               </a>
             </li>
             <li>
-              <a href="#" aria-label="تيليجرام" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
+              <a href="#" :aria-label="t('footer.telegram')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
                 <Send :size="17" aria-hidden="true" />
               </a>
             </li>
             <li>
-              <a href="#" aria-label="إكس" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
+              <a href="#" :aria-label="t('footer.x')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
                 <AtSign :size="17" aria-hidden="true" />
               </a>
             </li>
@@ -49,36 +51,36 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
         </div>
 
         <div>
-          <h2 class="mb-4 text-base font-extrabold text-navy">روابط سريعة</h2>
+          <h2 class="mb-4 text-base font-extrabold text-navy">{{ t('footer.quickLinks') }}</h2>
           <ul class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm text-bodytext md:flex md:flex-col">
-            <li><NuxtLink to="/products" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">كل المنتجات</NuxtLink></li>
-            <li><NuxtLink to="/cart" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">سلة التسوق</NuxtLink></li>
-            <li><NuxtLink to="/wishlist" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">المفضلة</NuxtLink></li>
-            <li><NuxtLink to="/account/orders" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">تتبع طلباتك</NuxtLink></li>
+            <li><NuxtLink to="/products" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">{{ t('footer.allProducts') }}</NuxtLink></li>
+            <li><NuxtLink to="/cart" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">{{ t('footer.cart') }}</NuxtLink></li>
+            <li><NuxtLink to="/wishlist" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">{{ t('footer.wishlist') }}</NuxtLink></li>
+            <li><NuxtLink to="/account/orders" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">{{ t('footer.trackOrders') }}</NuxtLink></li>
           </ul>
         </div>
 
         <div>
-          <h2 class="mb-4 text-base font-extrabold text-navy">التصنيفات</h2>
+          <h2 class="mb-4 text-base font-extrabold text-navy">{{ t('footer.categories') }}</h2>
           <ul class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm text-bodytext md:flex md:flex-col">
             <li v-for="category in footerCategories" :key="category.slug">
               <NuxtLink
                 :to="`/categories/${category.slug}`"
                 class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand"
               >
-                {{ category.nameAr }}
+                {{ pick(category.nameAr, category.nameEn) }}
               </NuxtLink>
             </li>
             <li v-if="footerCategories.length === 0">
               <NuxtLink to="/products" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">
-                تصفح التصنيفات
+                {{ t('footer.browseCategories') }}
               </NuxtLink>
             </li>
           </ul>
         </div>
 
         <div>
-          <h2 class="mb-4 text-base font-extrabold text-navy">تواصل معنا</h2>
+          <h2 class="mb-4 text-base font-extrabold text-navy">{{ t('footer.contact') }}</h2>
           <ul class="flex flex-col gap-3 text-sm text-bodytext">
             <li class="flex items-center gap-2.5">
               <Phone :size="16" class="shrink-0 text-brand" aria-hidden="true" />
@@ -90,7 +92,7 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
             </li>
             <li class="flex items-center gap-2.5">
               <MapPin :size="16" class="shrink-0 text-brand" aria-hidden="true" />
-              القاهرة، مصر
+              {{ t('footer.location') }}
             </li>
           </ul>
         </div>
@@ -99,20 +101,20 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
       <ul class="mb-8 grid gap-3 rounded-2xl border border-line bg-white p-5 sm:grid-cols-3 md:mb-10 md:gap-4 md:p-6">
         <li class="flex items-center gap-3 text-sm font-semibold text-bodytext">
           <CreditCard :size="20" class="shrink-0 text-navy" aria-hidden="true" />
-          دفع آمن (بطاقات ومحافظ إلكترونية)
+          {{ t('footer.securePayment') }}
         </li>
         <li class="flex items-center gap-3 text-sm font-semibold text-bodytext">
           <Truck :size="20" class="shrink-0 text-navy" aria-hidden="true" />
-          توصيل لكل محافظات مصر
+          {{ t('footer.nationwideDelivery') }}
         </li>
         <li class="flex items-center gap-3 text-sm font-semibold text-bodytext">
           <ShieldCheck :size="20" class="shrink-0 text-navy" aria-hidden="true" />
-          ضمان استرجاع حسب الشروط
+          {{ t('footer.returnPolicy') }}
         </li>
       </ul>
 
       <div class="border-t border-line pt-6 text-center text-xs text-mutedtext">
-        © {{ new Date().getFullYear() }} نِمبوس مارت — جميع الحقوق محفوظة
+        © {{ new Date().getFullYear() }} {{ t('footer.brand') }} — {{ t('footer.rights') }}
       </div>
     </div>
   </footer>

@@ -58,6 +58,23 @@ Short rules. Project-local source of truth; global skills only where these stay 
 - `Intl.PluralRules("ar")` / ICU messages for pluralized copy — no `n === 1 ?` string hacks.
 - Dates: `Intl.DateTimeFormat("ar-EG", { calendar: "gregory", timeZone: "Africa/Cairo" })`.
 
+## i18n (AR/EN, `@nuxtjs/i18n` v10, composition API, `legacy:false`)
+- UI copy lives in merged locale JSON (`i18n/locales/*.json`), never hardcoded in a page/component.
+- **Pages fragment:** `ar.storefront-pages.json` + `en.storefront-pages.json`, namespaced by page
+  short name (`home|product|category|cart|checkout|account|login|register|wishlist|search`).
+  ar/en trees must have **exactly matching keys** (verify with a sorted-key compare, not by eye).
+- **Access:** `const { t, locale } = useI18n()` (`locale` only where the EN variant is toggled).
+  Prefer existing `common.*` / `header.*` / `nav.*` / `status.*` / `error.*` keys over new duplicates.
+- **Bilingual DTO fields** (`titleAr/titleEn`, `nameAr/nameEn`, `descriptionAr/descriptionEn`) →
+  `useLocalized().pick(ar, en)`. **API snapshots / stored data** (`productTitleAr`,
+  `productTitleSnapshot`, `order.governorate`, `EGYPT_GOVERNORATES`) stay as-is — data, not UI copy.
+- Reactive `<title>`: `useHead(() => ({ title: \`${t('header.brand')} — ${t('…')}\` }))`.
+- Dates via `useAdminDateFormat().adminFormatDate(iso)` (locale-bound); never a hardcoded `Intl` locale tag.
+- Plurals via ICU `t('key', { count })` (vue-i18n reads `named.count` for the plural index) — no
+  `n === 1 ?` hacks. Latin digits for commerce numbers (see "Numbers & numerals").
+- Keep function/local names that mirror logic (e.g. `arabicFor(code)`) — swap the returned literal
+  for `t()`, don't rename logic to hide the change.
+
 ## Honesty (portfolio product)
 - No invented metrics, ratings, review counts, buyer counts, countdowns, or discount percentages.
 - Demo/placeholder content is labeled as such. Checkout is always marked simulated

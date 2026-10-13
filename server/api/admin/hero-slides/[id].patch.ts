@@ -27,8 +27,11 @@ export default defineEventHandler(async (event) => {
   const data = parsed.data
   const patch: Prisma.HeroSlideUpdateInput = {}
   if (data.titleAr !== undefined) patch.titleAr = data.titleAr
+  if (data.titleEn !== undefined) patch.titleEn = heroOrNone(data.titleEn)
   if (data.subtitleAr !== undefined) patch.subtitleAr = heroOrNone(data.subtitleAr)
+  if (data.subtitleEn !== undefined) patch.subtitleEn = heroOrNone(data.subtitleEn)
   if (data.ctaLabelAr !== undefined) patch.ctaLabelAr = data.ctaLabelAr
+  if (data.ctaLabelEn !== undefined) patch.ctaLabelEn = heroOrNone(data.ctaLabelEn)
   if (data.ctaHref !== undefined) patch.ctaHref = data.ctaHref
   if (data.imageUrl !== undefined) patch.imageUrl = heroOrNone(data.imageUrl)
   if (data.bgStyle !== undefined) patch.bgStyle = data.bgStyle

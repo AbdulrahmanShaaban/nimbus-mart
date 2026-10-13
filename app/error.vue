@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import { TriangleAlert } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{ error: { statusCode?: number; statusMessage?: string; message?: string } }>()
 
+const { t } = useI18n()
 const is404 = computed(() => props.error?.statusCode === 404)
 
-useHead({ title: is404.value ? 'الصفحة غير موجودة — نِمبوس مارت' : 'حدث خطأ — نِمبوس مارت' })
+useHead(() => ({
+  title: is404.value
+    ? `${t('error.notFound.title')} — ${t('header.brand')}`
+    : `${t('error.generic.title')} — ${t('header.brand')}`,
+}))
 
-const title = computed(() => (is404.value ? 'الصفحة غير موجودة' : 'حدث خطأ غير متوقع'))
+const title = computed(() =>
+  is404.value ? t('error.notFound.title') : t('error.generic.title'),
+)
 const hint = computed(() =>
-  is404.value
-    ? 'ربما تم نقل الصفحة أو أن الرابط غير صحيح.'
-    : 'نأسف للإزعاج، حاول مرة أخرى بعد قليل.',
+  is404.value ? t('error.notFound.hint') : t('error.generic.hint'),
 )
 </script>
 
@@ -32,14 +38,14 @@ const hint = computed(() =>
           class="flex h-11 items-center rounded-xl bg-navy px-6 text-sm font-bold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand"
           @click="clearError({ redirect: '/' })"
         >
-          العودة للرئيسية
+          {{ t('error.backHome') }}
         </button>
         <button
           type="button"
           class="flex h-11 items-center rounded-xl border border-line px-6 text-sm font-bold text-navy transition-colors hover:border-navy focus-visible:outline-2 focus-visible:outline-brand"
           @click="clearError()"
         >
-          إعادة المحاولة
+          {{ t('common.retry') }}
         </button>
       </div>
     </div>

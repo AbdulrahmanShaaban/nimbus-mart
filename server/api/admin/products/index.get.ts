@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       skip: (page - 1) * limit,
       take: limit,
       include: {
-        category: { select: { nameAr: true } },
+        category: { select: { nameAr: true, nameEn: true } },
         images: { orderBy: { sort: 'asc' }, take: 1, select: { url: true } },
         variants: { select: { stock: true } },
       },
@@ -63,6 +63,7 @@ export default defineEventHandler(async (event) => {
         compareAtCents: p.compareAtCents?.toString() ?? null,
         status: p.status,
         categoryName: p.category.nameAr,
+        categoryNameEn: p.category.nameEn,
         image: first?.url ?? null,
         stockTotal,
         variantsCount: p.variants.length,

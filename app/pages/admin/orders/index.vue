@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { Search, Eye } from '@lucide/vue'
-import { adminFetchMessage, adminFormatDate, adminStatusClass, adminStatusLabel } from '~/utils/admin-status'
+import { useI18n } from 'vue-i18n'
+import { adminFetchMessage, adminStatusClass, useAdminDateFormat } from '~/utils/admin-status'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
-useHead({ title: 'الطلبات — لوحة التحكم' })
+
+const { t } = useI18n()
+const { adminFormatDate } = useAdminDateFormat()
+
+useHead(() => ({ title: `${t('orders.title')} — ${t('header.brand')}` }))
 
 interface OrderListItem {
   orderNumber: string
@@ -68,13 +73,13 @@ const totalPages = computed(() => {
 <template>
   <div class="space-y-4">
     <div class="flex flex-wrap items-center justify-between gap-3">
-      <h1 class="text-2xl font-extrabold text-navy">الطلبات</h1>
+      <h1 class="text-2xl font-extrabold text-navy">{{ t('orders.title') }}</h1>
       <button
         type="button"
         class="rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
         @click="refresh()"
       >
-        تحديث
+        {{ t('orders.refresh') }}
       </button>
     </div>
 
@@ -84,58 +89,58 @@ const totalPages = computed(() => {
         <input
           v-model="q"
           type="search"
-          placeholder="ابحث برقم الطلب أو اسم العميل أو الموبايل..."
+          :placeholder="t('orders.searchPlaceholder')"
           class="w-full rounded-lg border border-line bg-white px-3 py-2 pe-9 text-sm text-navy focus-visible:outline-2 focus-visible:outline-brand"
-          aria-label="بحث في الطلبات"
+          :aria-label="t('orders.searchAria')"
           @input="onSearchInput"
         >
       </div>
       <select
         v-model="statusFilter"
         class="rounded-lg border border-line bg-white px-3 py-2 text-sm text-navy focus-visible:outline-2 focus-visible:outline-brand"
-        aria-label="تصفية بالحالة"
+        :aria-label="t('orders.filterStatusAria')"
         @change="onStatusChange"
       >
-        <option value="">الكل</option>
-        <option value="PLACED">تم الاستلام</option>
-        <option value="PROCESSING">قيد التجهيز</option>
-        <option value="SHIPPED">تم الشحن</option>
-        <option value="DELIVERED">تم التوصيل</option>
-        <option value="CANCELLED">ملغي</option>
+        <option value="">{{ t('orders.all') }}</option>
+        <option value="PLACED">{{ t('status.PLACED') }}</option>
+        <option value="PROCESSING">{{ t('status.PROCESSING') }}</option>
+        <option value="SHIPPED">{{ t('status.SHIPPED') }}</option>
+        <option value="DELIVERED">{{ t('status.DELIVERED') }}</option>
+        <option value="CANCELLED">{{ t('status.CANCELLED') }}</option>
       </select>
     </div>
 
     <div v-if="pending" class="rounded-xl border border-line bg-white p-8 text-center text-sm text-mutedtext">
-      جارٍ تحميل الطلبات...
+      {{ t('orders.loading') }}
     </div>
 
     <div v-else-if="error" class="rounded-xl border border-red-200 bg-red-50 p-6 text-sm text-red-700" role="alert">
-      <p>{{ adminFetchMessage(error) }}</p>
+      <p>{{ adminFetchMessage(error, t('common.operationFailed')) }}</p>
       <button
         type="button"
         class="mt-3 rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
     <template v-else-if="data">
       <div v-if="data.items.length === 0" class="rounded-xl border border-line bg-white px-4 py-10 text-center text-sm text-mutedtext">
-        لا توجد طلبات مطابقة.
+        {{ t('orders.empty') }}
       </div>
 
       <div v-else class="overflow-hidden rounded-xl border border-line bg-white">
         <table class="w-full text-sm">
           <thead>
             <tr class="bg-surface/50">
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">رقم الطلب</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">العميل</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الإجمالي</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">العناصر</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الحالة</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">التاريخ</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">إجراءات</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('orders.orderNumber') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('orders.customer') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('orders.total') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('orders.itemsCount') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('orders.status') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('orders.date') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('orders.actions') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -155,7 +160,7 @@ const totalPages = computed(() => {
               <td class="px-4 py-3">{{ o.itemCount }}</td>
               <td class="px-4 py-3">
                 <span class="inline-flex rounded-full px-2 py-0.5 text-xs font-semibold" :class="adminStatusClass(o.status)">
-                  {{ adminStatusLabel(o.status) }}
+                  {{ t('status.' + o.status) }}
                 </span>
               </td>
               <td class="px-4 py-3 text-mutedtext">{{ adminFormatDate(o.createdAt) }}</td>
@@ -165,7 +170,7 @@ const totalPages = computed(() => {
                   class="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2.5 py-1.5 text-xs text-navy transition-colors hover:bg-surface/60"
                 >
                   <Eye class="h-3.5 w-3.5" :aria-hidden="true" />
-                  <span>عرض</span>
+                  <span>{{ t('orders.view') }}</span>
                 </NuxtLink>
               </td>
             </tr>
@@ -175,7 +180,7 @@ const totalPages = computed(() => {
 
       <div class="flex items-center justify-between">
         <p class="text-sm text-mutedtext">
-          الإجمالي: {{ data.total }} طلب — صفحة {{ data.page }} من {{ totalPages }}
+          {{ t('orders.summary', { total: data.total, page: data.page, pages: totalPages }) }}
         </p>
         <div class="flex items-center gap-2">
           <button
@@ -184,7 +189,7 @@ const totalPages = computed(() => {
             :disabled="page <= 1"
             @click="page -= 1"
           >
-            السابق
+            {{ t('common.prev') }}
           </button>
           <button
             type="button"
@@ -192,7 +197,7 @@ const totalPages = computed(() => {
             :disabled="page >= totalPages"
             @click="page += 1"
           >
-            التالي
+            {{ t('common.next') }}
           </button>
         </div>
       </div>

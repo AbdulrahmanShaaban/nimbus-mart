@@ -8,6 +8,7 @@ export interface ProductCard {
   image: string | null
   categorySlug: string
   categoryNameAr: string
+  categoryNameEn: string | null
   defaultVariantId: string | null
   discountPercent: number | null
 }
@@ -19,7 +20,7 @@ export interface ProductCardRow {
   titleEn: string | null
   priceCents: bigint
   compareAtCents: bigint | null
-  category: { slug: string; nameAr: string }
+  category: { slug: string; nameAr: string; nameEn: string | null }
   images: { url: string }[]
   variants: { id: string; stock: number }[]
 }
@@ -65,6 +66,7 @@ export function toProductCard(row: ProductCardRow): ProductCard {
     image: row.images[0]?.url ?? null,
     categorySlug: row.category.slug,
     categoryNameAr: row.category.nameAr,
+    categoryNameEn: row.category.nameEn,
     defaultVariantId: pickDefaultVariantId(row.variants),
     discountPercent: discountPercentOf(row.priceCents, row.compareAtCents),
   }

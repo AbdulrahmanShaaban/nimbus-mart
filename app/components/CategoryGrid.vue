@@ -14,8 +14,11 @@ import {
 } from '@lucide/vue'
 import type { Component } from 'vue'
 import type { CategoryDto } from '~/types/api'
+import { useLocalized } from '~/composables/useLocalized'
 
 defineProps<{ categories: CategoryDto[] }>()
+
+const { pick } = useLocalized()
 
 const ICONS: Record<string, Component> = {
   shirt: Shirt,
@@ -49,7 +52,7 @@ function iconFor(name: string): Component {
           <img
             v-if="category.image"
             :src="category.image"
-            :alt="category.nameAr"
+            :alt="pick(category.nameAr, category.nameEn)"
             loading="lazy"
             class="h-full w-full rounded-xl object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           >
@@ -61,7 +64,7 @@ function iconFor(name: string): Component {
             aria-hidden="true"
           />
         </span>
-        <span class="text-sm font-bold leading-snug text-navy">{{ category.nameAr }}</span>
+        <span class="text-sm font-bold leading-snug text-navy">{{ pick(category.nameAr, category.nameEn) }}</span>
       </NuxtLink>
     </li>
   </ul>

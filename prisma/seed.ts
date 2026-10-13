@@ -587,8 +587,11 @@ async function main() {
     data: [
       {
         titleAr: 'حضور مميز في كل خطوة',
+        titleEn: 'A signature presence in every step',
         subtitleAr: 'اكتشف تشكيلة الأزياء الرجالية الجديدة. قمصان، أحذية، وإكسسوارات تكمل إطلالتك في كل مناسبة.',
+        subtitleEn: 'Discover the new menswear collection. Shirts, shoes, and accessories to complete every look.',
         ctaLabelAr: 'تسوق الكوليكشن',
+        ctaLabelEn: 'Shop the collection',
         ctaHref: '/categories/mens-shirts',
         imageUrl: `${CDN}/mens-shirts/man-plaid-shirt/thumbnail.webp`,
         bgStyle: 'BLUE',
@@ -597,8 +600,11 @@ async function main() {
       },
       {
         titleAr: 'إلكترونيات وأجهزة',
+        titleEn: 'Electronics & devices',
         subtitleAr: 'أحدث الأجهزة والتقنيات — من لابتوبات إلى هواتف، بأفضل الأسعار.',
+        subtitleEn: 'The latest gadgets and tech — from laptops to phones, at the best prices.',
         ctaLabelAr: 'تسوق الإلكترونيات',
+        ctaLabelEn: 'Shop electronics',
         ctaHref: '/categories/electronics',
         imageUrl: `${CDN}/laptops/apple-macbook-pro-14-inch-space-grey/thumbnail.webp`,
         bgStyle: 'INK',
@@ -607,8 +613,11 @@ async function main() {
       },
       {
         titleAr: 'الجمال والعناية',
+        titleEn: 'Beauty & care',
         subtitleAr: 'عطور ومستحضرات تجميل من أفضل الماركات العالمية.',
+        subtitleEn: 'Perfumes and cosmetics from the world’s best brands.',
         ctaLabelAr: 'تسوق الجمال',
+        ctaLabelEn: 'Shop beauty',
         ctaHref: '/categories/beauty',
         imageUrl: `${CDN}/fragrances/calvin-klein-ck-one/thumbnail.webp`,
         bgStyle: 'AMBER',
@@ -622,19 +631,27 @@ async function main() {
     data: {
       key: 'default',
       promoHeadingAr: 'جديد مطبخك بأفضل العروض',
+      promoHeadingEn: 'Upgrade your kitchen with the best deals',
       promoBodyAr: 'أحدث أدوات المطبخ والأجهزة الكهربائية بأسعار لا تُنافس.',
+      promoBodyEn: 'The latest kitchen tools and appliances at unbeatable prices.',
       promoCtaLabelAr: 'تسوق الآن',
+      promoCtaLabelEn: 'Shop now',
       promoCtaHref: '/categories/kitchen',
       promoGradient: 'navy',
       promoImageUrl: `${CDN}/kitchen-accessories/microwave-oven/thumbnail.webp`,
       promoSecondHeadingAr: 'صيف أحلى… مع كل اللي تحبه',
+      promoSecondHeadingEn: 'A sweeter summer… with everything you love',
       promoSecondBodyAr: 'اكتشف أحدث أدوات الصيف والموضة لموسم الحرارة.',
+      promoSecondBodyEn: 'Discover the latest summer essentials and fashion for the season.',
       promoSecondCtaLabelAr: 'تسوق الآن',
+      promoSecondCtaLabelEn: 'Shop now',
       promoSecondCtaHref: '/categories/sunglasses',
       promoSecondGradient: 'amber',
       promoSecondImageUrl: `${CDN}/sunglasses/black-sun-glasses/thumbnail.webp`,
       footerBlurbAr:
         'وجهتكم الأولى لكل ما هو جديد ومتميز. تشكيلة واسعة من الملابس، تجهيزات المطبخ، والأدوات اليومية — توصيل سريع لكل محافظات مصر.',
+      footerBlurbEn:
+        'Your first stop for everything new and exceptional. A wide range of fashion, kitchen gear, and everyday essentials — fast delivery across all of Egypt.',
     },
   })
 

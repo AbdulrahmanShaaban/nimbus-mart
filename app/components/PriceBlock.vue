@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const props = withDefaults(
   defineProps<{
     priceCents: string
@@ -25,6 +28,6 @@ const compare = computed(() => (props.compareAtCents ? formatBase(props.compareA
     <span
       v-if="discountPercent"
       class="rounded-full bg-brand px-2 py-0.5 text-[11px] font-black text-white"
-    >خصم {{ discountPercent }}%</span>
+    >{{ t('common.discount', { percent: discountPercent }) }}</span>
   </div>
 </template>

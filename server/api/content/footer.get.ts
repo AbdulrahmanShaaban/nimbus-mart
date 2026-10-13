@@ -5,9 +5,13 @@ export default defineEventHandler(async () => {
     db.category.findMany({
       where: { enabled: true },
       orderBy: { sortOrder: 'asc' },
-      select: { slug: true, nameAr: true },
+      select: { slug: true, nameAr: true, nameEn: true },
     }),
   ])
 
-  return { blurbAr: settings?.footerBlurbAr ?? null, categories }
+  return {
+    blurbAr: settings?.footerBlurbAr ?? null,
+    blurbEn: settings?.footerBlurbEn ?? null,
+    categories,
+  }
 })

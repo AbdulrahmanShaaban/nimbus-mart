@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Minus, Plus } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 
 const props = withDefaults(
   defineProps<{
@@ -8,10 +9,12 @@ const props = withDefaults(
     disabled?: boolean
     ariaLabel?: string
   }>(),
-  { max: 99, disabled: false, ariaLabel: 'الكمية' },
+  { max: 99, disabled: false, ariaLabel: undefined },
 )
 
 const emit = defineEmits<{ 'update:modelValue': [value: number] }>()
+const { t } = useI18n()
+const label = computed(() => props.ariaLabel ?? t('common.quantity'))
 
 const maxQty = computed(() => Math.max(1, Math.min(99, props.max)))
 
@@ -42,13 +45,13 @@ function onInputChange(event: Event) {
   <div
     class="inline-flex items-center overflow-hidden rounded-xl border border-line bg-white"
     role="group"
-    :aria-label="ariaLabel"
+    :aria-label="label"
   >
     <button
       type="button"
       class="grid h-9 w-9 shrink-0 place-items-center rounded-s-xl text-navy transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-brand"
       :disabled="disabled || modelValue <= 1"
-      :aria-label="`إنقاص ${ariaLabel}`"
+      :aria-label="t('common.decrease', { label })"
       @click="decrease"
     >
       <Minus :size="15" aria-hidden="true" />
@@ -60,7 +63,7 @@ function onInputChange(event: Event) {
       min="1"
       :max="maxQty"
       :disabled="disabled"
-      :aria-label="ariaLabel"
+      :aria-label="label"
       class="h-9 w-10 border-x border-line bg-transparent text-center text-sm font-bold text-navy focus-visible:outline-2 focus-visible:outline-brand disabled:opacity-60"
       @change="onInputChange"
     >
@@ -68,7 +71,7 @@ function onInputChange(event: Event) {
       type="button"
       class="grid h-9 w-9 shrink-0 place-items-center rounded-e-xl text-navy transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-brand"
       :disabled="disabled || modelValue >= maxQty"
-      :aria-label="`زيادة ${ariaLabel}`"
+      :aria-label="t('common.increase', { label })"
       @click="increase"
     >
       <Plus :size="15" aria-hidden="true" />

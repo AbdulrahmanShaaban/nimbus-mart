@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
+import { useI18n } from 'vue-i18n'
 import {
   LayoutDashboard,
   Package,
@@ -15,6 +16,7 @@ import {
 const route = useRoute()
 const { logout } = useAuth()
 const { loadRates } = useCurrency()
+const { t } = useI18n()
 
 interface AdminNav {
   label: string
@@ -22,15 +24,15 @@ interface AdminNav {
   icon: Component
 }
 
-const nav: AdminNav[] = [
-  { label: 'لوحة القيادة', href: '/admin', icon: LayoutDashboard },
-  { label: 'المنتجات', href: '/admin/products', icon: Package },
-  { label: 'الطلبات', href: '/admin/orders', icon: ShoppingCart },
-  { label: 'العملاء', href: '/admin/users', icon: Users },
-  { label: 'المحتوى', href: '/admin/content', icon: LayoutTemplate },
-  { label: 'العملات', href: '/admin/currencies', icon: Coins },
-  { label: 'سجل التدقيق', href: '/admin/audit', icon: ScrollText },
-]
+const nav = computed<AdminNav[]>(() => [
+  { label: t('nav.dashboard'), href: '/admin', icon: LayoutDashboard },
+  { label: t('nav.products'), href: '/admin/products', icon: Package },
+  { label: t('nav.orders'), href: '/admin/orders', icon: ShoppingCart },
+  { label: t('nav.users'), href: '/admin/users', icon: Users },
+  { label: t('nav.content'), href: '/admin/content', icon: LayoutTemplate },
+  { label: t('nav.currencies'), href: '/admin/currencies', icon: Coins },
+  { label: t('nav.audit'), href: '/admin/audit', icon: ScrollText },
+])
 
 function isActive(href: string): boolean {
   if (href === '/admin') return route.path === '/admin'
@@ -57,7 +59,7 @@ onMounted(() => {
         <p class="text-lg font-extrabold">
           NIMBUS<span class="text-neon">.</span>
         </p>
-        <p class="mt-1 text-sm text-white/70">لوحة التحكم</p>
+        <p class="mt-1 text-sm text-white/70">{{ t('nav.panel') }}</p>
       </div>
       <nav class="flex-1 overflow-y-auto py-4">
         <NuxtLink
@@ -78,7 +80,7 @@ onMounted(() => {
       <div class="space-y-2 border-t border-white/10 p-4">
         <NuxtLink to="/" class="flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white">
           <ExternalLink class="h-4 w-4" :aria-hidden="true" />
-          <span>عرض المتجر</span>
+          <span>{{ t('nav.viewStore') }}</span>
         </NuxtLink>
         <button
           type="button"
@@ -86,7 +88,7 @@ onMounted(() => {
           @click="onLogout"
         >
           <LogOut class="h-4 w-4" :aria-hidden="true" />
-          <span>تسجيل الخروج</span>
+          <span>{{ t('nav.logout') }}</span>
         </button>
       </div>
     </aside>
@@ -94,12 +96,12 @@ onMounted(() => {
     <div class="sticky top-0 z-30 bg-navy-deep text-white md:hidden">
       <div class="flex items-center justify-between px-4 py-3">
         <p class="font-extrabold">
-          NIMBUS<span class="text-neon">.</span> لوحة التحكم
+          NIMBUS<span class="text-neon">.</span> {{ t('nav.panel') }}
         </p>
         <button
           type="button"
           class="flex h-9 w-9 items-center justify-center rounded-full text-white/90 transition-colors hover:bg-white/10"
-          aria-label="تسجيل الخروج"
+          :aria-label="t('nav.logout')"
           @click="onLogout"
         >
           <LogOut class="h-4 w-4" :aria-hidden="true" />

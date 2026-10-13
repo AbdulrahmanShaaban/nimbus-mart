@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { Search, ShoppingBag, Heart, Menu, X, LayoutDashboard, ChevronDown } from '@lucide/vue'
+import { Search, ShoppingBag, Heart, Menu, X, LayoutDashboard, ChevronDown, Globe } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { CategoryDto } from '~/types/api'
 
 const route = useRoute()
+const { t, locale, setLocale } = useI18n()
+const { pick } = useLocalized()
 const { count: cartCount, refresh: refreshCart } = useCart()
 const { user, refresh: refreshAuth } = useAuth()
 const { currency, currencies, loadRates } = useCurrency()
@@ -17,6 +20,13 @@ const { data: categoriesData } = await useAsyncData('site-categories', () =>
 )
 
 const categories = computed(() => categoriesData.value?.items ?? [])
+
+const otherLocale = computed(() => (locale.value === 'ar' ? 'en' : 'ar'))
+const otherLocaleLabel = computed(() => (locale.value === 'ar' ? 'EN' : 'ع'))
+
+function toggleLocale() {
+  void setLocale(otherLocale.value)
+}
 
 watch(
   () => route.fullPath,
@@ -67,7 +77,7 @@ onUnmounted(() => {
         class="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:hidden"
         :aria-expanded="mobileMenuOpen"
         aria-controls="nm-mobile-menu"
-        aria-label="القائمة"
+        :aria-label="t('header.menu')"
         @click="mobileMenuOpen = !mobileMenuOpen"
       >
         <X v-if="mobileMenuOpen" :size="22" aria-hidden="true" />
@@ -79,7 +89,7 @@ onUnmounted(() => {
         class="flex min-w-0 items-center gap-1.5 text-lg font-black text-navy focus-visible:outline-2 focus-visible:outline-brand md:text-2xl"
       >
         <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-neon" aria-hidden="true" />
-        <span class="truncate">نِمبوس مارت</span>
+        <span class="truncate">{{ t('header.brand') }}</span>
       </NuxtLink>
 
       <form action="/search" method="get" class="hidden flex-1 md:block" role="search">
@@ -87,14 +97,14 @@ onUnmounted(() => {
           <input
             type="search"
             name="q"
-            placeholder="ابحث عن منتجاتك…"
-            aria-label="بحث في المنتجات"
+            :placeholder="t('common.searchPlaceholder')"
+            :aria-label="t('header.searchProducts')"
             class="h-11 w-full rounded-full border-2 border-brand/50 bg-white ps-4 pe-11 text-sm text-navy placeholder:text-mutedtext focus-visible:outline-2 focus-visible:outline-brand"
           >
           <button
             type="submit"
             class="absolute end-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand"
-            aria-label="بحث"
+            :aria-label="t('common.search')"
           >
             <Search :size="17" aria-hidden="true" />
           </button>
@@ -102,26 +112,43 @@ onUnmounted(() => {
       </form>
 
       <div class="ms-auto flex shrink-0 items-center gap-0 md:gap-2">
+        <button
+          type="button"
+          class="grid h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:hidden"
+          :aria-label="t('common.switchLanguage')"
+          @click="toggleLocale"
+        >
+          <span class="text-xs font-black" dir="ltr">{{ otherLocaleLabel }}</span>
+        </button>
         <NuxtLink
           to="/search"
           class="grid h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:hidden"
-          aria-label="بحث"
+          :aria-label="t('common.search')"
         >
           <Search :size="20" aria-hidden="true" />
         </NuxtLink>
+        <button
+          type="button"
+          class="hidden h-10 items-center gap-1.5 rounded-full border border-line px-3 text-xs font-black text-navy transition-colors hover:border-navy focus-visible:outline-2 focus-visible:outline-brand md:flex"
+          :aria-label="t('common.switchLanguage')"
+          @click="toggleLocale"
+        >
+          <Globe :size="14" aria-hidden="true" />
+          <span dir="ltr">{{ otherLocaleLabel }}</span>
+        </button>
         <NuxtLink
           v-if="user"
           to="/account"
           class="hidden h-10 items-center rounded-full border-2 border-brand px-4 text-sm font-bold text-brand transition-colors hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-brand md:inline-flex"
         >
-          حسابي
+          {{ t('header.account') }}
         </NuxtLink>
         <NuxtLink
           v-else
           to="/login"
           class="hidden h-10 items-center rounded-full border-2 border-brand px-4 text-sm font-bold text-brand transition-colors hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-brand md:inline-flex"
         >
-          تسجيل الدخول
+          {{ t('header.login') }}
         </NuxtLink>
         <div ref="currencyRoot" class="relative hidden md:block">
           <button
@@ -129,6 +156,7 @@ onUnmounted(() => {
             class="flex h-10 items-center gap-1 rounded-full border border-line px-3 text-xs font-black text-navy transition-colors hover:border-navy focus-visible:outline-2 focus-visible:outline-brand"
             :aria-expanded="currencyOpen"
             aria-haspopup="listbox"
+            :aria-label="t('common.currency')"
             @click="currencyOpen = !currencyOpen"
           >
             {{ currency }}
@@ -138,7 +166,7 @@ onUnmounted(() => {
             v-if="currencyOpen && currencies.length > 1"
             class="absolute end-0 top-12 z-50 w-36 overflow-hidden rounded-xl border border-line bg-white py-1 shadow-[0_8px_24px_rgba(12,40,123,0.14)]"
             role="listbox"
-            aria-label="العملة"
+            :aria-label="t('common.currency')"
           >
             <li v-for="row in currencies" :key="row.code">
               <button
@@ -159,14 +187,14 @@ onUnmounted(() => {
           v-if="user?.role === 'ADMIN'"
           to="/admin"
           class="hidden h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:grid"
-          aria-label="لوحة التحكم"
+          :aria-label="t('header.adminPanel')"
         >
           <LayoutDashboard :size="20" aria-hidden="true" />
         </NuxtLink>
         <NuxtLink
           to="/wishlist"
           class="relative grid h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand"
-          aria-label="المفضلة"
+          :aria-label="t('header.wishlist')"
         >
           <Heart :size="20" aria-hidden="true" />
           <span
@@ -177,7 +205,7 @@ onUnmounted(() => {
         <NuxtLink
           to="/cart"
           class="relative grid h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand"
-          aria-label="سلة التسوق"
+          :aria-label="t('header.cart')"
         >
           <ShoppingBag :size="20" aria-hidden="true" />
           <span
@@ -192,17 +220,17 @@ onUnmounted(() => {
       v-if="mobileMenuOpen"
       id="nm-mobile-menu"
       class="border-t border-line bg-white px-4 py-3 md:hidden"
-      aria-label="القائمة الجوال"
+      :aria-label="t('header.menuMobile')"
     >
       <ul class="flex flex-col gap-1">
         <li>
           <NuxtLink to="/" class="block rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand">
-            الرئيسية
+            {{ t('header.home') }}
           </NuxtLink>
         </li>
         <li>
           <NuxtLink to="/products" class="block rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand">
-            كل المنتجات
+            {{ t('header.allProducts') }}
           </NuxtLink>
         </li>
         <li v-for="category in categories" :key="category.slug">
@@ -210,30 +238,41 @@ onUnmounted(() => {
             :to="`/categories/${category.slug}`"
             class="block rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand"
           >
-            {{ category.nameAr }}
+            {{ pick(category.nameAr, category.nameEn) }}
           </NuxtLink>
         </li>
         <li v-if="user?.role === 'ADMIN'">
           <NuxtLink to="/admin" class="block rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand">
-            لوحة التحكم
+            {{ t('header.adminPanel') }}
           </NuxtLink>
         </li>
         <li class="mt-1 border-t border-line pt-2">
           <NuxtLink :to="user ? '/account' : '/login'" class="block rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand">
-            {{ user ? 'حسابي' : 'تسجيل الدخول' }}
+            {{ user ? t('header.account') : t('header.login') }}
           </NuxtLink>
+        </li>
+        <li class="border-t border-line pt-2">
+          <button
+            type="button"
+            class="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand"
+            @click="toggleLocale"
+          >
+            <Globe :size="16" aria-hidden="true" />
+            {{ t('common.language') }}
+            <span class="ms-auto text-xs text-mutedtext" dir="ltr">{{ otherLocaleLabel }}</span>
+          </button>
         </li>
       </ul>
     </nav>
 
-    <nav class="border-t border-neon/40 bg-neon" aria-label="التصنيفات">
+    <nav class="border-t border-neon/40 bg-neon" :aria-label="t('header.categories')">
       <div class="nm-no-scrollbar mx-auto flex max-w-[1330px] items-center gap-0 overflow-x-auto px-4 py-2 md:px-6">
         <NuxtLink
           to="/"
           class="shrink-0 rounded-full px-2.5 py-1.5 text-center text-[13px] font-bold leading-tight text-navy transition-colors hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-brand"
           :class="{ 'bg-white/80': route.path === '/' }"
         >
-          الرئيسية
+          {{ t('header.home') }}
         </NuxtLink>
         <NuxtLink
           v-for="category in categories"
@@ -242,14 +281,14 @@ onUnmounted(() => {
           class="flex shrink-0 items-center justify-center gap-0.5 rounded-full px-2.5 py-1.5 text-center text-[13px] font-bold leading-tight text-navy transition-colors hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-brand md:max-w-[96px] md:px-2"
           :class="{ 'bg-white/80': route.path === `/categories/${category.slug}` }"
         >
-          <span class="min-w-0">{{ category.nameAr }}</span>
+          <span class="min-w-0">{{ pick(category.nameAr, category.nameEn) }}</span>
           <ChevronDown :size="12" class="hidden shrink-0 self-center md:block" aria-hidden="true" />
         </NuxtLink>
         <NuxtLink
           to="/products"
           class="flex shrink-0 items-center justify-center gap-0.5 rounded-full px-2.5 py-1.5 text-center text-[13px] font-bold leading-tight text-navy transition-colors hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-brand"
         >
-          المزيد
+          {{ t('header.more') }}
           <ChevronDown :size="12" class="hidden shrink-0 self-center md:block" aria-hidden="true" />
         </NuxtLink>
       </div>

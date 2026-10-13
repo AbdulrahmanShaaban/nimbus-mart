@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ShoppingBag, Check, TriangleAlert, Heart, ShieldCheck, Truck, RotateCcw } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { ProductDetailDto } from '~/types/api'
+
+const { t, locale } = useI18n()
+const { pick } = useLocalized()
 
 const route = useRoute()
 const slug = computed(() => (typeof route.params.slug === 'string' ? route.params.slug : ''))
@@ -17,8 +21,19 @@ const wishlistCount = useState<number>('nm-wishlist-count', () => 0)
 
 const product = computed(() => data.value)
 
+const is404 = computed(() => {
+  const err = error.value
+  return !!err && typeof err === 'object' && 'statusCode' in err && err.statusCode === 404
+})
+
+const productTitle = computed(() => {
+  if (product.value) return pick(product.value.titleAr, product.value.titleEn)
+  if (is404.value) return t('error.notFound.title')
+  return t('product.fallbackTitle')
+})
+
 useHead({
-  title: computed(() => (product.value ? `${product.value.titleAr} — نِمبوس مارت` : 'المنتج — نِمبوس مارت')),
+  title: computed(() => `${productTitle.value} — ${t('header.brand')}`),
 })
 
 const selectedVariantId = ref<string | null>(null)
@@ -158,24 +173,24 @@ onUnmounted(() => {
 
 <template>
   <div class="mx-auto max-w-[1330px] px-4 py-8 md:px-6 md:py-12">
-    <div v-if="pending" class="text-sm text-mutedtext" aria-live="polite">جاري التحميل…</div>
+    <div v-if="pending" class="text-sm text-mutedtext" aria-live="polite">{{ t('common.loading') }}</div>
 
     <div v-else-if="error || !product" class="rounded-2xl border border-line bg-white p-8 text-center" role="alert">
-      <p class="mb-1 font-bold text-navy">تعذّر تحميل المنتج</p>
-      <p class="mb-4 text-sm text-mutedtext">ربما تم حذف المنتج أو أن الرابط غير صحيح.</p>
+      <p class="mb-1 font-bold text-navy">{{ t('product.errorTitle') }}</p>
+      <p class="mb-4 text-sm text-mutedtext">{{ t('product.errorHint') }}</p>
       <div class="flex flex-wrap items-center justify-center gap-3">
         <button
           type="button"
           class="rounded-full bg-navy px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand"
           @click="refresh()"
         >
-          إعادة المحاولة
+          {{ t('common.retry') }}
         </button>
         <NuxtLink
           to="/products"
           class="rounded-full border border-line px-6 py-2.5 text-sm font-bold text-navy transition-colors hover:border-navy focus-visible:outline-2 focus-visible:outline-brand"
         >
-          كل المنتجات
+          {{ t('header.allProducts') }}
         </NuxtLink>
       </div>
     </div>
@@ -183,10 +198,10 @@ onUnmounted(() => {
     <template v-else>
       <SiteBreadcrumbs
         :items="[
-          { label: 'الرئيسية', href: '/' },
-          { label: 'المنتجات', href: '/products' },
-          { label: product.category.nameAr, href: `/categories/${product.category.slug}` },
-          { label: product.titleAr },
+          { label: t('nav.home'), href: '/' },
+          { label: t('product.breadcrumbProducts'), href: '/products' },
+          { label: pick(product.category.nameAr, product.category.nameEn), href: `/categories/${product.category.slug}` },
+          { label: productTitle },
         ]"
       />
 
@@ -195,7 +210,7 @@ onUnmounted(() => {
           <div class="aspect-square overflow-hidden rounded-2xl border border-line bg-[#FAFAFA]">
             <img
               :src="currentImage"
-              :alt="product.titleAr"
+              :alt="productTitle"
               class="h-full w-full object-contain p-4"
             >
           </div>
@@ -206,20 +221,20 @@ onUnmounted(() => {
               type="button"
               class="h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-white transition-colors focus-visible:outline-2 focus-visible:outline-brand"
               :class="index === selectedImageIndex ? 'border-brand' : 'border-line'"
-              :aria-label="`الصورة ${index + 1}`"
+              :aria-label="t('product.imageLabel', { index: index + 1 })"
               @click="selectedImageIndex = index"
             >
-              <img :src="image" :alt="`${product.titleAr} — صورة ${index + 1}`" loading="lazy" class="h-full w-full object-cover">
+              <img :src="image" :alt="t('product.imageAlt', { title: productTitle, index: index + 1 })" loading="lazy" class="h-full w-full object-cover">
             </button>
           </div>
         </div>
 
         <div>
-          <span class="text-sm font-semibold text-mutedtext">{{ product.category.nameAr }}</span>
+          <span class="text-sm font-semibold text-mutedtext">{{ pick(product.category.nameAr, product.category.nameEn) }}</span>
           <h1 class="mt-1 text-2xl font-extrabold leading-snug text-navy md:text-3xl">
-            {{ product.titleAr }}
+            {{ productTitle }}
           </h1>
-          <p v-if="product.titleEn" class="mt-1 text-sm text-mutedtext" dir="ltr" style="text-align: start;">{{ product.titleEn }}</p>
+          <p v-if="product.titleEn && locale !== 'en'" class="mt-1 text-sm text-mutedtext" dir="ltr" style="text-align: start;">{{ product.titleEn }}</p>
 
           <div class="mt-4 flex flex-wrap items-baseline gap-3">
             <span class="text-2xl font-black text-navy">{{ price }}</span>
@@ -227,13 +242,13 @@ onUnmounted(() => {
             <span
               v-if="product.discountPercent"
               class="rounded-full bg-neon px-2.5 py-0.5 text-xs font-black text-brand-alt"
-            >خصم -{{ product.discountPercent }}%</span>
+            >{{ t('common.discount', { percent: product.discountPercent }) }}</span>
           </div>
 
-          <p class="mt-5 text-sm leading-relaxed text-bodytext">{{ product.descriptionAr }}</p>
+          <p class="mt-5 text-sm leading-relaxed text-bodytext">{{ pick(product.descriptionAr, product.descriptionEn) }}</p>
 
           <div v-if="sizes.length > 0" class="mt-6">
-            <h2 class="mb-2 text-sm font-bold text-navy">المقاس</h2>
+            <h2 class="mb-2 text-sm font-bold text-navy">{{ t('product.size') }}</h2>
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="size in sizes"
@@ -249,7 +264,7 @@ onUnmounted(() => {
           </div>
 
           <div v-if="colors.size > 0" class="mt-5">
-            <h2 class="mb-2 text-sm font-bold text-navy">اللون</h2>
+            <h2 class="mb-2 text-sm font-bold text-navy">{{ t('product.color') }}</h2>
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="[color, hex] in colors"
@@ -279,18 +294,18 @@ onUnmounted(() => {
             >
               <template v-if="addState === 'added'">
                 <Check :size="17" aria-hidden="true" />
-                تمت الإضافة إلى السلة
+                {{ t('product.addedToCart') }}
               </template>
               <template v-else-if="addState === 'error'">
                 <TriangleAlert :size="17" aria-hidden="true" />
-                تعذّرت الإضافة — حاول مرة أخرى
+                {{ t('product.addError') }}
               </template>
               <template v-else-if="!inStock">
-                نفد المخزون
+                {{ t('common.outOfStock') }}
               </template>
               <template v-else>
                 <ShoppingBag :size="17" aria-hidden="true" />
-                أضف إلى السلة
+                {{ t('common.addToCart') }}
               </template>
             </button>
             <button
@@ -298,7 +313,7 @@ onUnmounted(() => {
               class="grid h-11 w-11 shrink-0 place-items-center rounded-xl border transition-colors focus-visible:outline-2 focus-visible:outline-brand"
               :class="wished ? 'border-red-200 bg-red-50 text-red-500' : 'border-line text-navy hover:border-navy'"
               :aria-pressed="wished"
-              :aria-label="wished ? 'إزالة من المفضلة' : 'أضف إلى المفضلة'"
+              :aria-label="wished ? t('product.wishlistRemove') : t('product.wishlistAdd')"
               @click="toggleWishlist"
             >
               <Heart :size="19" :fill="wished ? 'currentColor' : 'none'" aria-hidden="true" />
@@ -307,28 +322,28 @@ onUnmounted(() => {
 
           <p v-if="selectedVariant" class="mt-3 text-xs text-mutedtext">
             SKU: <bdi dir="ltr">{{ selectedVariant.sku }}</bdi>
-            · المتبقي: {{ selectedVariant.stock }} قطعة
+            · {{ t('product.remaining', { count: selectedVariant.stock }) }}
           </p>
 
           <ul class="mt-6 grid gap-3 rounded-2xl bg-surface p-5 text-sm text-bodytext sm:grid-cols-3">
             <li class="flex items-center gap-2">
               <Truck :size="17" class="shrink-0 text-brand" aria-hidden="true" />
-              توصيل لكل المحافظات
+              {{ t('product.deliveryAll') }}
             </li>
             <li class="flex items-center gap-2">
               <RotateCcw :size="17" class="shrink-0 text-brand" aria-hidden="true" />
-              استرجاع حسب الشروط
+              {{ t('product.returns') }}
             </li>
             <li class="flex items-center gap-2">
               <ShieldCheck :size="17" class="shrink-0 text-brand" aria-hidden="true" />
-              دفع آمن
+              {{ t('product.securePayment') }}
             </li>
           </ul>
         </div>
       </div>
 
       <section v-if="product.related.length > 0" class="mt-14">
-        <SectionHeader title="منتجات مشابهة" :href="`/categories/${product.category.slug}`" href-label="عرض الكل" />
+        <SectionHeader :title="t('product.similar')" :href="`/categories/${product.category.slug}`" :href-label="t('common.viewAll')" />
         <ProductRow :items="product.related" />
       </section>
     </template>

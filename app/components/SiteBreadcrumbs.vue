@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import { ChevronLeft } from '@lucide/vue'
+import { ChevronLeft, ChevronRight } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{ items: { label: string; href?: string }[] }>()
+
+const { t, locale } = useI18n()
+const ChevronIcon = computed(() => (locale.value === 'en' ? ChevronRight : ChevronLeft))
 </script>
 
 <template>
-  <nav aria-label="مسار التنقل" class="mb-5">
+  <nav :aria-label="t('nav.breadcrumb')" class="mb-5">
     <ol class="flex flex-wrap items-center gap-1.5 text-sm text-mutedtext">
       <li v-for="(item, index) in items" :key="`${item.label}-${index}`" class="flex items-center gap-1.5">
-        <ChevronLeft
+        <component
+          :is="ChevronIcon"
           v-if="index > 0"
           :size="14"
           class="shrink-0 text-mutedtext/70"

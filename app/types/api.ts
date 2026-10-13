@@ -3,8 +3,11 @@ export type BgStyle = 'BLUE' | 'AMBER' | 'INK'
 export interface HeroSlideDto {
   id: string
   titleAr: string
+  titleEn: string | null
   subtitleAr: string
+  subtitleEn: string | null
   ctaLabelAr: string
+  ctaLabelEn: string | null
   ctaHref: string
   imageUrl: string
   bgStyle: BgStyle
@@ -29,14 +32,18 @@ export interface ProductCardDto {
   image: string
   categorySlug: string
   categoryNameAr: string
+  categoryNameEn: string | null
   defaultVariantId: string | null
   discountPercent: number | null
 }
 
 export interface PromoBlockDto {
   headingAr: string
+  headingEn: string | null
   bodyAr: string
+  bodyEn: string | null
   ctaLabelAr: string
+  ctaLabelEn: string | null
   ctaHref: string
   gradient: string
   imageUrl: string
@@ -52,11 +59,13 @@ export interface HomeContentDto {
   promo: PromoBlockDto | null
   promoSecond: PromoBlockDto | null
   footerBlurbAr: string
+  footerBlurbEn: string | null
 }
 
 export interface FooterContentDto {
   blurbAr: string
-  categories: { slug: string; nameAr: string }[]
+  blurbEn: string | null
+  categories: { slug: string; nameAr: string; nameEn: string | null }[]
 }
 
 export interface ProductListDto {
@@ -83,10 +92,11 @@ export interface ProductDetailDto {
   titleAr: string
   titleEn: string
   descriptionAr: string
+  descriptionEn: string | null
   priceCents: string
   compareAtCents: string | null
   discountPercent: number | null
-  category: { slug: string; nameAr: string }
+  category: { slug: string; nameAr: string; nameEn: string | null }
   images: string[]
   variants: ProductVariantDto[]
   defaultVariantId: string | null

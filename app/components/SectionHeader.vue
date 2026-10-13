@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ArrowLeft } from '@lucide/vue'
+import { ArrowLeft, ArrowRight } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
   title: string
@@ -7,6 +8,9 @@ defineProps<{
   hrefLabel?: string
   center?: boolean
 }>()
+
+const { t, locale } = useI18n()
+const ArrowIcon = computed(() => (locale.value === 'en' ? ArrowRight : ArrowLeft))
 </script>
 
 <template>
@@ -24,8 +28,8 @@ defineProps<{
       :to="href"
       class="flex shrink-0 items-center gap-1 rounded text-base text-brand transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-brand"
     >
-      {{ hrefLabel ?? 'عرض الكل' }}
-      <ArrowLeft :size="16" aria-hidden="true" />
+      {{ hrefLabel ?? t('common.viewAll') }}
+      <component :is="ArrowIcon" :size="16" aria-hidden="true" />
     </NuxtLink>
   </div>
 </template>

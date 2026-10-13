@@ -2,8 +2,11 @@ import { z } from 'zod'
 
 export const heroSlideFields = {
   titleAr: z.string().min(1),
+  titleEn: z.string().min(1).nullable().optional(),
   subtitleAr: z.string().min(1).nullable().optional(),
+  subtitleEn: z.string().min(1).nullable().optional(),
   ctaLabelAr: z.string().min(1),
+  ctaLabelEn: z.string().min(1).nullable().optional(),
   ctaHref: z.string().min(1),
   imageUrl: z.string().url().nullable().optional(),
   bgStyle: z.enum(['BLUE', 'AMBER', 'INK']),
@@ -45,8 +48,11 @@ export default defineEventHandler(async (event) => {
   const created = await useDb().heroSlide.create({
     data: {
       titleAr: data.titleAr,
+      titleEn: heroOrNone(data.titleEn),
       subtitleAr: heroOrNone(data.subtitleAr),
+      subtitleEn: heroOrNone(data.subtitleEn),
       ctaLabelAr: data.ctaLabelAr,
+      ctaLabelEn: heroOrNone(data.ctaLabelEn),
       ctaHref: data.ctaHref,
       imageUrl: heroOrNone(data.imageUrl),
       bgStyle: data.bgStyle,

@@ -1,0 +1,40 @@
+{
+  "pc": {
+    "wishAdd": "Add to wishlist",
+    "wishRemove": "Remove from wishlist",
+    "viewProduct": "View {title}",
+    "addFailed": "Couldn't add"
+  },
+  "pb": {
+    "filtersShow": "Filter results",
+    "filtersHide": "Hide filters",
+    "allCategories": "All categories",
+    "price": "Price ({currency})",
+    "priceMinPlaceholder": "Min",
+    "priceMinAria": "Minimum price",
+    "priceMaxPlaceholder": "Max",
+    "priceMaxAria": "Maximum price",
+    "sortLabel": "Sort",
+    "sortAria": "Sort results",
+    "sortNewest": "Newest",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "saleOnly": "Sale only",
+    "loadErrorTitle": "Couldn't load products",
+    "loadErrorHint": "Something went wrong while fetching data — please try again.",
+    "emptyTitle": "No matching products",
+    "emptyHint": "Try changing the filters or using a different search term.",
+    "emptyAction": "Clear filters",
+    "paginationAria": "Product pages navigation",
+    "pageOf": "Page {page} of {total}"
+  },
+  "cd": {
+    "title": "Deals ending soon",
+    "subtitle": "Limited time — hurry before it's gone",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Mins",
+    "seconds": "Secs",
+    "timeRemaining": "Time remaining for this deal"
+  }
+}

@@ -17,12 +17,14 @@
   },
   "dependencies": {
     "@lucide/vue": "^1.55.0",
+    "@nuxtjs/i18n": "^10.6.0",
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "nuxt": "^4.6.1",
     "pg": "^8.23.1",
     "swiper": "^11.2.10",
     "vue": "^3.5.43",
+    "vue-i18n": "^11.4.14",
     "vue-router": "^5.4.0",
     "zod": "^4.6.5"
   },

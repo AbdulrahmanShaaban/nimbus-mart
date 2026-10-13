@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { ArrowRight } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import AdminProductForm from '~/components/admin/ProductForm.vue'
 import type { AdminProductFormValue } from '~/types/admin-product-form'
 import { adminFetchMessage } from '~/utils/admin-status'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
-useHead({ title: 'تعديل المنتج — لوحة التحكم' })
+
+const { t } = useI18n()
+const { pick } = useLocalized()
+
+useHead(() => ({ title: `${t('products.editTitle')} — ${t('header.brand')}` }))
 
 interface AdminProductDetail {
   id: string
@@ -52,7 +57,7 @@ async function onSubmit(payload: AdminProductFormValue) {
     saved.value = true
     await refresh()
   } catch (e) {
-    serverError.value = adminFetchMessage(e)
+    serverError.value = adminFetchMessage(e, t('common.operationFailed'))
   } finally {
     saving.value = false
   }
@@ -66,25 +71,25 @@ async function onSubmit(payload: AdminProductFormValue) {
       class="inline-flex items-center gap-1.5 text-sm text-brand transition-colors hover:underline"
     >
       <ArrowRight class="h-4 w-4" :aria-hidden="true" />
-      <span>العودة إلى المنتجات</span>
+      <span>{{ t('products.back') }}</span>
     </NuxtLink>
 
     <h1 class="text-2xl font-extrabold text-navy">
-      تعديل المنتج<span v-if="data"> — {{ data.titleAr }}</span>
+      {{ t('products.editTitle') }}<span v-if="data"> — {{ pick(data.titleAr, data.titleEn) }}</span>
     </h1>
 
     <div v-if="pending" class="rounded-xl border border-line bg-white p-8 text-center text-sm text-mutedtext">
-      جارٍ تحميل المنتج...
+      {{ t('products.loadDetail') }}
     </div>
 
     <div v-else-if="error" class="rounded-xl border border-red-200 bg-red-50 p-6 text-sm text-red-700" role="alert">
-      <p>{{ adminFetchMessage(error) }}</p>
+      <p>{{ adminFetchMessage(error, t('common.operationFailed')) }}</p>
       <button
         type="button"
         class="mt-3 rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
@@ -94,7 +99,7 @@ async function onSubmit(payload: AdminProductFormValue) {
         class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800"
         role="status"
       >
-        تم حفظ التغييرات بنجاح.
+        {{ t('products.saved') }}
       </div>
       <AdminProductForm :initial="data" :saving="saving" :server-error="serverError" @submit="onSubmit" />
     </template>

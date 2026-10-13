@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-10-11',
   devtools: { enabled: false },
   ssr: true,
-  modules: ['@nuxt/eslint'],
+  modules: ['@nuxt/eslint', '@nuxtjs/i18n'],
   css: ['~/assets/css/main.css', 'swiper/css', 'swiper/css/navigation', 'swiper/css/pagination'],
   vite: {
     plugins: [tailwindcss()],
@@ -12,9 +12,34 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
   },
+  i18n: {
+    locales: [
+      {
+        code: 'ar',
+        language: 'ar-EG',
+        files: ['ar.json', 'ar.storefront-components.json', 'ar.storefront-pages.json', 'ar.admin.json'],
+        name: 'العربية',
+        dir: 'rtl',
+      },
+      {
+        code: 'en',
+        language: 'en-US',
+        files: ['en.json', 'en.storefront-components.json', 'en.storefront-pages.json', 'en.admin.json'],
+        name: 'English',
+        dir: 'ltr',
+      },
+    ],
+    defaultLocale: 'ar',
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'nm_locale',
+      redirectOn: 'root',
+      alwaysRedirect: false,
+    },
+  },
   app: {
     head: {
-      htmlAttrs: { lang: 'ar', dir: 'rtl' },
       title: 'Nimbus Mart — تسوّقٌ خفيف كالسحاب',
       meta: [
         { name: 'description', content: 'نِمبوس مارت — متجر إلكتروني مصري للعناية بالمنزل والمطبخ والأجهزة، توصيل سريع والدفع عند الاستلام.' },

@@ -1,3 +1,5 @@
+import { useI18n } from 'vue-i18n'
+
 export interface CurrencyRow {
   code: string
   rate: string
@@ -10,6 +12,7 @@ export interface CurrencyRow {
 }
 
 export function useCurrency() {
+  const { locale } = useI18n()
   const rates = useState<CurrencyRow[]>('nm-currency-rates', () => [])
 
   const currencyCookie = useCookie<string>('nm_currency', {
@@ -41,7 +44,8 @@ export function useCurrency() {
     const cents = typeof baseCents === 'bigint' ? baseCents : BigInt(baseCents)
     const row = current.value
     if (!row || row.isBase || row.code === 'EGP') {
-      return `${formatMinor(cents, 2)} ج.م`
+      const label = locale.value === 'en' ? 'EGP' : 'ج.م'
+      return `${formatMinor(cents, 2)} ${label}`
     }
     const minor = convertToDisplayMinor(
       cents,

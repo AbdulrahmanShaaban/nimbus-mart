@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { Search } from '@lucide/vue'
-import { adminFetchMessage, adminFormatDate } from '~/utils/admin-status'
+import { useI18n } from 'vue-i18n'
+import { adminFetchMessage, useAdminDateFormat } from '~/utils/admin-status'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
-useHead({ title: 'العملاء — لوحة التحكم' })
+
+const { t } = useI18n()
+const { adminFormatDate } = useAdminDateFormat()
+
+useHead(() => ({ title: `${t('users.title')} — ${t('header.brand')}` }))
 
 interface UserListItem {
   id: string
@@ -64,13 +69,13 @@ const totalPages = computed(() => {
 <template>
   <div class="space-y-4">
     <div class="flex flex-wrap items-center justify-between gap-3">
-      <h1 class="text-2xl font-extrabold text-navy">العملاء</h1>
+      <h1 class="text-2xl font-extrabold text-navy">{{ t('users.title') }}</h1>
       <button
         type="button"
         class="rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
         @click="refresh()"
       >
-        تحديث
+        {{ t('users.refresh') }}
       </button>
     </div>
 
@@ -80,54 +85,54 @@ const totalPages = computed(() => {
         <input
           v-model="q"
           type="search"
-          placeholder="ابحث بالاسم أو البريد أو الموبايل..."
+          :placeholder="t('users.searchPlaceholder')"
           class="w-full rounded-lg border border-line bg-white px-3 py-2 pe-9 text-sm text-navy focus-visible:outline-2 focus-visible:outline-brand"
-          aria-label="بحث في العملاء"
+          :aria-label="t('users.searchAria')"
           @input="onSearchInput"
         >
       </div>
       <select
         v-model="roleFilter"
         class="rounded-lg border border-line bg-white px-3 py-2 text-sm text-navy focus-visible:outline-2 focus-visible:outline-brand"
-        aria-label="تصفية بالدور"
+        :aria-label="t('users.filterRoleAria')"
         @change="onRoleChange"
       >
-        <option value="">الكل</option>
-        <option value="CUSTOMER">عملاء</option>
-        <option value="ADMIN">مديرو</option>
+        <option value="">{{ t('users.all') }}</option>
+        <option value="CUSTOMER">{{ t('users.roleCustomers') }}</option>
+        <option value="ADMIN">{{ t('users.roleAdmins') }}</option>
       </select>
     </div>
 
     <div v-if="pending" class="rounded-xl border border-line bg-white p-8 text-center text-sm text-mutedtext">
-      جارٍ تحميل العملاء...
+      {{ t('users.loading') }}
     </div>
 
     <div v-else-if="error" class="rounded-xl border border-red-200 bg-red-50 p-6 text-sm text-red-700" role="alert">
-      <p>{{ adminFetchMessage(error) }}</p>
+      <p>{{ adminFetchMessage(error, t('common.operationFailed')) }}</p>
       <button
         type="button"
         class="mt-3 rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
     <template v-else-if="data">
       <div v-if="data.items.length === 0" class="rounded-xl border border-line bg-white px-4 py-10 text-center text-sm text-mutedtext">
-        لا يوجد مستخدمون مطابقون.
+        {{ t('users.empty') }}
       </div>
 
       <div v-else class="overflow-hidden rounded-xl border border-line bg-white">
         <table class="w-full text-sm">
           <thead>
             <tr class="bg-surface/50">
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الاسم</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">البريد</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الموبايل</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الدور</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">تاريخ التسجيل</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">عدد الطلبات</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('users.name') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('users.email') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('users.phone') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('users.role') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('users.joined') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('users.ordersCount') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -144,7 +149,7 @@ const totalPages = computed(() => {
                   class="inline-flex rounded-full px-2 py-0.5 text-xs font-semibold"
                   :class="u.role === 'ADMIN' ? 'bg-navy/10 text-navy' : 'bg-gray-100 text-gray-700'"
                 >
-                  {{ u.role === 'ADMIN' ? 'مدير' : 'عميل' }}
+                  {{ t('status.' + u.role) }}
                 </span>
               </td>
               <td class="px-4 py-3 text-mutedtext">{{ adminFormatDate(u.createdAt) }}</td>
@@ -156,7 +161,7 @@ const totalPages = computed(() => {
 
       <div class="flex items-center justify-between">
         <p class="text-sm text-mutedtext">
-          الإجمالي: {{ data.total }} مستخدم — صفحة {{ data.page }} من {{ totalPages }}
+          {{ t('users.summary', { total: data.total, page: data.page, pages: totalPages }) }}
         </p>
         <div class="flex items-center gap-2">
           <button
@@ -165,7 +170,7 @@ const totalPages = computed(() => {
             :disabled="page <= 1"
             @click="page -= 1"
           >
-            السابق
+            {{ t('common.prev') }}
           </button>
           <button
             type="button"
@@ -173,7 +178,7 @@ const totalPages = computed(() => {
             :disabled="page >= totalPages"
             @click="page += 1"
           >
-            التالي
+            {{ t('common.next') }}
           </button>
         </div>
       </div>

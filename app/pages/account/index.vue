@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { ListOrdered, LogOut, CircleCheck, CircleAlert } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { AccountDto } from '~/types/api'
 
+const { t } = useI18n()
+const { adminFormatDate } = useAdminDateFormat()
+
 definePageMeta({ middleware: ['auth'] })
-useHead({ title: 'حسابي — نِمبوس مارت' })
+useHead(() => ({ title: `${t('header.account')} — ${t('header.brand')}` }))
 
 const { user, logout } = useAuth()
 
@@ -32,14 +36,6 @@ const passwordSaved = ref(false)
 const passwordSaving = ref(false)
 const passwordFormError = ref<string | null>(null)
 
-function formatDate(iso: string): string {
-  return new Intl.DateTimeFormat('ar-EG', {
-    dateStyle: 'medium',
-    timeZone: 'Africa/Cairo',
-    calendar: 'gregory',
-  }).format(new Date(iso))
-}
-
 async function saveProfile() {
   if (profileSaving.value) return
   profileSaved.value = false
@@ -47,11 +43,11 @@ async function saveProfile() {
   delete profileErrors.phone
   let valid = true
   if (profile.name.trim().length < 2) {
-    profileErrors.name = 'الاسم قصير جداً'
+    profileErrors.name = t('account.nameShort')
     valid = false
   }
   if (profile.phone.trim() && !/^01[0-5]\d{8}$/.test(profile.phone.trim())) {
-    profileErrors.phone = 'رقم موبايل غير صحيح'
+    profileErrors.phone = t('account.phoneInvalid')
     valid = false
   }
   if (!valid) return
@@ -67,7 +63,7 @@ async function saveProfile() {
     }
     profileSaved.value = true
   } catch {
-    profileErrors.name = 'تعذّر حفظ البيانات، حاول مرة أخرى.'
+    profileErrors.name = t('account.saveError')
   } finally {
     profileSaving.value = false
   }
@@ -82,15 +78,15 @@ async function savePassword() {
   passwordErrors.confirmPassword = undefined
   let valid = true
   if (!password.currentPassword) {
-    passwordErrors.currentPassword = 'كلمة المرور الحالية مطلوبة'
+    passwordErrors.currentPassword = t('account.currentPasswordRequired')
     valid = false
   }
   if (password.newPassword.length < 8) {
-    passwordErrors.newPassword = 'كلمة المرور الجديدة يجب ألا تقل عن 8 أحرف'
+    passwordErrors.newPassword = t('account.newPasswordMin')
     valid = false
   }
   if (password.confirmPassword !== password.newPassword) {
-    passwordErrors.confirmPassword = 'كلمتا المرور غير متطابقتين'
+    passwordErrors.confirmPassword = t('common.passwordMismatch')
     valid = false
   }
   if (!valid) return
@@ -110,7 +106,7 @@ async function savePassword() {
       status = err.statusCode
     }
     passwordFormError.value =
-      status === 401 ? 'كلمة المرور الحالية غير صحيحة.' : 'تعذّر تحديث كلمة المرور، حاول مرة أخرى.'
+      status === 401 ? t('account.currentPasswordWrong') : t('account.passwordUpdateError')
   } finally {
     passwordSaving.value = false
   }
@@ -125,46 +121,46 @@ async function onLogout() {
 <template>
   <div class="mx-auto max-w-[1330px] px-4 py-8 md:px-6 md:py-12">
     <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
-      <h1 class="text-2xl font-extrabold text-navy md:text-3xl">حسابي</h1>
+      <h1 class="text-2xl font-extrabold text-navy md:text-3xl">{{ t('header.account') }}</h1>
       <NuxtLink
         to="/account/orders"
         class="flex h-10 items-center gap-2 rounded-xl border border-line px-4 text-sm font-bold text-navy transition-colors hover:border-navy focus-visible:outline-2 focus-visible:outline-brand"
       >
         <ListOrdered :size="16" aria-hidden="true" />
-        طلباتي
+        {{ t('account.orders') }}
       </NuxtLink>
     </div>
 
-    <div v-if="pending" class="text-sm text-mutedtext" aria-live="polite">جاري التحميل…</div>
+    <div v-if="pending" class="text-sm text-mutedtext" aria-live="polite">{{ t('common.loading') }}</div>
 
     <div v-else-if="error || !data" class="rounded-2xl border border-line bg-white p-8 text-center" role="alert">
-      <p class="mb-1 font-bold text-navy">تعذّر تحميل بيانات الحساب</p>
-      <p class="mb-4 text-sm text-mutedtext">حدث خطأ أثناء جلب البيانات، حاول مرة أخرى.</p>
+      <p class="mb-1 font-bold text-navy">{{ t('account.errorTitle') }}</p>
+      <p class="mb-4 text-sm text-mutedtext">{{ t('account.errorHint') }}</p>
       <button
         type="button"
         class="rounded-full bg-navy px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
     <div v-else class="grid gap-6 lg:grid-cols-2">
       <section class="rounded-2xl border border-line bg-white p-6">
-        <h2 class="mb-4 text-base font-extrabold text-navy">البيانات الشخصية</h2>
+        <h2 class="mb-4 text-base font-extrabold text-navy">{{ t('account.personalInfo') }}</h2>
         <dl class="mb-5 flex flex-col gap-2 text-sm">
           <div class="flex items-center justify-between gap-3">
-            <dt class="text-bodytext">البريد الإلكتروني</dt>
+            <dt class="text-bodytext">{{ t('account.emailLabel') }}</dt>
             <dd class="font-bold text-navy" dir="ltr">{{ data.email }}</dd>
           </div>
           <div class="flex items-center justify-between gap-3">
-            <dt class="text-bodytext">عضو منذ</dt>
-            <dd class="font-bold text-navy">{{ formatDate(data.createdAt) }}</dd>
+            <dt class="text-bodytext">{{ t('account.memberSince') }}</dt>
+            <dd class="font-bold text-navy">{{ adminFormatDate(data.createdAt) }}</dd>
           </div>
         </dl>
 
         <form class="flex flex-col gap-4" novalidate @submit.prevent="saveProfile">
-          <FormField label="الاسم" for-id="account-name" :error="profileErrors.name">
+          <FormField :label="t('account.nameLabel')" for-id="account-name" :error="profileErrors.name">
             <input
               id="account-name"
               v-model="profile.name"
@@ -174,12 +170,13 @@ async function onLogout() {
               :class="profileErrors.name ? 'border-red-400' : 'border-line'"
             >
           </FormField>
-          <FormField label="رقم الموبايل" for-id="account-phone" :error="profileErrors.phone">
+          <FormField :label="t('account.phoneLabel')" for-id="account-phone" :error="profileErrors.phone">
             <input
               id="account-phone"
               v-model="profile.phone"
               type="tel"
               inputmode="tel"
+              autocomplete="tel"
               dir="ltr"
               placeholder="01xxxxxxxxx"
               class="h-11 w-full rounded-xl border px-3.5 text-start text-sm text-navy placeholder:text-mutedtext focus-visible:outline-2 focus-visible:outline-brand"
@@ -192,22 +189,22 @@ async function onLogout() {
             role="status"
           >
             <CircleCheck :size="16" aria-hidden="true" />
-            تم حفظ التغييرات
+            {{ t('account.profileSaved') }}
           </p>
           <button
             type="submit"
             class="h-11 w-full rounded-xl bg-navy text-sm font-bold text-white transition-colors hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-brand"
             :disabled="profileSaving"
           >
-            {{ profileSaving ? 'جاري الحفظ…' : 'حفظ التغييرات' }}
+            {{ profileSaving ? t('account.saving') : t('account.saveChanges') }}
           </button>
         </form>
       </section>
 
       <section class="rounded-2xl border border-line bg-white p-6">
-        <h2 class="mb-4 text-base font-extrabold text-navy">تغيير كلمة المرور</h2>
+        <h2 class="mb-4 text-base font-extrabold text-navy">{{ t('account.changePassword') }}</h2>
         <form class="flex flex-col gap-4" novalidate @submit.prevent="savePassword">
-          <FormField label="كلمة المرور الحالية" for-id="account-current-password" :error="passwordErrors.currentPassword">
+          <FormField :label="t('account.currentPassword')" for-id="account-current-password" :error="passwordErrors.currentPassword">
             <input
               id="account-current-password"
               v-model="password.currentPassword"
@@ -217,7 +214,7 @@ async function onLogout() {
               :class="passwordErrors.currentPassword ? 'border-red-400' : 'border-line'"
             >
           </FormField>
-          <FormField label="كلمة المرور الجديدة" for-id="account-new-password" :error="passwordErrors.newPassword">
+          <FormField :label="t('account.newPassword')" for-id="account-new-password" :error="passwordErrors.newPassword">
             <input
               id="account-new-password"
               v-model="password.newPassword"
@@ -227,7 +224,7 @@ async function onLogout() {
               :class="passwordErrors.newPassword ? 'border-red-400' : 'border-line'"
             >
           </FormField>
-          <FormField label="تأكيد كلمة المرور الجديدة" for-id="account-confirm-password" :error="passwordErrors.confirmPassword">
+          <FormField :label="t('account.confirmNewPassword')" for-id="account-confirm-password" :error="passwordErrors.confirmPassword">
             <input
               id="account-confirm-password"
               v-model="password.confirmPassword"
@@ -251,14 +248,14 @@ async function onLogout() {
             role="status"
           >
             <CircleCheck :size="16" aria-hidden="true" />
-            تم تحديث كلمة المرور
+            {{ t('account.passwordUpdated') }}
           </p>
           <button
             type="submit"
             class="h-11 w-full rounded-xl bg-navy text-sm font-bold text-white transition-colors hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-brand"
             :disabled="passwordSaving"
           >
-            {{ passwordSaving ? 'جاري التحديث…' : 'تحديث كلمة المرور' }}
+            {{ passwordSaving ? t('account.updatingPassword') : t('account.updatePassword') }}
           </button>
         </form>
 
@@ -268,7 +265,7 @@ async function onLogout() {
           @click="onLogout"
         >
           <LogOut :size="16" aria-hidden="true" />
-          تسجيل الخروج
+          {{ t('header.logout') }}
         </button>
       </section>
     </div>

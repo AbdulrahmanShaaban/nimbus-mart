@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ShoppingBag, Trash, ArrowLeft } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 
-useHead({ title: 'سلة التسوق — نِمبوس مارت' })
+const { t } = useI18n()
+
+useHead(() => ({ title: `${t('header.cart')} — ${t('header.brand')}` }))
 
 const { cart, cartLoaded, refresh, updateItem, removeItem, subtotalCents } = useCart()
 const { formatBase } = useCurrency()
@@ -35,7 +38,7 @@ async function changeQuantity(id: string, quantity: number) {
       await navigateTo('/login')
       return
     }
-    actionError.value = 'تعذّر تحديث الكمية، حاول مرة أخرى.'
+    actionError.value = t('cart.qtyError')
     await refresh()
   } finally {
     busyItemId.value = null
@@ -52,7 +55,7 @@ async function removeItemById(id: string) {
       await navigateTo('/login')
       return
     }
-    actionError.value = 'تعذّر حذف المنتج، حاول مرة أخرى.'
+    actionError.value = t('cart.removeError')
     await refresh()
   } finally {
     busyItemId.value = null
@@ -66,20 +69,20 @@ onMounted(() => {
 
 <template>
   <div class="mx-auto max-w-[1330px] px-4 py-8 md:px-6 md:py-12">
-    <h1 class="mb-6 text-2xl font-extrabold text-navy md:text-3xl">سلة التسوق</h1>
+    <h1 class="mb-6 text-2xl font-extrabold text-navy md:text-3xl">{{ t('header.cart') }}</h1>
 
     <EmptyState
       v-if="cartLoaded && items.length === 0"
-      title="سلتك فارغة"
-      hint="ابدأ التسوق وأضف منتجات إلى السلة لتظهر هنا."
-      action-label="تسوّق الآن"
+      :title="t('cart.emptyTitle')"
+      :hint="t('cart.emptyHint')"
+      :action-label="t('common.shopNow')"
       action-href="/products"
       :icon="ShoppingBag"
     />
 
     <div v-else class="grid gap-8 lg:grid-cols-[1fr_320px]">
       <div class="flex flex-col gap-3">
-        <p v-if="!cartLoaded" class="text-sm text-mutedtext" aria-live="polite">جاري التحميل…</p>
+        <p v-if="!cartLoaded" class="text-sm text-mutedtext" aria-live="polite">{{ t('common.loading') }}</p>
 
         <p
           v-if="actionError"
@@ -119,7 +122,7 @@ onMounted(() => {
                 type="button"
                 class="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-red-500 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-brand"
                 :disabled="busyItemId === item.id"
-                :aria-label="`حذف ${item.productTitleAr} من السلة`"
+                :aria-label="t('cart.removeItemAria', { title: item.productTitleAr })"
                 @click="removeItemById(item.id)"
               >
                 <Trash :size="17" aria-hidden="true" />
@@ -127,9 +130,9 @@ onMounted(() => {
             </div>
 
             <p v-if="item.size || item.color" class="text-xs text-mutedtext">
-              <template v-if="item.size">المقاس: {{ item.size }}</template>
+              <template v-if="item.size">{{ t('cart.size') }}: {{ item.size }}</template>
               <template v-if="item.size && item.color"> · </template>
-              <template v-if="item.color">اللون: {{ item.color }}</template>
+              <template v-if="item.color">{{ t('cart.color') }}: {{ item.color }}</template>
             </p>
 
             <div class="mt-auto flex flex-wrap items-center justify-between gap-3">
@@ -147,20 +150,20 @@ onMounted(() => {
 
       <aside>
         <div class="rounded-2xl border border-line bg-white p-6 lg:sticky lg:top-44">
-          <h2 class="mb-4 text-base font-extrabold text-navy">ملخص الطلب</h2>
+          <h2 class="mb-4 text-base font-extrabold text-navy">{{ t('cart.summary') }}</h2>
           <dl class="mb-4 flex flex-col gap-2 text-sm">
             <div class="flex items-center justify-between">
-              <dt class="text-bodytext">الإجمالي الفرعي</dt>
+              <dt class="text-bodytext">{{ t('cart.subtotal') }}</dt>
               <dd class="font-bold text-navy">{{ subtotal }}</dd>
             </div>
             <div class="flex items-center justify-between">
-              <dt class="text-bodytext">الشحن</dt>
-              <dd class="text-mutedtext">يُحتسب عند إتمام الطلب</dd>
+              <dt class="text-bodytext">{{ t('cart.shipping') }}</dt>
+              <dd class="text-mutedtext">{{ t('cart.shippingNote') }}</dd>
             </div>
           </dl>
           <div class="mb-5 border-t border-line pt-4">
             <div class="flex items-center justify-between">
-              <span class="font-bold text-navy">الإجمالي</span>
+              <span class="font-bold text-navy">{{ t('cart.total') }}</span>
               <span class="text-lg font-black text-navy">{{ subtotal }}</span>
             </div>
           </div>
@@ -168,7 +171,7 @@ onMounted(() => {
             to="/checkout"
             class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-neon text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-brand"
           >
-            إتمام الشراء
+            {{ t('cart.checkout') }}
             <ArrowLeft :size="16" aria-hidden="true" />
           </NuxtLink>
         </div>

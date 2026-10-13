@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { User, CircleAlert } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 
-useHead({ title: 'إنشاء حساب — نِمبوس مارت' })
+const { t } = useI18n()
+
+useHead(() => ({ title: `${t('register.metaTitle')} — ${t('header.brand')}` }))
 
 const route = useRoute()
 const { register } = useAuth()
@@ -42,36 +45,36 @@ function validate(): boolean {
   let valid = true
 
   if (!form.name.trim()) {
-    errors.name = 'الاسم مطلوب'
+    errors.name = t('register.nameRequired')
     valid = false
   } else if (form.name.trim().length < 2) {
-    errors.name = 'الاسم قصير جداً'
+    errors.name = t('register.nameShort')
     valid = false
   }
 
   if (!form.email.trim()) {
-    errors.email = 'البريد الإلكتروني مطلوب'
+    errors.email = t('register.emailRequired')
     valid = false
   } else if (!emailPattern.test(form.email.trim())) {
-    errors.email = 'بريد إلكتروني غير صحيح'
+    errors.email = t('register.emailInvalid')
     valid = false
   }
 
   if (form.phone.trim() && !phonePattern.test(form.phone.trim())) {
-    errors.phone = 'رقم موبايل غير صحيح'
+    errors.phone = t('register.phoneInvalid')
     valid = false
   }
 
   if (!form.password) {
-    errors.password = 'كلمة المرور مطلوبة'
+    errors.password = t('register.passwordRequired')
     valid = false
   } else if (form.password.length < 8) {
-    errors.password = 'كلمة المرور يجب ألا تقل عن 8 أحرف'
+    errors.password = t('register.passwordMin')
     valid = false
   }
 
   if (form.confirmPassword !== form.password) {
-    errors.confirmPassword = 'كلمتا المرور غير متطابقتين'
+    errors.confirmPassword = t('common.passwordMismatch')
     valid = false
   }
 
@@ -93,7 +96,7 @@ async function submit() {
     await register(payload)
     await navigateTo(redirectTarget.value)
   } catch {
-    errors.form = 'تعذّر إنشاء الحساب، تأكد أن البريد غير مُستخدم مسبقاً.'
+    errors.form = t('register.error')
   } finally {
     submitting.value = false
   }
@@ -106,12 +109,12 @@ async function submit() {
       <span class="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-navy text-neon">
         <User :size="24" aria-hidden="true" />
       </span>
-      <h1 class="text-2xl font-extrabold text-navy">إنشاء حساب جديد</h1>
-      <p class="mt-2 text-sm text-mutedtext">انضم إلى نِمبوس مارت وتسوّق بسهولة</p>
+      <h1 class="text-2xl font-extrabold text-navy">{{ t('register.title') }}</h1>
+      <p class="mt-2 text-sm text-mutedtext">{{ t('register.subtitle') }}</p>
     </div>
 
     <form class="flex flex-col gap-5 rounded-2xl border border-line bg-white p-6" novalidate @submit.prevent="submit">
-      <FormField label="الاسم بالكامل" for-id="register-name" :error="errors.name">
+      <FormField :label="t('register.name')" for-id="register-name" :error="errors.name">
         <input
           id="register-name"
           v-model="form.name"
@@ -122,7 +125,7 @@ async function submit() {
         >
       </FormField>
 
-      <FormField label="البريد الإلكتروني" for-id="register-email" :error="errors.email">
+      <FormField :label="t('register.email')" for-id="register-email" :error="errors.email">
         <input
           id="register-email"
           v-model="form.email"
@@ -134,7 +137,7 @@ async function submit() {
         >
       </FormField>
 
-      <FormField label="رقم الموبايل (اختياري)" for-id="register-phone" :error="errors.phone">
+      <FormField :label="t('register.phone')" for-id="register-phone" :error="errors.phone">
         <input
           id="register-phone"
           v-model="form.phone"
@@ -148,7 +151,7 @@ async function submit() {
         >
       </FormField>
 
-      <FormField label="كلمة المرور" for-id="register-password" :error="errors.password">
+      <FormField :label="t('register.password')" for-id="register-password" :error="errors.password">
         <input
           id="register-password"
           v-model="form.password"
@@ -159,7 +162,7 @@ async function submit() {
         >
       </FormField>
 
-      <FormField label="تأكيد كلمة المرور" for-id="register-confirm" :error="errors.confirmPassword">
+      <FormField :label="t('register.confirmPassword')" for-id="register-confirm" :error="errors.confirmPassword">
         <input
           id="register-confirm"
           v-model="form.confirmPassword"
@@ -184,16 +187,16 @@ async function submit() {
         class="flex h-12 w-full items-center justify-center rounded-xl bg-neon text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-brand"
         :disabled="submitting"
       >
-        {{ submitting ? 'جاري إنشاء الحساب…' : 'إنشاء الحساب' }}
+        {{ submitting ? t('register.submitting') : t('register.submit') }}
       </button>
 
       <p class="text-center text-sm text-mutedtext">
-        لديك حساب بالفعل؟
+        {{ t('register.hasAccount') }}
         <NuxtLink
           :to="{ path: '/login', query: { redirect: redirectTarget } }"
           class="font-bold text-brand hover:underline focus-visible:outline-2 focus-visible:outline-brand"
         >
-          سجّل الدخول
+          {{ t('register.signIn') }}
         </NuxtLink>
       </p>
     </form>

@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { Plus, Trash, Save } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type {
   AdminProductInitial,
   AdminProductFormValue,
 } from '~/types/admin-product-form'
+import { useLocalized } from '~/composables/useLocalized'
+
+const { t } = useI18n()
+const { pick } = useLocalized()
 
 const props = defineProps<{
   initial?: AdminProductInitial | null
@@ -84,6 +89,7 @@ const errors = ref<Record<string, string>>({})
 interface CategoryOption {
   id: string
   nameAr: string
+  nameEn: string | null
 }
 const categories = ref<CategoryOption[]>([])
 const categoriesError = ref<string | null>(null)
@@ -107,7 +113,11 @@ async function loadCategories() {
               : typeof r.name === 'string'
                 ? r.name
                 : r.id
-          out.push({ id: r.id, nameAr: name })
+          out.push({
+            id: r.id,
+            nameAr: name,
+            nameEn: typeof r.nameEn === 'string' ? r.nameEn : null,
+          })
         }
       }
     }
@@ -117,7 +127,7 @@ async function loadCategories() {
       if (first) categoryId.value = first.id
     }
   } catch {
-    categoriesError.value = 'تعذّر تحميل التصنيفات — تحقق من الاتصال ثم أعد تحميل الصفحة'
+    categoriesError.value = t('productForm.categoriesError')
   }
 }
 
@@ -154,45 +164,45 @@ function validate(): boolean {
   const e: Record<string, string> = {}
 
   if (titleAr.value.trim().length < 2) {
-    e.titleAr = 'أدخل عنوانًا عربيًا (حرفان على الأقل)'
+    e.titleAr = t('productForm.errTitleAr')
   }
 
   const slugVal = slug.value.trim()
   if (!/^[a-z0-9-]+$/.test(slugVal) || slugVal.length < 2) {
-    e.slug = 'أدخل رابطًا صالحًا بأحرف إنجليزية صغيرة وأرقام وشرطات فقط'
+    e.slug = t('productForm.errSlug')
   }
 
   if (!categoryId.value) {
-    e.categoryId = 'اختر التصنيف'
+    e.categoryId = t('productForm.errCategory')
   }
 
   if (descriptionAr.value.trim().length < 2) {
-    e.descriptionAr = 'أدخل وصفًا (حرفان على الأقل)'
+    e.descriptionAr = t('productForm.errDescription')
   }
 
   if (!egpToCents(priceEgp.value)) {
-    e.priceEgp = 'أدخل سعرًا صحيحًا بالجنيه المصري'
+    e.priceEgp = t('productForm.errPrice')
   }
 
   if (compareAtEgp.value.trim() && !egpToCents(compareAtEgp.value)) {
-    e.compareAtEgp = 'أدخل سعرًا صحيحًا أو اترك الحقل فارغًا'
+    e.compareAtEgp = t('productForm.errCompareAt')
   }
 
   const trimmedImages = images.value.map((s) => s.trim()).filter((s) => s.length > 0)
   for (const img of trimmedImages) {
     if (!isHttpUrl(img)) {
-      e.images = 'تأكد أن كل روابط الصور تبدأ بـ http أو https'
+      e.images = t('productForm.errImages')
       break
     }
   }
 
   if (variants.value.length < 1) {
-    e.variants = 'أضف متغيرًا واحدًا على الأقل'
+    e.variants = t('productForm.errVariants')
   }
 
   variants.value.forEach((v, i) => {
     if (!v.sku.trim()) {
-      e[`variant-${i}`] = 'أدخل رمز SKU لكل متغير'
+      e[`variant-${i}`] = t('productForm.errSku')
     }
   })
 
@@ -241,41 +251,41 @@ function onSubmit() {
     </div>
 
     <section class="rounded-xl border border-line bg-white p-5">
-      <h2 class="mb-4 text-base font-bold text-navy">معلومات المنتج</h2>
+      <h2 class="mb-4 text-base font-bold text-navy">{{ t('productForm.infoSection') }}</h2>
       <div class="grid gap-4 md:grid-cols-2">
         <div>
-          <label for="pf-title-ar" class="mb-1 block text-sm font-semibold text-navy">العنوان (عربي)</label>
+          <label for="pf-title-ar" class="mb-1 block text-sm font-semibold text-navy">{{ t('productForm.titleAr') }}</label>
           <input id="pf-title-ar" v-model="titleAr" type="text" :class="inputClass" required >
           <p v-if="fieldError('titleAr')" class="mt-1 text-xs text-red-600">{{ fieldError('titleAr') }}</p>
         </div>
         <div>
           <label for="pf-title-en" class="mb-1 block text-sm font-semibold text-navy">
-            العنوان (إنجليزي) <span class="font-normal text-mutedtext">— اختياري</span>
+            {{ t('productForm.titleEn') }} <span class="font-normal text-mutedtext">— {{ t('productForm.optional') }}</span>
           </label>
           <input id="pf-title-en" v-model="titleEn" type="text" dir="ltr" :class="inputClass" >
         </div>
         <div>
-          <label for="pf-slug" class="mb-1 block text-sm font-semibold text-navy">الرابط (Slug)</label>
+          <label for="pf-slug" class="mb-1 block text-sm font-semibold text-navy">{{ t('productForm.slug') }}</label>
           <input id="pf-slug" v-model="slug" type="text" dir="ltr" :class="inputClass" required >
-          <p class="mt-1 text-xs text-mutedtext">يُستخدم في الرابط: /products/...</p>
+          <p class="mt-1 text-xs text-mutedtext">{{ t('productForm.slugHint') }}</p>
           <p v-if="fieldError('slug')" class="mt-1 text-xs text-red-600">{{ fieldError('slug') }}</p>
         </div>
         <div>
-          <label for="pf-category" class="mb-1 block text-sm font-semibold text-navy">التصنيف</label>
+          <label for="pf-category" class="mb-1 block text-sm font-semibold text-navy">{{ t('productForm.category') }}</label>
           <select id="pf-category" v-model="categoryId" :class="inputClass" required>
-            <option value="" disabled>اختر التصنيف</option>
-            <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.nameAr }}</option>
+            <option value="" disabled>{{ t('productForm.categoryPlaceholder') }}</option>
+            <option v-for="c in categories" :key="c.id" :value="c.id">{{ pick(c.nameAr, c.nameEn) }}</option>
           </select>
           <p v-if="categoriesError" class="mt-1 text-xs text-red-600">{{ categoriesError }}</p>
           <p v-else-if="fieldError('categoryId')" class="mt-1 text-xs text-red-600">{{ fieldError('categoryId') }}</p>
         </div>
         <div class="md:col-span-2">
-          <label for="pf-desc" class="mb-1 block text-sm font-semibold text-navy">الوصف</label>
+          <label for="pf-desc" class="mb-1 block text-sm font-semibold text-navy">{{ t('productForm.description') }}</label>
           <textarea id="pf-desc" v-model="descriptionAr" rows="5" :class="inputClass" required />
           <p v-if="fieldError('descriptionAr')" class="mt-1 text-xs text-red-600">{{ fieldError('descriptionAr') }}</p>
         </div>
         <div>
-          <label for="pf-price" class="mb-1 block text-sm font-semibold text-navy">السعر (ج.م)</label>
+          <label for="pf-price" class="mb-1 block text-sm font-semibold text-navy">{{ t('productForm.price') }}</label>
           <input
             id="pf-price"
             v-model="priceEgp"
@@ -291,7 +301,7 @@ function onSubmit() {
         </div>
         <div>
           <label for="pf-compare" class="mb-1 block text-sm font-semibold text-navy">
-            سعر قبل الخصم (ج.م) <span class="font-normal text-mutedtext">— اختياري</span>
+            {{ t('productForm.compareAt') }} <span class="font-normal text-mutedtext">— {{ t('productForm.optional') }}</span>
           </label>
           <input
             id="pf-compare"
@@ -306,11 +316,11 @@ function onSubmit() {
           <p v-if="fieldError('compareAtEgp')" class="mt-1 text-xs text-red-600">{{ fieldError('compareAtEgp') }}</p>
         </div>
         <div>
-          <label for="pf-status" class="mb-1 block text-sm font-semibold text-navy">الحالة</label>
+          <label for="pf-status" class="mb-1 block text-sm font-semibold text-navy">{{ t('productForm.status') }}</label>
           <select id="pf-status" v-model="status" :class="inputClass">
-            <option value="ACTIVE">نشط</option>
-            <option value="DRAFT">مسودة</option>
-            <option value="ARCHIVED">مؤرشف</option>
+            <option value="ACTIVE">{{ t('status.ACTIVE') }}</option>
+            <option value="DRAFT">{{ t('status.DRAFT') }}</option>
+            <option value="ARCHIVED">{{ t('status.ARCHIVED') }}</option>
           </select>
         </div>
       </div>
@@ -318,18 +328,18 @@ function onSubmit() {
 
     <section class="rounded-xl border border-line bg-white p-5">
       <div class="mb-4 flex items-center justify-between">
-        <h2 class="text-base font-bold text-navy">الصور</h2>
+        <h2 class="text-base font-bold text-navy">{{ t('productForm.imagesSection') }}</h2>
         <button
           type="button"
           class="flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
           @click="addImage"
         >
           <Plus class="h-4 w-4" :aria-hidden="true" />
-          <span>إضافة صورة</span>
+          <span>{{ t('productForm.addImage') }}</span>
         </button>
       </div>
       <p v-if="images.length === 0" class="text-sm text-mutedtext">
-        لا توجد صور بعد — أضف رابط صورة (DummyJSON أو غيره).
+        {{ t('productForm.noImages') }}
       </p>
       <div class="space-y-2">
         <div v-for="(img, i) in images" :key="i" class="flex items-center gap-2">
@@ -339,12 +349,12 @@ function onSubmit() {
             dir="ltr"
             placeholder="https://cdn.dummyjson.com/..."
             :class="inputClass"
-            :aria-label="`رابط الصورة ${i + 1}`"
+            :aria-label="t('productForm.imageUrlAria', { n: i + 1 })"
           >
           <button
             type="button"
             class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-red-600 transition-colors hover:bg-red-50"
-            :aria-label="`حذف الصورة ${i + 1}`"
+            :aria-label="t('productForm.deleteImageAria', { n: i + 1 })"
             @click="removeImage(i)"
           >
             <Trash class="h-4 w-4" :aria-hidden="true" />
@@ -356,27 +366,27 @@ function onSubmit() {
 
     <section class="rounded-xl border border-line bg-white p-5">
       <div class="mb-4 flex items-center justify-between">
-        <h2 class="text-base font-bold text-navy">المتغيرات</h2>
+        <h2 class="text-base font-bold text-navy">{{ t('productForm.variantsSection') }}</h2>
         <button
           type="button"
           class="flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
           @click="addVariant"
         >
           <Plus class="h-4 w-4" :aria-hidden="true" />
-          <span>إضافة متغير</span>
+          <span>{{ t('productForm.addVariant') }}</span>
         </button>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
             <tr class="bg-surface/50 text-start">
-              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">SKU</th>
-              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">المقاس</th>
-              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">اللون</th>
-              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">كود اللون</th>
-              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">السعر البديل (ج.م)</th>
-              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">المخزون</th>
-              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">صورة المتغير</th>
+              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">{{ t('productForm.thSku') }}</th>
+              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">{{ t('productForm.thSize') }}</th>
+              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">{{ t('productForm.thColor') }}</th>
+              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">{{ t('productForm.thColorHex') }}</th>
+              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">{{ t('productForm.thPrice') }}</th>
+              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">{{ t('productForm.thStock') }}</th>
+              <th class="px-3 py-2 text-start text-xs font-semibold text-mutedtext">{{ t('productForm.thImage') }}</th>
               <th class="px-3 py-2" />
             </tr>
           </thead>
@@ -388,7 +398,7 @@ function onSubmit() {
                   type="text"
                   dir="ltr"
                   class="w-28 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                  aria-label="رمز SKU"
+                  :aria-label="t('productForm.skuAria')"
                 >
                 <p v-if="fieldError(`variant-${i}`)" class="mt-1 text-xs text-red-600">{{ fieldError(`variant-${i}`) }}</p>
               </td>
@@ -397,7 +407,7 @@ function onSubmit() {
                   v-model="v.size"
                   type="text"
                   class="w-20 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                  aria-label="المقاس"
+                  :aria-label="t('productForm.sizeAria')"
                 >
               </td>
               <td class="px-3 py-2">
@@ -405,7 +415,7 @@ function onSubmit() {
                   v-model="v.color"
                   type="text"
                   class="w-24 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                  aria-label="اسم اللون"
+                  :aria-label="t('productForm.colorAria')"
                 >
               </td>
               <td class="px-3 py-2">
@@ -414,7 +424,7 @@ function onSubmit() {
                     type="color"
                     :value="v.colorHex || '#cccccc'"
                     class="h-8 w-8 shrink-0 cursor-pointer rounded border border-line bg-white p-0.5"
-                    aria-label="منتقي كود اللون"
+                    :aria-label="t('productForm.colorPickerAria')"
                     @input="v.colorHex = ($event.target as HTMLInputElement).value"
                   >
                   <input
@@ -423,7 +433,7 @@ function onSubmit() {
                     dir="ltr"
                     placeholder="#073ce2"
                     class="w-24 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                    aria-label="كود اللون"
+                    :aria-label="t('productForm.colorHexAria')"
                   >
                 </div>
               </td>
@@ -435,7 +445,7 @@ function onSubmit() {
                   step="0.01"
                   dir="ltr"
                   class="w-28 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                  aria-label="السعر البديل"
+                  :aria-label="t('productForm.priceAria')"
                 >
               </td>
               <td class="px-3 py-2">
@@ -447,7 +457,7 @@ function onSubmit() {
                   step="1"
                   dir="ltr"
                   class="w-20 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                  aria-label="المخزون"
+                  :aria-label="t('productForm.stockAria')"
                 >
               </td>
               <td class="px-3 py-2">
@@ -457,7 +467,7 @@ function onSubmit() {
                   dir="ltr"
                   placeholder="https://..."
                   class="w-40 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                  aria-label="صورة المتغير"
+                  :aria-label="t('productForm.imageAria')"
                 >
               </td>
               <td class="px-3 py-2">
@@ -465,7 +475,7 @@ function onSubmit() {
                   type="button"
                   class="flex h-8 w-8 items-center justify-center rounded-lg text-red-600 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
                   :disabled="variants.length <= 1"
-                  :aria-label="`حذف المتغير ${i + 1}`"
+                  :aria-label="t('productForm.deleteVariantAria', { n: i + 1 })"
                   @click="removeVariant(i)"
                 >
                   <Trash class="h-4 w-4" :aria-hidden="true" />
@@ -485,7 +495,7 @@ function onSubmit() {
         :disabled="saving === true"
       >
         <Save class="h-4 w-4" :aria-hidden="true" />
-        <span>{{ saving === true ? 'جارٍ الحفظ...' : 'حفظ المنتج' }}</span>
+        <span>{{ saving === true ? t('productForm.saving') : t('productForm.save') }}</span>
       </button>
     </div>
   </form>

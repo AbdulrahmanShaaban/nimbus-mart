@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { Plus, Trash, Save } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import { adminFetchMessage } from '~/utils/admin-status'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
-useHead({ title: 'المحتوى — لوحة التحكم' })
+const { t } = useI18n()
+useHead(() => ({ title: `${t('admin.content.title')} — ${t('admin.nav.dashboard')}` }))
 
 interface HeroSlideRow {
   id: string
   titleAr: string
+  titleEn: string | null
   subtitleAr: string | null
+  subtitleEn: string | null
   ctaLabelAr: string
+  ctaLabelEn: string | null
   ctaHref: string
   imageUrl: string | null
   bgStyle: 'BLUE' | 'AMBER' | 'INK'
@@ -19,18 +24,25 @@ interface HeroSlideRow {
 
 interface SettingsShape {
   promoHeadingAr: string | null
+  promoHeadingEn: string | null
   promoBodyAr: string | null
+  promoBodyEn: string | null
   promoCtaLabelAr: string | null
+  promoCtaLabelEn: string | null
   promoCtaHref: string | null
   promoGradient: string | null
   promoImageUrl: string | null
   promoSecondHeadingAr: string | null
+  promoSecondHeadingEn: string | null
   promoSecondBodyAr: string | null
+  promoSecondBodyEn: string | null
   promoSecondCtaLabelAr: string | null
+  promoSecondCtaLabelEn: string | null
   promoSecondCtaHref: string | null
   promoSecondGradient: string | null
   promoSecondImageUrl: string | null
   footerBlurbAr: string | null
+  footerBlurbEn: string | null
 }
 
 const inputClass =
@@ -67,8 +79,11 @@ function addSlide() {
   slides.value.push({
     id: '',
     titleAr: '',
+    titleEn: null,
     subtitleAr: null,
+    subtitleEn: null,
     ctaLabelAr: '',
+    ctaLabelEn: null,
     ctaHref: '',
     imageUrl: null,
     bgStyle: 'BLUE',
@@ -79,18 +94,25 @@ function addSlide() {
 }
 
 async function saveSlide(s: HeroSlideRow, index: number) {
+  const trimOrNull = (v: string | null): string | null => {
+    const x = v?.trim() ?? ''
+    return x === '' ? null : x
+  }
   const payload = {
     titleAr: s.titleAr.trim(),
-    subtitleAr: s.subtitleAr?.trim() || null,
+    titleEn: trimOrNull(s.titleEn),
+    subtitleAr: trimOrNull(s.subtitleAr),
+    subtitleEn: trimOrNull(s.subtitleEn),
     ctaLabelAr: s.ctaLabelAr.trim(),
+    ctaLabelEn: trimOrNull(s.ctaLabelEn),
     ctaHref: s.ctaHref.trim(),
-    imageUrl: s.imageUrl?.trim() || null,
+    imageUrl: trimOrNull(s.imageUrl),
     bgStyle: s.bgStyle,
     sortOrder: Number.isFinite(s.sortOrder) ? Math.trunc(s.sortOrder) : 0,
     enabled: s.enabled,
   }
   if (!payload.titleAr || !payload.ctaLabelAr || !payload.ctaHref) {
-    slideBanner.value = { type: 'err', text: 'أكمل حقول الشريحة: العنوان وزر CTA ورابطه مطلوبة.' }
+    slideBanner.value = { type: 'err', text: t('admin.content.slideRequired') }
     return
   }
   savingSlideKey.value = slideKey(s, index)
@@ -101,7 +123,7 @@ async function saveSlide(s: HeroSlideRow, index: number) {
     } else {
       await $fetch('/api/admin/hero-slides', { method: 'POST', body: payload })
     }
-    slideBanner.value = { type: 'ok', text: 'تم حفظ الشريحة بنجاح.' }
+    slideBanner.value = { type: 'ok', text: t('admin.content.slideSaved') }
     await refreshHero()
   } catch (e) {
     slideBanner.value = { type: 'err', text: adminFetchMessage(e) }
@@ -115,12 +137,12 @@ async function deleteSlide(s: HeroSlideRow, index: number) {
     slides.value.splice(index, 1)
     return
   }
-  if (!window.confirm('هل أنت متأكد من حذف هذه الشريحة الإعلانية؟')) return
+  if (!window.confirm(t('admin.content.slideDeleteConfirm'))) return
   savingSlideKey.value = slideKey(s, index)
   slideBanner.value = null
   try {
     await $fetch(`/api/admin/hero-slides/${s.id}`, { method: 'DELETE' })
-    slideBanner.value = { type: 'ok', text: 'تم حذف الشريحة.' }
+    slideBanner.value = { type: 'ok', text: t('admin.content.slideDeleted') }
     await refreshHero()
   } catch (e) {
     slideBanner.value = { type: 'err', text: adminFetchMessage(e) }
@@ -137,18 +159,25 @@ const {
 
 const settingsForm = reactive<SettingsShape>({
   promoHeadingAr: null,
+  promoHeadingEn: null,
   promoBodyAr: null,
+  promoBodyEn: null,
   promoCtaLabelAr: null,
+  promoCtaLabelEn: null,
   promoCtaHref: null,
   promoGradient: null,
   promoImageUrl: null,
   promoSecondHeadingAr: null,
+  promoSecondHeadingEn: null,
   promoSecondBodyAr: null,
+  promoSecondBodyEn: null,
   promoSecondCtaLabelAr: null,
+  promoSecondCtaLabelEn: null,
   promoSecondCtaHref: null,
   promoSecondGradient: null,
   promoSecondImageUrl: null,
   footerBlurbAr: null,
+  footerBlurbEn: null,
 })
 
 watch(
@@ -166,29 +195,36 @@ async function saveSettings() {
   savingSettings.value = true
   settingsBanner.value = null
   const trimOrNull = (v: string | null): string | null => {
-    const t = v?.trim() ?? ''
-    return t === '' ? null : t
+    const x = v?.trim() ?? ''
+    return x === '' ? null : x
   }
   try {
     await $fetch('/api/admin/settings', {
       method: 'PATCH',
       body: {
         promoHeadingAr: trimOrNull(settingsForm.promoHeadingAr),
+        promoHeadingEn: trimOrNull(settingsForm.promoHeadingEn),
         promoBodyAr: trimOrNull(settingsForm.promoBodyAr),
+        promoBodyEn: trimOrNull(settingsForm.promoBodyEn),
         promoCtaLabelAr: trimOrNull(settingsForm.promoCtaLabelAr),
+        promoCtaLabelEn: trimOrNull(settingsForm.promoCtaLabelEn),
         promoCtaHref: trimOrNull(settingsForm.promoCtaHref),
         promoGradient: trimOrNull(settingsForm.promoGradient),
         promoImageUrl: trimOrNull(settingsForm.promoImageUrl),
         promoSecondHeadingAr: trimOrNull(settingsForm.promoSecondHeadingAr),
+        promoSecondHeadingEn: trimOrNull(settingsForm.promoSecondHeadingEn),
         promoSecondBodyAr: trimOrNull(settingsForm.promoSecondBodyAr),
+        promoSecondBodyEn: trimOrNull(settingsForm.promoSecondBodyEn),
         promoSecondCtaLabelAr: trimOrNull(settingsForm.promoSecondCtaLabelAr),
+        promoSecondCtaLabelEn: trimOrNull(settingsForm.promoSecondCtaLabelEn),
         promoSecondCtaHref: trimOrNull(settingsForm.promoSecondCtaHref),
         promoSecondGradient: trimOrNull(settingsForm.promoSecondGradient),
         promoSecondImageUrl: trimOrNull(settingsForm.promoSecondImageUrl),
         footerBlurbAr: trimOrNull(settingsForm.footerBlurbAr),
+        footerBlurbEn: trimOrNull(settingsForm.footerBlurbEn),
       },
     })
-    settingsBanner.value = { type: 'ok', text: 'تم حفظ إعدادات المحتوى بنجاح.' }
+    settingsBanner.value = { type: 'ok', text: t('admin.content.settingsSaved') }
   } catch (e) {
     settingsBanner.value = { type: 'err', text: adminFetchMessage(e) }
   } finally {
@@ -199,18 +235,18 @@ async function saveSettings() {
 
 <template>
   <div class="space-y-6">
-    <h1 class="text-2xl font-extrabold text-navy">المحتوى</h1>
+    <h1 class="text-2xl font-extrabold text-navy">{{ t('admin.content.title') }}</h1>
 
     <section class="rounded-xl border border-line bg-white p-5">
       <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="text-base font-bold text-navy">الشراائح الإعلانية (الواجهة الرئيسية)</h2>
+        <h2 class="text-base font-bold text-navy">{{ t('admin.content.heroSection') }}</h2>
         <button
           type="button"
           class="flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
           @click="addSlide"
         >
           <Plus class="h-4 w-4" :aria-hidden="true" />
-          <span>إضافة شريحة</span>
+          <span>{{ t('admin.content.addSlide') }}</span>
         </button>
       </div>
 
@@ -223,47 +259,66 @@ async function saveSettings() {
         {{ slideBanner.text }}
       </div>
 
-      <div v-if="heroPending" class="py-6 text-center text-sm text-mutedtext">جارٍ تحميل الشراائح...</div>
+      <div v-if="heroPending" class="py-6 text-center text-sm text-mutedtext">{{ t('common.loading') }}</div>
       <div v-else-if="heroError" class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
         {{ adminFetchMessage(heroError) }}
       </div>
 
       <div v-else class="space-y-4">
-        <p v-if="slides.length === 0" class="text-sm text-mutedtext">لا توجد شراائح — أضف شريحة جديدة.</p>
+        <p v-if="slides.length === 0" class="text-sm text-mutedtext">{{ t('admin.content.noSlides') }}</p>
 
         <div v-for="(s, i) in slides" :key="slideKey(s, i)" class="rounded-lg border border-line p-4">
+          <p class="mb-3 text-xs font-black uppercase tracking-wide text-brand">{{ t('admin.content.arFields') }}</p>
           <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             <div>
-              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-title-${i}`">العنوان</label>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-title-${i}`">{{ t('admin.content.fieldTitleAr') }}</label>
               <input :id="`hero-title-${i}`" v-model="s.titleAr" type="text" :class="inputClass" >
             </div>
             <div>
-              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-sub-${i}`">العنوان الفرعي</label>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-sub-${i}`">{{ t('admin.content.fieldSubtitleAr') }}</label>
               <input :id="`hero-sub-${i}`" v-model="s.subtitleAr" type="text" :class="inputClass" >
             </div>
             <div>
-              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-cta-${i}`">نص الزر</label>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-cta-${i}`">{{ t('admin.content.fieldCtaAr') }}</label>
               <input :id="`hero-cta-${i}`" v-model="s.ctaLabelAr" type="text" :class="inputClass" >
             </div>
+          </div>
+          <p class="mt-4 mb-3 text-xs font-black uppercase tracking-wide text-brand">{{ t('admin.content.enFields') }}</p>
+          <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             <div>
-              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-href-${i}`">رابط الزر</label>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-title-en-${i}`">{{ t('admin.content.fieldTitleEn') }}</label>
+              <input :id="`hero-title-en-${i}`" v-model="s.titleEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-sub-en-${i}`">{{ t('admin.content.fieldSubtitleEn') }}</label>
+              <input :id="`hero-sub-en-${i}`" v-model="s.subtitleEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-cta-en-${i}`">{{ t('admin.content.fieldCtaEn') }}</label>
+              <input :id="`hero-cta-en-${i}`" v-model="s.ctaLabelEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+          </div>
+          <p class="mt-4 mb-3 text-xs font-black uppercase tracking-wide text-mutedtext">{{ t('admin.content.sharedFields') }}</p>
+          <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            <div>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-href-${i}`">{{ t('admin.content.fieldCtaHref') }}</label>
               <input :id="`hero-href-${i}`" v-model="s.ctaHref" type="text" dir="ltr" :class="inputClass" >
             </div>
             <div>
-              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-img-${i}`">رابط الصورة</label>
+              <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-img-${i}`">{{ t('admin.content.fieldImageUrl') }}</label>
               <input :id="`hero-img-${i}`" v-model="s.imageUrl" type="url" dir="ltr" :class="inputClass" >
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-bg-${i}`">الخلفية</label>
+                <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-bg-${i}`">{{ t('admin.content.fieldBg') }}</label>
                 <select :id="`hero-bg-${i}`" v-model="s.bgStyle" :class="inputClass">
-                  <option value="BLUE">أزرق</option>
-                  <option value="AMBER">كهرماني</option>
-                  <option value="INK">داكن</option>
+                  <option value="BLUE">{{ t('admin.content.bgBlue') }}</option>
+                  <option value="AMBER">{{ t('admin.content.bgAmber') }}</option>
+                  <option value="INK">{{ t('admin.content.bgInk') }}</option>
                 </select>
               </div>
               <div>
-                <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-order-${i}`">الترتيب</label>
+                <label class="mb-1 block text-xs font-semibold text-mutedtext" :for="`hero-order-${i}`">{{ t('admin.content.fieldSort') }}</label>
                 <input
                   :id="`hero-order-${i}`"
                   v-model.number="s.sortOrder"
@@ -278,7 +333,7 @@ async function saveSettings() {
           <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
             <label class="flex items-center gap-2 text-sm text-navy">
               <input v-model="s.enabled" type="checkbox" class="h-4 w-4 rounded border-line accent-brand" >
-              <span>مفعّلة</span>
+              <span>{{ t('admin.content.enabled') }}</span>
             </label>
             <div class="flex items-center gap-2">
               <button
@@ -288,7 +343,7 @@ async function saveSettings() {
                 @click="saveSlide(s, i)"
               >
                 <Save class="h-4 w-4" :aria-hidden="true" />
-                <span>{{ savingSlideKey === slideKey(s, i) ? 'جارٍ الحفظ...' : 'حفظ' }}</span>
+                <span>{{ savingSlideKey === slideKey(s, i) ? t('admin.content.saving') : t('common.save') }}</span>
               </button>
               <button
                 type="button"
@@ -297,7 +352,7 @@ async function saveSettings() {
                 @click="deleteSlide(s, i)"
               >
                 <Trash class="h-4 w-4" :aria-hidden="true" />
-                <span>حذف</span>
+                <span>{{ t('common.delete') }}</span>
               </button>
             </div>
           </div>
@@ -306,7 +361,7 @@ async function saveSettings() {
     </section>
 
     <section class="rounded-xl border border-line bg-white p-5">
-      <h2 class="mb-4 text-base font-bold text-navy">إعدادات المحتوى (البانرات والتذييل)</h2>
+      <h2 class="mb-4 text-base font-bold text-navy">{{ t('admin.content.settingsSection') }}</h2>
 
       <div
         v-if="settingsBanner"
@@ -317,81 +372,125 @@ async function saveSettings() {
         {{ settingsBanner.text }}
       </div>
 
-      <div v-if="settingsPending" class="py-6 text-center text-sm text-mutedtext">جارٍ تحميل الإعدادات...</div>
+      <div v-if="settingsPending" class="py-6 text-center text-sm text-mutedtext">{{ t('common.loading') }}</div>
       <div v-else-if="settingsError" class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
         {{ adminFetchMessage(settingsError) }}
       </div>
 
       <div v-else class="space-y-6">
         <div>
-          <h3 class="mb-3 text-sm font-bold text-navy">البانر الترويجي الأول</h3>
+          <h3 class="mb-3 text-sm font-bold text-navy">{{ t('admin.content.promo1') }}</h3>
+          <p class="mb-3 text-xs font-black uppercase tracking-wide text-brand">{{ t('admin.content.arFields') }}</p>
           <div class="grid gap-3 md:grid-cols-2">
             <div>
-              <label for="set-p1-title" class="mb-1 block text-xs font-semibold text-mutedtext">العنوان</label>
+              <label for="set-p1-title" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldTitleAr') }}</label>
               <input id="set-p1-title" v-model="settingsForm.promoHeadingAr" type="text" :class="inputClass" >
             </div>
             <div>
-              <label for="set-p1-body" class="mb-1 block text-xs font-semibold text-mutedtext">النص</label>
+              <label for="set-p1-body" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldBodyAr') }}</label>
               <input id="set-p1-body" v-model="settingsForm.promoBodyAr" type="text" :class="inputClass" >
             </div>
             <div>
-              <label for="set-p1-cta" class="mb-1 block text-xs font-semibold text-mutedtext">نص الزر</label>
+              <label for="set-p1-cta" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldCtaAr') }}</label>
               <input id="set-p1-cta" v-model="settingsForm.promoCtaLabelAr" type="text" :class="inputClass" >
             </div>
+          </div>
+          <p class="mt-4 mb-3 text-xs font-black uppercase tracking-wide text-brand">{{ t('admin.content.enFields') }}</p>
+          <div class="grid gap-3 md:grid-cols-2">
             <div>
-              <label for="set-p1-href" class="mb-1 block text-xs font-semibold text-mutedtext">رابط الزر</label>
+              <label for="set-p1-title-en" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldTitleEn') }}</label>
+              <input id="set-p1-title-en" v-model="settingsForm.promoHeadingEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+            <div>
+              <label for="set-p1-body-en" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldBodyEn') }}</label>
+              <input id="set-p1-body-en" v-model="settingsForm.promoBodyEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+            <div>
+              <label for="set-p1-cta-en" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldCtaEn') }}</label>
+              <input id="set-p1-cta-en" v-model="settingsForm.promoCtaLabelEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+          </div>
+          <p class="mt-4 mb-3 text-xs font-black uppercase tracking-wide text-mutedtext">{{ t('admin.content.sharedFields') }}</p>
+          <div class="grid gap-3 md:grid-cols-2">
+            <div>
+              <label for="set-p1-href" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldCtaHref') }}</label>
               <input id="set-p1-href" v-model="settingsForm.promoCtaHref" type="text" dir="ltr" :class="inputClass" >
             </div>
             <div>
-              <label for="set-p1-gradient" class="mb-1 block text-xs font-semibold text-mutedtext">التدريج</label>
+              <label for="set-p1-gradient" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldGradient') }}</label>
               <select id="set-p1-gradient" v-model="settingsForm.promoGradient" :class="inputClass">
-                <option value="navy">كحلي</option>
-                <option value="amber">كهرماني</option>
+                <option value="navy">{{ t('admin.content.gradNavy') }}</option>
+                <option value="amber">{{ t('admin.content.gradAmber') }}</option>
               </select>
             </div>
             <div>
-              <label for="set-p1-img" class="mb-1 block text-xs font-semibold text-mutedtext">رابط الصورة</label>
+              <label for="set-p1-img" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldImageUrl') }}</label>
               <input id="set-p1-img" v-model="settingsForm.promoImageUrl" type="url" dir="ltr" :class="inputClass" >
             </div>
           </div>
         </div>
 
         <div>
-          <h3 class="mb-3 text-sm font-bold text-navy">البانر الترويجي الثاني</h3>
+          <h3 class="mb-3 text-sm font-bold text-navy">{{ t('admin.content.promo2') }}</h3>
+          <p class="mb-3 text-xs font-black uppercase tracking-wide text-brand">{{ t('admin.content.arFields') }}</p>
           <div class="grid gap-3 md:grid-cols-2">
             <div>
-              <label for="set-p2-title" class="mb-1 block text-xs font-semibold text-mutedtext">العنوان</label>
+              <label for="set-p2-title" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldTitleAr') }}</label>
               <input id="set-p2-title" v-model="settingsForm.promoSecondHeadingAr" type="text" :class="inputClass" >
             </div>
             <div>
-              <label for="set-p2-body" class="mb-1 block text-xs font-semibold text-mutedtext">النص</label>
+              <label for="set-p2-body" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldBodyAr') }}</label>
               <input id="set-p2-body" v-model="settingsForm.promoSecondBodyAr" type="text" :class="inputClass" >
             </div>
             <div>
-              <label for="set-p2-cta" class="mb-1 block text-xs font-semibold text-mutedtext">نص الزر</label>
+              <label for="set-p2-cta" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldCtaAr') }}</label>
               <input id="set-p2-cta" v-model="settingsForm.promoSecondCtaLabelAr" type="text" :class="inputClass" >
             </div>
+          </div>
+          <p class="mt-4 mb-3 text-xs font-black uppercase tracking-wide text-brand">{{ t('admin.content.enFields') }}</p>
+          <div class="grid gap-3 md:grid-cols-2">
             <div>
-              <label for="set-p2-href" class="mb-1 block text-xs font-semibold text-mutedtext">رابط الزر</label>
+              <label for="set-p2-title-en" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldTitleEn') }}</label>
+              <input id="set-p2-title-en" v-model="settingsForm.promoSecondHeadingEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+            <div>
+              <label for="set-p2-body-en" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldBodyEn') }}</label>
+              <input id="set-p2-body-en" v-model="settingsForm.promoSecondBodyEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+            <div>
+              <label for="set-p2-cta-en" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldCtaEn') }}</label>
+              <input id="set-p2-cta-en" v-model="settingsForm.promoSecondCtaLabelEn" type="text" dir="ltr" :class="inputClass" >
+            </div>
+          </div>
+          <p class="mt-4 mb-3 text-xs font-black uppercase tracking-wide text-mutedtext">{{ t('admin.content.sharedFields') }}</p>
+          <div class="grid gap-3 md:grid-cols-2">
+            <div>
+              <label for="set-p2-href" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldCtaHref') }}</label>
               <input id="set-p2-href" v-model="settingsForm.promoSecondCtaHref" type="text" dir="ltr" :class="inputClass" >
             </div>
             <div>
-              <label for="set-p2-gradient" class="mb-1 block text-xs font-semibold text-mutedtext">التدريج</label>
+              <label for="set-p2-gradient" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldGradient') }}</label>
               <select id="set-p2-gradient" v-model="settingsForm.promoSecondGradient" :class="inputClass">
-                <option value="navy">كحلي</option>
-                <option value="amber">كهرماني</option>
+                <option value="navy">{{ t('admin.content.gradNavy') }}</option>
+                <option value="amber">{{ t('admin.content.gradAmber') }}</option>
               </select>
             </div>
             <div>
-              <label for="set-p2-img" class="mb-1 block text-xs font-semibold text-mutedtext">رابط الصورة</label>
+              <label for="set-p2-img" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.fieldImageUrl') }}</label>
               <input id="set-p2-img" v-model="settingsForm.promoSecondImageUrl" type="url" dir="ltr" :class="inputClass" >
             </div>
           </div>
         </div>
 
-        <div>
-          <label for="set-footer" class="mb-1 block text-xs font-semibold text-mutedtext">نص التذييل</label>
-          <textarea id="set-footer" v-model="settingsForm.footerBlurbAr" rows="3" :class="inputClass" />
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <label for="set-footer" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.footerBlurbAr') }}</label>
+            <textarea id="set-footer" v-model="settingsForm.footerBlurbAr" rows="3" dir="rtl" :class="inputClass" />
+          </div>
+          <div>
+            <label for="set-footer-en" class="mb-1 block text-xs font-semibold text-mutedtext">{{ t('admin.content.footerBlurbEn') }}</label>
+            <textarea id="set-footer-en" v-model="settingsForm.footerBlurbEn" rows="3" dir="ltr" :class="inputClass" />
+          </div>
         </div>
 
         <button
@@ -401,7 +500,7 @@ async function saveSettings() {
           @click="saveSettings"
         >
           <Save class="h-4 w-4" :aria-hidden="true" />
-          <span>{{ savingSettings ? 'جارٍ الحفظ...' : 'حفظ الإعدادات' }}</span>
+          <span>{{ savingSettings ? t('admin.content.saving') : t('admin.content.saveSettings') }}</span>
         </button>
       </div>
     </section>

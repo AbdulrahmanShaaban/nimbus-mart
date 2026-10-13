@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ShoppingBag, Heart, Eye, Check, TriangleAlert } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { ProductCardDto } from '~/types/api'
 
 const props = withDefaults(
@@ -12,7 +13,14 @@ const props = withDefaults(
 const emit = defineEmits<{ wishedChange: [productId: string, inWishlist: boolean] }>()
 
 const route = useRoute()
+const { t } = useI18n()
+const { pick } = useLocalized()
 const { addItem } = useCart()
+
+const productTitle = computed(() => pick(props.product.titleAr, props.product.titleEn))
+const categoryLabel = computed(() =>
+  pick(props.product.categoryNameAr, props.product.categoryNameEn),
+)
 const wishlistCount = useState<number>('nm-wishlist-count', () => 0)
 
 type AddState = 'idle' | 'adding' | 'added' | 'error'
@@ -87,7 +95,7 @@ onUnmounted(() => {
           class="grid h-9 w-9 place-items-center rounded-xl bg-white text-navy shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-colors hover:bg-navy hover:text-white focus-visible:outline-2 focus-visible:outline-brand"
           :class="wished ? 'text-red-500' : ''"
           :aria-pressed="wished"
-          :aria-label="wished ? 'إزالة من المفضلة' : 'أضف إلى المفضلة'"
+          :aria-label="wished ? t('pc.wishRemove') : t('pc.wishAdd')"
           @click="toggleWishlist"
         >
           <Heart :size="16" :fill="wished ? 'currentColor' : 'none'" aria-hidden="true" />
@@ -95,7 +103,7 @@ onUnmounted(() => {
         <span
           v-if="product.discountPercent"
           class="rounded-full bg-brand px-2.5 py-0.5 text-[11px] font-black text-white"
-        >خصم {{ product.discountPercent }}%</span>
+        >{{ t('common.discount', { percent: product.discountPercent }) }}</span>
       </div>
 
       <div
@@ -105,7 +113,7 @@ onUnmounted(() => {
           type="button"
           class="grid h-10 w-10 place-items-center rounded-xl bg-white text-navy shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-colors hover:bg-navy hover:text-white focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-50"
           :disabled="!inStock || addState === 'adding'"
-          :aria-label="inStock ? 'أضف إلى السلة' : 'نفد المخزون'"
+          :aria-label="inStock ? t('common.addToCart') : t('common.outOfStock')"
           @click="addToCart"
         >
           <Check v-if="addState === 'added'" :size="18" aria-hidden="true" />
@@ -114,7 +122,7 @@ onUnmounted(() => {
         <NuxtLink
           :to="`/products/${product.slug}`"
           class="grid h-10 w-10 place-items-center rounded-xl bg-white text-navy shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-colors hover:bg-navy hover:text-white focus-visible:outline-2 focus-visible:outline-brand"
-          :aria-label="`عرض ${product.titleAr}`"
+          :aria-label="t('pc.viewProduct', { title: productTitle })"
         >
           <Eye :size="18" aria-hidden="true" />
         </NuxtLink>
@@ -122,19 +130,19 @@ onUnmounted(() => {
 
       <img
         :src="product.image"
-        :alt="product.titleAr"
+        :alt="productTitle"
         loading="lazy"
         class="absolute inset-0 h-full w-full object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-105"
       >
     </div>
 
     <div class="flex flex-1 flex-col gap-1.5 px-1 pb-1 pt-2.5">
-      <span class="text-[11px] font-semibold text-mutedtext">{{ product.categoryNameAr }}</span>
+      <span class="text-[11px] font-semibold text-mutedtext">{{ categoryLabel }}</span>
       <NuxtLink
         :to="`/products/${product.slug}`"
         class="line-clamp-2 min-h-10 text-sm font-bold leading-5 text-navy transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand"
       >
-        {{ product.titleAr }}
+        {{ productTitle }}
       </NuxtLink>
 
       <div class="mt-auto pt-1">
@@ -153,18 +161,18 @@ onUnmounted(() => {
       >
         <template v-if="addState === 'added'">
           <Check :size="16" aria-hidden="true" />
-          تمت الإضافة
+          {{ t('common.added') }}
         </template>
         <template v-else-if="addState === 'error'">
           <TriangleAlert :size="16" aria-hidden="true" />
-          تعذّرت الإضافة
+          {{ t('pc.addFailed') }}
         </template>
         <template v-else-if="!inStock">
-          نفد المخزون
+          {{ t('common.outOfStock') }}
         </template>
         <template v-else>
           <ShoppingBag :size="16" aria-hidden="true" />
-          أضف إلى السلة
+          {{ t('common.addToCart') }}
         </template>
       </button>
     </div>

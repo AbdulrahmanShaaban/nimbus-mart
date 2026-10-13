@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay } from 'swiper/modules'
 import { ChevronLeft, ChevronRight } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { Swiper as SwiperClass } from 'swiper/types'
 import type { ProductCardDto } from '~/types/api'
 
@@ -12,6 +13,11 @@ const props = withDefaults(
   }>(),
   { autoplay: false },
 )
+
+const { t, locale } = useI18n()
+
+const PrevIcon = computed(() => (locale.value === 'en' ? ChevronLeft : ChevronRight))
+const NextIcon = computed(() => (locale.value === 'en' ? ChevronRight : ChevronLeft))
 
 const swiperInstance = ref<SwiperClass | null>(null)
 const atStart = ref(true)
@@ -65,19 +71,19 @@ function slideNext() {
       type="button"
       class="nm-row-arrow absolute start-0 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-[0_2px_10px_rgba(0,0,0,0.12)] transition-colors hover:bg-neon focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-40"
       :disabled="!canPrev"
-      aria-label="السابق"
+      :aria-label="t('common.prev')"
       @click="slidePrev"
     >
-      <ChevronRight :size="18" aria-hidden="true" />
+      <component :is="PrevIcon" :size="18" aria-hidden="true" />
     </button>
     <button
       type="button"
       class="nm-row-arrow absolute end-0 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-[0_2px_10px_rgba(0,0,0,0.12)] transition-colors hover:bg-neon focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-40"
       :disabled="!canNext"
-      aria-label="التالي"
+      :aria-label="t('common.next')"
       @click="slideNext"
     >
-      <ChevronLeft :size="18" aria-hidden="true" />
+      <component :is="NextIcon" :size="18" aria-hidden="true" />
     </button>
   </div>
 </template>

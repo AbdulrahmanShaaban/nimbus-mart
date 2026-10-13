@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { CircleCheck, ListOrdered } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { OrderDetailDto } from '~/types/api'
 
-useHead({ title: 'تم استلام طلبك — نِمبوس مارت' })
+const { t } = useI18n()
+
+useHead(() => ({ title: `${t('checkout.successMeta')} — ${t('header.brand')}` }))
 
 const route = useRoute()
 const { user } = useAuth()
@@ -32,20 +35,20 @@ const order = computed(() => orderData.value)
     <span class="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-full bg-emerald-100 text-emerald-600">
       <CircleCheck :size="40" aria-hidden="true" />
     </span>
-    <h1 class="mb-3 text-2xl font-extrabold text-navy md:text-3xl">تم استلام طلبك بنجاح</h1>
-    <p class="mb-2 text-bodytext">شكراً لتسوقك مع نِمبوس مارت. سنتواصل معك قريباً لتأكيد التوصيل.</p>
+    <h1 class="mb-3 text-2xl font-extrabold text-navy md:text-3xl">{{ t('checkout.successTitle') }}</h1>
+    <p class="mb-2 text-bodytext">{{ t('checkout.successThanks') }}</p>
     <p v-if="orderNumber" class="mb-2 text-sm text-mutedtext">
-      رقم الطلب: <bdi dir="ltr" class="font-black text-navy">{{ orderNumber }}</bdi>
+      {{ t('checkout.orderNumber') }}: <bdi dir="ltr" class="font-black text-navy">{{ orderNumber }}</bdi>
     </p>
-    <p v-else class="mb-2 text-sm text-mutedtext">لم يتم العثور على رقم الطلب.</p>
+    <p v-else class="mb-2 text-sm text-mutedtext">{{ t('checkout.orderNumberMissing') }}</p>
 
     <dl v-if="order" class="mx-auto mb-8 flex max-w-sm flex-col gap-2 rounded-2xl border border-line bg-white p-5 text-sm">
       <div class="flex items-center justify-between">
-        <dt class="text-bodytext">الحالة</dt>
+        <dt class="text-bodytext">{{ t('checkout.status') }}</dt>
         <dd><StatusBadge :status="order.status" /></dd>
       </div>
       <div class="flex items-center justify-between">
-        <dt class="text-bodytext">الإجمالي</dt>
+        <dt class="text-bodytext">{{ t('checkout.total') }}</dt>
         <dd class="font-black text-navy">{{ formatBase(order.totalCents) }}</dd>
       </div>
     </dl>
@@ -57,7 +60,7 @@ const order = computed(() => orderData.value)
         class="flex h-11 items-center gap-2 rounded-xl bg-neon px-6 text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-brand"
       >
         <ListOrdered :size="16" aria-hidden="true" />
-        تفاصيل الطلب
+        {{ t('checkout.viewDetails') }}
       </NuxtLink>
       <NuxtLink
         v-else-if="!user && orderNumber"
@@ -65,13 +68,13 @@ const order = computed(() => orderData.value)
         class="flex h-11 items-center gap-2 rounded-xl bg-neon px-6 text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-brand"
       >
         <ListOrdered :size="16" aria-hidden="true" />
-        تسجيل الدخول لعرض التفاصيل
+        {{ t('checkout.loginToView') }}
       </NuxtLink>
       <NuxtLink
         to="/"
         class="flex h-11 items-center rounded-xl border border-line px-6 text-sm font-bold text-navy transition-colors hover:border-navy focus-visible:outline-2 focus-visible:outline-brand"
       >
-        العودة للرئيسية
+        {{ t('error.backHome') }}
       </NuxtLink>
     </div>
   </div>

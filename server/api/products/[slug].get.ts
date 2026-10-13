@@ -34,10 +34,11 @@ export default defineEventHandler(async (event) => {
     titleAr: product.titleAr,
     titleEn: product.titleEn,
     descriptionAr: product.descriptionAr,
+    descriptionEn: product.descriptionEn,
     priceCents: product.priceCents.toString(),
     compareAtCents: product.compareAtCents?.toString() ?? null,
     discountPercent: discountPercentOf(product.priceCents, product.compareAtCents),
-    category: { slug: product.category.slug, nameAr: product.category.nameAr },
+    category: { slug: product.category.slug, nameAr: product.category.nameAr, nameEn: product.category.nameEn },
     images: product.images.map((image) => image.url),
     variants: product.variants.map((variant) => ({
       id: variant.id,

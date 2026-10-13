@@ -88,8 +88,11 @@ export default defineEventHandler(async () => {
     heroSlides: slides.map((slide) => ({
       id: slide.id,
       titleAr: slide.titleAr,
+      titleEn: slide.titleEn,
       subtitleAr: slide.subtitleAr,
+      subtitleEn: slide.subtitleEn,
       ctaLabelAr: slide.ctaLabelAr,
+      ctaLabelEn: slide.ctaLabelEn,
       ctaHref: slide.ctaHref,
       imageUrl: slide.imageUrl,
       bgStyle: slide.bgStyle,
@@ -102,8 +105,11 @@ export default defineEventHandler(async () => {
     promo: settings && settings.promoHeadingAr
       ? {
           headingAr: settings.promoHeadingAr,
+          headingEn: settings.promoHeadingEn,
           bodyAr: settings.promoBodyAr,
+          bodyEn: settings.promoBodyEn,
           ctaLabelAr: settings.promoCtaLabelAr,
+          ctaLabelEn: settings.promoCtaLabelEn,
           ctaHref: settings.promoCtaHref,
           gradient: settings.promoGradient,
           imageUrl: settings.promoImageUrl,
@@ -112,13 +118,17 @@ export default defineEventHandler(async () => {
     promoSecond: settings && settings.promoSecondHeadingAr
       ? {
           headingAr: settings.promoSecondHeadingAr,
+          headingEn: settings.promoSecondHeadingEn,
           bodyAr: settings.promoSecondBodyAr,
+          bodyEn: settings.promoSecondBodyEn,
           ctaLabelAr: settings.promoSecondCtaLabelAr,
+          ctaLabelEn: settings.promoSecondCtaLabelEn,
           ctaHref: settings.promoSecondCtaHref,
           gradient: settings.promoSecondGradient,
           imageUrl: settings.promoSecondImageUrl,
         }
       : null,
     footerBlurbAr: settings?.footerBlurbAr ?? null,
+    footerBlurbEn: settings?.footerBlurbEn ?? null,
   }
 })

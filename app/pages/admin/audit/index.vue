@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { ChevronDown, ChevronUp } from '@lucide/vue'
-import { adminFetchMessage, adminFormatDate } from '~/utils/admin-status'
+import { useI18n } from 'vue-i18n'
+import { adminFetchMessage, useAdminDateFormat } from '~/utils/admin-status'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
-useHead({ title: 'سجل التدقيق — لوحة التحكم' })
+
+const { t, te } = useI18n()
+const { adminFormatDate } = useAdminDateFormat()
+
+useHead(() => ({ title: `${t('audit.title')} — ${t('header.brand')}` }))
 
 interface AuditItem {
   id: string
@@ -51,27 +56,14 @@ function pretty(v: unknown): string {
   }
 }
 
-const entityLabels: Record<string, string> = {
-  product: 'منتج',
-  order: 'طلب',
-  hero_slide: 'شريحة إعلانية',
-  site_setting: 'إعدادات الموقع',
-  currency_rate: 'عملة',
-  user: 'مستخدم',
-}
-
-const actionLabels: Record<string, string> = {
-  CREATE: 'إنشاء',
-  UPDATE: 'تحديث',
-  DELETE: 'حذف',
-}
-
 function entityLabel(entity: string): string {
-  return entityLabels[entity] ?? entity
+  const key = `audit.entities.${entity}`
+  return te(key) ? t(key) : entity
 }
 
 function actionLabel(action: string): string {
-  return actionLabels[action] ?? action
+  const key = `audit.actions.${action}`
+  return te(key) ? t(key) : action
 }
 
 function shortId(id: string | null): string {
@@ -83,45 +75,45 @@ function shortId(id: string | null): string {
 <template>
   <div class="space-y-4">
     <div class="flex flex-wrap items-center justify-between gap-3">
-      <h1 class="text-2xl font-extrabold text-navy">سجل التدقيق</h1>
+      <h1 class="text-2xl font-extrabold text-navy">{{ t('audit.title') }}</h1>
       <button
         type="button"
         class="rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
         @click="refresh()"
       >
-        تحديث
+        {{ t('audit.refresh') }}
       </button>
     </div>
 
     <div v-if="pending" class="rounded-xl border border-line bg-white p-8 text-center text-sm text-mutedtext">
-      جارٍ تحميل السجل...
+      {{ t('audit.loading') }}
     </div>
 
     <div v-else-if="error" class="rounded-xl border border-red-200 bg-red-50 p-6 text-sm text-red-700" role="alert">
-      <p>{{ adminFetchMessage(error) }}</p>
+      <p>{{ adminFetchMessage(error, t('common.operationFailed')) }}</p>
       <button
         type="button"
         class="mt-3 rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
     <template v-else-if="data">
       <div v-if="data.items.length === 0" class="rounded-xl border border-line bg-white px-4 py-10 text-center text-sm text-mutedtext">
-        لا توجد سجلات بعد.
+        {{ t('audit.empty') }}
       </div>
 
       <div v-else class="overflow-hidden rounded-xl border border-line bg-white">
         <table class="w-full text-sm">
           <thead>
             <tr class="bg-surface/50">
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">التاريخ</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الفعل</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الجهة</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">المنفّذ</th>
-              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">عرض</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('audit.date') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('audit.action') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('audit.entity') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('audit.actor') }}</th>
+              <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('audit.view') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -134,7 +126,7 @@ function shortId(id: string | null): string {
                   <p class="text-xs text-mutedtext" dir="ltr">{{ shortId(a.entityId) }}</p>
                 </td>
                 <td class="px-4 py-3">
-                  <bdi dir="ltr">{{ a.actorEmail ?? 'النظام' }}</bdi>
+                  <bdi dir="ltr">{{ a.actorEmail ?? t('audit.system') }}</bdi>
                 </td>
                 <td class="px-4 py-3">
                   <button
@@ -145,7 +137,7 @@ function shortId(id: string | null): string {
                   >
                     <ChevronDown v-if="expanded[a.id] !== true" class="h-3.5 w-3.5" :aria-hidden="true" />
                     <ChevronUp v-else class="h-3.5 w-3.5" :aria-hidden="true" />
-                    <span>{{ expanded[a.id] === true ? 'إخفاء' : 'التفاصيل' }}</span>
+                    <span>{{ expanded[a.id] === true ? t('audit.hideDetails') : t('audit.showDetails') }}</span>
                   </button>
                 </td>
               </tr>
@@ -153,11 +145,11 @@ function shortId(id: string | null): string {
                 <td colspan="5" class="px-4 py-3">
                   <div class="grid gap-3 lg:grid-cols-2">
                     <div>
-                      <p class="mb-1 text-xs font-semibold text-mutedtext">قبل</p>
+                      <p class="mb-1 text-xs font-semibold text-mutedtext">{{ t('audit.before') }}</p>
                       <pre dir="ltr" class="max-h-64 overflow-auto rounded-lg border border-line bg-white p-3 text-xs text-navy">{{ pretty(a.before) }}</pre>
                     </div>
                     <div>
-                      <p class="mb-1 text-xs font-semibold text-mutedtext">بعد</p>
+                      <p class="mb-1 text-xs font-semibold text-mutedtext">{{ t('audit.after') }}</p>
                       <pre dir="ltr" class="max-h-64 overflow-auto rounded-lg border border-line bg-white p-3 text-xs text-navy">{{ pretty(a.after) }}</pre>
                     </div>
                   </div>
@@ -170,7 +162,7 @@ function shortId(id: string | null): string {
 
       <div class="flex items-center justify-between">
         <p class="text-sm text-mutedtext">
-          الإجمالي: {{ data.total }} سجل — صفحة {{ data.page }} من {{ totalPages }}
+          {{ t('audit.summary', { total: data.total, page: data.page, pages: totalPages }) }}
         </p>
         <div class="flex items-center gap-2">
           <button
@@ -179,7 +171,7 @@ function shortId(id: string | null): string {
             :disabled="page <= 1"
             @click="page -= 1"
           >
-            السابق
+            {{ t('common.prev') }}
           </button>
           <button
             type="button"
@@ -187,7 +179,7 @@ function shortId(id: string | null): string {
             :disabled="page >= totalPages"
             @click="page += 1"
           >
-            التالي
+            {{ t('common.next') }}
           </button>
         </div>
       </div>

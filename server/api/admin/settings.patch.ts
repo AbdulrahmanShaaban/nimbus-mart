@@ -3,34 +3,48 @@ import type { Prisma } from '../../generated/prisma/client'
 
 const settingsSchema = z.object({
   promoHeadingAr: z.string().nullable().optional(),
+  promoHeadingEn: z.string().nullable().optional(),
   promoBodyAr: z.string().nullable().optional(),
+  promoBodyEn: z.string().nullable().optional(),
   promoCtaLabelAr: z.string().nullable().optional(),
+  promoCtaLabelEn: z.string().nullable().optional(),
   promoCtaHref: z.string().nullable().optional(),
   promoGradient: z.string().nullable().optional(),
   promoImageUrl: z.string().nullable().optional(),
   promoSecondHeadingAr: z.string().nullable().optional(),
+  promoSecondHeadingEn: z.string().nullable().optional(),
   promoSecondBodyAr: z.string().nullable().optional(),
+  promoSecondBodyEn: z.string().nullable().optional(),
   promoSecondCtaLabelAr: z.string().nullable().optional(),
+  promoSecondCtaLabelEn: z.string().nullable().optional(),
   promoSecondCtaHref: z.string().nullable().optional(),
   promoSecondGradient: z.string().nullable().optional(),
   promoSecondImageUrl: z.string().nullable().optional(),
   footerBlurbAr: z.string().nullable().optional(),
+  footerBlurbEn: z.string().nullable().optional(),
 })
 
 const SETTINGS_KEYS = [
   'promoHeadingAr',
+  'promoHeadingEn',
   'promoBodyAr',
+  'promoBodyEn',
   'promoCtaLabelAr',
+  'promoCtaLabelEn',
   'promoCtaHref',
   'promoGradient',
   'promoImageUrl',
   'promoSecondHeadingAr',
+  'promoSecondHeadingEn',
   'promoSecondBodyAr',
+  'promoSecondBodyEn',
   'promoSecondCtaLabelAr',
+  'promoSecondCtaLabelEn',
   'promoSecondCtaHref',
   'promoSecondGradient',
   'promoSecondImageUrl',
   'footerBlurbAr',
+  'footerBlurbEn',
 ] as const
 
 export default defineEventHandler(async (event) => {

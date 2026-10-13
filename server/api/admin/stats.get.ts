@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
         where: { stock: { lte: 3 } },
         orderBy: { stock: 'asc' },
         take: 5,
-        select: { sku: true, stock: true, product: { select: { titleAr: true } } },
+        select: { sku: true, stock: true, product: { select: { titleAr: true, titleEn: true } } },
       }),
       db.order.findMany({
         orderBy: { createdAt: 'desc' },
@@ -43,6 +43,7 @@ export default defineEventHandler(async (event) => {
     lowStockItems: lowStockRows.map((v) => ({
       sku: v.sku,
       titleAr: v.product.titleAr,
+      titleEn: v.product.titleEn,
       stock: v.stock,
     })),
     recentOrders: recentOrders.map((o) => ({

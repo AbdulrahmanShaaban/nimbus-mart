@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { Save } from '@lucide/vue'
-import { adminFetchMessage, adminFormatDate } from '~/utils/admin-status'
+import { useI18n } from 'vue-i18n'
+import { adminFetchMessage, useAdminDateFormat } from '~/utils/admin-status'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
-useHead({ title: 'العملات — لوحة التحكم' })
+
+const { t } = useI18n()
+const { adminFormatDate } = useAdminDateFormat()
+
+useHead(() => ({ title: `${t('currencies.title')} — ${t('header.brand')}` }))
 
 interface CurrencyRow {
   code: string
@@ -45,7 +50,7 @@ async function saveRow(r: CurrencyRow) {
   if (!ratePattern.test(r.rate)) {
     banner.value = {
       type: 'err',
-      text: `سعر العملة ${r.code} غير صالح — استخدم رقمًا عشريًا حتى 8 خانات.`,
+      text: t('currencies.invalidRate', { code: r.code }),
     }
     return
   }
@@ -63,10 +68,10 @@ async function saveRow(r: CurrencyRow) {
         isBase: r.isBase,
       },
     })
-    banner.value = { type: 'ok', text: `تم حفظ العملة ${r.code}.` }
+    banner.value = { type: 'ok', text: t('currencies.saved', { code: r.code }) }
     await refresh()
   } catch (e) {
-    banner.value = { type: 'err', text: adminFetchMessage(e) }
+    banner.value = { type: 'err', text: adminFetchMessage(e, t('common.operationFailed')) }
     await refresh()
   } finally {
     savingCode.value = null
@@ -77,18 +82,18 @@ async function saveRow(r: CurrencyRow) {
 <template>
   <div class="space-y-4">
     <div class="flex flex-wrap items-center justify-between gap-3">
-      <h1 class="text-2xl font-extrabold text-navy">العملات</h1>
+      <h1 class="text-2xl font-extrabold text-navy">{{ t('currencies.title') }}</h1>
       <button
         type="button"
         class="rounded-lg border border-line bg-white px-3 py-1.5 text-sm text-navy transition-colors hover:bg-surface/60"
         @click="refresh()"
       >
-        تحديث
+        {{ t('currencies.refresh') }}
       </button>
     </div>
 
     <p class="rounded-lg border border-line bg-white px-4 py-3 text-sm text-mutedtext">
-      الأسعار هي قيمة العملة مقابل 1 جنيه مصري (EGP) — العملة الأساسية. لا يمكن إلغاء الأساسية بدون بديل.
+      {{ t('currencies.info') }}
     </p>
 
     <div
@@ -101,17 +106,17 @@ async function saveRow(r: CurrencyRow) {
     </div>
 
     <div v-if="pending" class="rounded-xl border border-line bg-white p-8 text-center text-sm text-mutedtext">
-      جارٍ تحميل العملات...
+      {{ t('currencies.loading') }}
     </div>
 
     <div v-else-if="error" class="rounded-xl border border-red-200 bg-red-50 p-6 text-sm text-red-700" role="alert">
-      <p>{{ adminFetchMessage(error) }}</p>
+      <p>{{ adminFetchMessage(error, t('common.operationFailed')) }}</p>
       <button
         type="button"
         class="mt-3 rounded-lg bg-red-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
@@ -119,14 +124,14 @@ async function saveRow(r: CurrencyRow) {
       <table class="w-full text-sm">
         <thead>
           <tr class="bg-surface/50">
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">العملة</th>
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">السعر</th>
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الرمز</th>
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الموضع</th>
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">الخانات العشرية</th>
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">مفعّل</th>
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">أساسية</th>
-            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">آخر تحديث</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.currency') }}</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.rate') }}</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.symbol') }}</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.position') }}</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.decimals') }}</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.enabled') }}</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.base') }}</th>
+            <th class="px-4 py-3 text-start text-xs font-semibold text-mutedtext">{{ t('currencies.updatedAt') }}</th>
             <th class="px-4 py-3" />
           </tr>
         </thead>
@@ -147,7 +152,7 @@ async function saveRow(r: CurrencyRow) {
                 dir="ltr"
                 inputmode="decimal"
                 class="w-32 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                :aria-label="`سعر ${r.code}`"
+                :aria-label="t('currencies.rateAria', { code: r.code })"
               >
             </td>
             <td class="px-4 py-3">
@@ -157,17 +162,17 @@ async function saveRow(r: CurrencyRow) {
                 dir="ltr"
                 maxlength="6"
                 class="w-20 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                :aria-label="`رمز ${r.code}`"
+                :aria-label="t('currencies.symbolAria', { code: r.code })"
               >
             </td>
             <td class="px-4 py-3">
               <select
                 v-model="r.position"
                 class="rounded-lg border border-line bg-white px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                :aria-label="`موضع رمز ${r.code}`"
+                :aria-label="t('currencies.positionAria', { code: r.code })"
               >
-                <option value="BEFORE">قبل</option>
-                <option value="AFTER">بعد</option>
+                <option value="BEFORE">{{ t('currencies.before') }}</option>
+                <option value="AFTER">{{ t('currencies.after') }}</option>
               </select>
             </td>
             <td class="px-4 py-3">
@@ -179,7 +184,7 @@ async function saveRow(r: CurrencyRow) {
                 step="1"
                 dir="ltr"
                 class="w-20 rounded-lg border border-line px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-brand"
-                :aria-label="`خانات ${r.code}`"
+                :aria-label="t('currencies.decimalsAria', { code: r.code })"
               >
             </td>
             <td class="px-4 py-3">
@@ -187,7 +192,7 @@ async function saveRow(r: CurrencyRow) {
                 v-model="r.enabled"
                 type="checkbox"
                 class="h-4 w-4 rounded border-line accent-brand"
-                :aria-label="`تفعيل ${r.code}`"
+                :aria-label="t('currencies.enableAria', { code: r.code })"
               >
             </td>
             <td class="px-4 py-3">
@@ -196,7 +201,7 @@ async function saveRow(r: CurrencyRow) {
                 type="radio"
                 name="base-currency"
                 class="h-4 w-4 border-line accent-brand"
-                :aria-label="`جعل ${r.code} العملة الأساسية`"
+                :aria-label="t('currencies.baseAria', { code: r.code })"
                 @change="pickBase(r)"
               >
             </td>
@@ -209,7 +214,7 @@ async function saveRow(r: CurrencyRow) {
                 @click="saveRow(r)"
               >
                 <Save class="h-3.5 w-3.5" :aria-hidden="true" />
-                <span>{{ savingCode === r.code ? 'جارٍ الحفظ...' : 'حفظ' }}</span>
+                <span>{{ savingCode === r.code ? t('currencies.saving') : t('common.save') }}</span>
               </button>
             </td>
           </tr>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { SlidersHorizontal, ChevronLeft, ChevronRight, Tag } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { CategoryDto, ProductListDto } from '~/types/api'
 
 const props = defineProps<{
@@ -8,6 +9,12 @@ const props = defineProps<{
 }>()
 
 const route = useRoute()
+
+const { t, locale } = useI18n()
+const { pick } = useLocalized()
+
+const PrevIcon = computed(() => (locale.value === 'en' ? ChevronLeft : ChevronRight))
+const NextIcon = computed(() => (locale.value === 'en' ? ChevronRight : ChevronLeft))
 
 const PAGE_SIZE = 12
 
@@ -134,7 +141,7 @@ function goToPage(page: number) {
         @click="filtersOpen = !filtersOpen"
       >
         <SlidersHorizontal :size="16" aria-hidden="true" />
-        {{ filtersOpen ? 'إخفاء الفلاتر' : 'تصفية النتائج' }}
+        {{ filtersOpen ? t('pb.filtersHide') : t('pb.filtersShow') }}
       </button>
       <div
         class="rounded-2xl border border-line bg-white p-5 md:sticky md:top-44"
@@ -142,11 +149,11 @@ function goToPage(page: number) {
       >
         <h2 class="mb-4 flex items-center gap-2 text-base font-extrabold text-navy">
           <SlidersHorizontal :size="18" aria-hidden="true" />
-          تصفية النتائج
+          {{ t('pb.filtersShow') }}
         </h2>
 
         <div class="mb-5">
-          <h3 class="mb-2 text-sm font-bold text-navy">التصنيفات</h3>
+          <h3 class="mb-2 text-sm font-bold text-navy">{{ t('header.categories') }}</h3>
           <div class="max-h-56 overflow-y-auto pe-1">
             <label class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-bodytext transition-colors hover:bg-surface has-[:checked]:bg-surface has-[:checked]:font-bold has-[:checked]:text-navy">
               <input
@@ -156,7 +163,7 @@ function goToPage(page: number) {
                 class="accent-brand focus-visible:outline-2 focus-visible:outline-brand"
                 @change="onCategoryChange('')"
               >
-              كل التصنيفات
+              {{ t('pb.allCategories') }}
             </label>
             <label
               v-for="category in categories"
@@ -170,21 +177,21 @@ function goToPage(page: number) {
                 class="accent-brand focus-visible:outline-2 focus-visible:outline-brand"
                 @change="onCategoryChange(category.slug)"
               >
-              {{ category.nameAr }}
+              {{ pick(category.nameAr, category.nameEn) }}
             </label>
           </div>
         </div>
 
         <div class="mb-5">
-          <h3 class="mb-2 text-sm font-bold text-navy">السعر (ج.م)</h3>
+          <h3 class="mb-2 text-sm font-bold text-navy">{{ t('pb.price', { currency: t('common.egp') }) }}</h3>
           <div class="flex items-center gap-2">
             <input
               v-model="minDraft"
               type="number"
               min="0"
               inputmode="numeric"
-              placeholder="من"
-              aria-label="الحد الأدنى للسعر"
+              :placeholder="t('pb.priceMinPlaceholder')"
+              :aria-label="t('pb.priceMinAria')"
               class="h-10 w-full min-w-0 rounded-xl border border-line px-3 text-sm text-navy placeholder:text-mutedtext focus-visible:outline-2 focus-visible:outline-brand"
               @change="onPriceCommit"
             >
@@ -194,8 +201,8 @@ function goToPage(page: number) {
               type="number"
               min="0"
               inputmode="numeric"
-              placeholder="إلى"
-              aria-label="الحد الأعلى للسعر"
+              :placeholder="t('pb.priceMaxPlaceholder')"
+              :aria-label="t('pb.priceMaxAria')"
               class="h-10 w-full min-w-0 rounded-xl border border-line px-3 text-sm text-navy placeholder:text-mutedtext focus-visible:outline-2 focus-visible:outline-brand"
               @change="onPriceCommit"
             >
@@ -203,16 +210,16 @@ function goToPage(page: number) {
         </div>
 
         <div class="mb-5">
-          <h3 class="mb-2 text-sm font-bold text-navy">الترتيب</h3>
+          <h3 class="mb-2 text-sm font-bold text-navy">{{ t('pb.sortLabel') }}</h3>
           <select
             :value="sort"
-            aria-label="ترتيب النتائج"
+            :aria-label="t('pb.sortAria')"
             class="h-10 w-full rounded-xl border border-line bg-white px-3 text-sm text-navy focus-visible:outline-2 focus-visible:outline-brand"
             @change="onSortChange"
           >
-            <option value="newest">الأحدث</option>
-            <option value="price_asc">السعر: من الأقل للأعلى</option>
-            <option value="price_desc">السعر: من الأعلى للأقل</option>
+            <option value="newest">{{ t('pb.sortNewest') }}</option>
+            <option value="price_asc">{{ t('pb.sortPriceAsc') }}</option>
+            <option value="price_desc">{{ t('pb.sortPriceDesc') }}</option>
           </select>
         </div>
 
@@ -223,7 +230,7 @@ function goToPage(page: number) {
             class="h-4 w-4 accent-brand focus-visible:outline-2 focus-visible:outline-brand"
             @change="onSaleChange"
           >
-          التخفيضات فقط
+          {{ t('pb.saleOnly') }}
         </label>
       </div>
     </aside>
@@ -232,12 +239,12 @@ function goToPage(page: number) {
       <div class="mb-5 flex flex-wrap items-baseline justify-between gap-3">
         <h1 class="text-2xl font-extrabold text-navy md:text-3xl">{{ heading }}</h1>
         <p v-if="!pending && !error" class="text-sm text-mutedtext">
-          {{ total }} نتيجة
+          {{ t('common.results', { count: total }) }}
         </p>
       </div>
 
       <div v-if="pending" aria-live="polite">
-        <p class="mb-4 text-sm text-mutedtext">جاري التحميل…</p>
+        <p class="mb-4 text-sm text-mutedtext">{{ t('common.loading') }}</p>
         <LoadingSkeleton :count="8" />
       </div>
 
@@ -246,22 +253,22 @@ function goToPage(page: number) {
         class="rounded-2xl border border-line bg-white p-8 text-center"
         role="alert"
       >
-        <p class="mb-1 font-bold text-navy">تعذّر تحميل المنتجات</p>
-        <p class="mb-4 text-sm text-mutedtext">حدث خطأ أثناء جلب البيانات، حاول مرة أخرى.</p>
+        <p class="mb-1 font-bold text-navy">{{ t('pb.loadErrorTitle') }}</p>
+        <p class="mb-4 text-sm text-mutedtext">{{ t('pb.loadErrorHint') }}</p>
         <button
           type="button"
           class="rounded-full bg-navy px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand"
           @click="refresh()"
         >
-          إعادة المحاولة
+          {{ t('common.retry') }}
         </button>
       </div>
 
       <EmptyState
         v-else-if="items.length === 0"
-        title="لا توجد منتجات مطابقة"
-        hint="جرّب تغيير الفلاتر أو كلمة البحث khác."
-        action-label="مسح الفلاتر"
+        :title="t('pb.emptyTitle')"
+        :hint="t('pb.emptyHint')"
+        :action-label="t('pb.emptyAction')"
         action-href="/products"
         :icon="Tag"
       />
@@ -274,7 +281,7 @@ function goToPage(page: number) {
         <nav
           v-if="totalPages > 1"
           class="mt-8 flex flex-wrap items-center justify-center gap-3"
-          aria-label="تصفح صفحات المنتجات"
+          :aria-label="t('pb.paginationAria')"
         >
           <button
             type="button"
@@ -282,11 +289,11 @@ function goToPage(page: number) {
             :disabled="currentPage <= 1"
             @click="goToPage(currentPage - 1)"
           >
-            <ChevronRight :size="16" aria-hidden="true" />
-            السابق
+            <component :is="PrevIcon" :size="16" aria-hidden="true" />
+            {{ t('common.prev') }}
           </button>
           <span class="text-sm text-mutedtext">
-            صفحة {{ currentPage }} من {{ totalPages }}
+            {{ t('pb.pageOf', { page: currentPage, total: totalPages }) }}
           </span>
           <button
             type="button"
@@ -294,8 +301,8 @@ function goToPage(page: number) {
             :disabled="currentPage >= totalPages"
             @click="goToPage(currentPage + 1)"
           >
-            التالي
-            <ChevronLeft :size="16" aria-hidden="true" />
+            {{ t('common.next') }}
+            <component :is="NextIcon" :size="16" aria-hidden="true" />
           </button>
         </nav>
       </template>

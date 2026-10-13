@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { Heart } from '@lucide/vue'
+import { useI18n } from 'vue-i18n'
 import type { WishlistResponseDto } from '~/types/api'
 
+const { t } = useI18n()
+
 definePageMeta({ middleware: ['auth'] })
-useHead({ title: 'المفضلة — نِمبوس مارت' })
+useHead(() => ({ title: `${t('header.wishlist')} — ${t('header.brand')}` }))
 
 const wishlistCount = useState<number>('nm-wishlist-count', () => 0)
 
@@ -30,27 +33,27 @@ function onWishedChange(_productId: string, inWishlist: boolean) {
 
 <template>
   <div class="mx-auto max-w-[1330px] px-4 py-8 md:px-6 md:py-12">
-    <h1 class="mb-6 text-2xl font-extrabold text-navy md:text-3xl">المفضلة</h1>
+    <h1 class="mb-6 text-2xl font-extrabold text-navy md:text-3xl">{{ t('header.wishlist') }}</h1>
 
-    <div v-if="pending" class="text-sm text-mutedtext" aria-live="polite">جاري التحميل…</div>
+    <div v-if="pending" class="text-sm text-mutedtext" aria-live="polite">{{ t('common.loading') }}</div>
 
     <div v-else-if="error" class="rounded-2xl border border-line bg-white p-8 text-center" role="alert">
-      <p class="mb-1 font-bold text-navy">تعذّر تحميل المفضلة</p>
-      <p class="mb-4 text-sm text-mutedtext">حدث خطأ أثناء جلب البيانات، حاول مرة أخرى.</p>
+      <p class="mb-1 font-bold text-navy">{{ t('wishlist.errorTitle') }}</p>
+      <p class="mb-4 text-sm text-mutedtext">{{ t('wishlist.errorHint') }}</p>
       <button
         type="button"
         class="rounded-full bg-navy px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand"
         @click="refresh()"
       >
-        إعادة المحاولة
+        {{ t('common.retry') }}
       </button>
     </div>
 
     <EmptyState
       v-else-if="items.length === 0"
-      title="قائمة المفضلة فارغة"
-      hint="اضغط على أيقونة القلب في أي منتج لإضافته هنا."
-      action-label="تسوّق الآن"
+      :title="t('wishlist.emptyTitle')"
+      :hint="t('wishlist.emptyHint')"
+      :action-label="t('common.shopNow')"
       action-href="/products"
       :icon="Heart"
     />

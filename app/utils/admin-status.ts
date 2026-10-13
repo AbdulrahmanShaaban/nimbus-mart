@@ -1,3 +1,6 @@
+import { useI18n } from 'vue-i18n'
+
+/** @deprecated Prefer `t('status.' + status)` from useI18n(). Kept as fallback. */
 export const ADMIN_STATUS_LABELS: Record<string, string> = {
   DRAFT: 'مسودة',
   ACTIVE: 'نشط',
@@ -11,6 +14,7 @@ export const ADMIN_STATUS_LABELS: Record<string, string> = {
   CUSTOMER: 'عميل',
 }
 
+/** @deprecated Prefer `t('status.' + status)` from useI18n(). */
 export function adminStatusLabel(status: string): string {
   return ADMIN_STATUS_LABELS[status] ?? status
 }
@@ -39,31 +43,50 @@ export function adminStatusClass(status: string): string {
   }
 }
 
-const dateFmtShort = new Intl.DateTimeFormat('ar-EG-u-nu-latn', {
-  calendar: 'gregory',
-  timeZone: 'Africa/Cairo',
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-})
+const dateFmtCache = new Map<string, Intl.DateTimeFormat>()
 
-const dateFmtFull = new Intl.DateTimeFormat('ar-EG-u-nu-latn', {
-  calendar: 'gregory',
-  timeZone: 'Africa/Cairo',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
-})
-
-export function adminFormatDate(iso: string, withTime = false): string {
-  const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return '—'
-  return withTime ? dateFmtFull.format(d) : dateFmtShort.format(d)
+function getDateFmt(tag: string, withTime: boolean): Intl.DateTimeFormat {
+  const key = `${tag}:${withTime ? 'full' : 'short'}`
+  let fmt = dateFmtCache.get(key)
+  if (!fmt) {
+    fmt = new Intl.DateTimeFormat(tag, {
+      calendar: 'gregory',
+      timeZone: 'Africa/Cairo',
+      year: 'numeric',
+      ...(withTime
+        ? { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
+        : { month: 'short', day: 'numeric' }),
+    })
+    dateFmtCache.set(key, fmt)
+  }
+  return fmt
 }
 
-export function adminFetchMessage(e: unknown): string {
+/**
+ * Plain formatter — defaults to Arabic. Prefer `useAdminDateFormat()` in
+ * components so the tag follows the active locale.
+ */
+export function adminFormatDate(iso: string, withTime = false, localeTag = 'ar-EG-u-nu-latn'): string {
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return '—'
+  return getDateFmt(localeTag, withTime).format(d)
+}
+
+/** Locale-aware date formatter bound to the active i18n locale. */
+export function useAdminDateFormat() {
+  const { locale } = useI18n()
+  const tag = computed(() => (locale.value === 'en' ? 'en-GB-u-nu-latn' : 'ar-EG-u-nu-latn'))
+
+  function adminFormatDate(iso: string, withTime = false): string {
+    const d = new Date(iso)
+    if (Number.isNaN(d.getTime())) return '—'
+    return getDateFmt(tag.value, withTime).format(d)
+  }
+
+  return { adminFormatDate }
+}
+
+export function adminFetchMessage(e: unknown, fallback = 'تعذّر إتمام العملية — حاول مرة أخرى'): string {
   if (e && typeof e === 'object' && 'data' in e) {
     const data = (e as { data?: unknown }).data
     if (data && typeof data === 'object' && 'message' in data) {
@@ -72,5 +95,5 @@ export function adminFetchMessage(e: unknown): string {
     }
   }
   if (e instanceof Error && e.message) return e.message
-  return 'تعذّر إتمام العملية — حاول مرة أخرى'
+  return fallback
 }

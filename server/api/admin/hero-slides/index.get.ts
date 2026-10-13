@@ -8,8 +8,11 @@ export default defineEventHandler(async (event) => {
     items: rows.map((s) => ({
       id: s.id,
       titleAr: s.titleAr,
+      titleEn: s.titleEn,
       subtitleAr: s.subtitleAr,
+      subtitleEn: s.subtitleEn,
       ctaLabelAr: s.ctaLabelAr,
+      ctaLabelEn: s.ctaLabelEn,
       ctaHref: s.ctaHref,
       imageUrl: s.imageUrl,
       bgStyle: s.bgStyle,
