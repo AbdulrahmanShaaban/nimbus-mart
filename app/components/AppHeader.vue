@@ -239,18 +239,18 @@ onUnmounted(() => {
           v-for="category in categories"
           :key="category.slug"
           :to="`/categories/${category.slug}`"
-          class="flex max-w-[96px] shrink-0 items-center justify-center gap-0.5 rounded-full px-2 py-1.5 text-center text-[13px] font-bold leading-tight text-navy transition-colors hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-brand"
+          class="flex shrink-0 items-center justify-center gap-0.5 rounded-full px-2.5 py-1.5 text-center text-[13px] font-bold leading-tight text-navy transition-colors hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-brand md:max-w-[96px] md:px-2"
           :class="{ 'bg-white/80': route.path === `/categories/${category.slug}` }"
         >
           <span class="min-w-0">{{ category.nameAr }}</span>
-          <ChevronDown :size="12" class="shrink-0 self-center" aria-hidden="true" />
+          <ChevronDown :size="12" class="hidden shrink-0 self-center md:block" aria-hidden="true" />
         </NuxtLink>
         <NuxtLink
           to="/products"
           class="flex shrink-0 items-center justify-center gap-0.5 rounded-full px-2.5 py-1.5 text-center text-[13px] font-bold leading-tight text-navy transition-colors hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-brand"
         >
           المزيد
-          <ChevronDown :size="12" class="shrink-0 self-center" aria-hidden="true" />
+          <ChevronDown :size="12" class="hidden shrink-0 self-center md:block" aria-hidden="true" />
         </NuxtLink>
       </div>
     </nav>

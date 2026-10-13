@@ -30,6 +30,8 @@ const currentPage = computed(() => {
 const activeCategory = computed(() => props.fixedCategory ?? queryValue(route.query.category))
 const searchQuery = computed(() => queryValue(route.query.q))
 
+const filtersOpen = ref(false)
+
 watch(
   () => [queryValue(route.query.min), queryValue(route.query.max)] as const,
   ([min, max]) => {
@@ -125,7 +127,19 @@ function goToPage(page: number) {
 <template>
   <div class="flex flex-col gap-6 md:flex-row md:gap-8">
     <aside class="w-full shrink-0 md:w-64">
-      <div class="rounded-2xl border border-line bg-white p-5 md:sticky md:top-44">
+      <button
+        type="button"
+        class="mb-3 flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-white py-2.5 text-sm font-bold text-navy transition-colors hover:border-navy focus-visible:outline-2 focus-visible:outline-brand md:hidden"
+        :aria-expanded="filtersOpen"
+        @click="filtersOpen = !filtersOpen"
+      >
+        <SlidersHorizontal :size="16" aria-hidden="true" />
+        {{ filtersOpen ? 'إخفاء الفلاتر' : 'تصفية النتائج' }}
+      </button>
+      <div
+        class="rounded-2xl border border-line bg-white p-5 md:sticky md:top-44"
+        :class="{ 'hidden md:block': !filtersOpen }"
+      >
         <h2 class="mb-4 flex items-center gap-2 text-base font-extrabold text-navy">
           <SlidersHorizontal :size="18" aria-hidden="true" />
           تصفية النتائج

@@ -21,17 +21,17 @@ function gradientClass(gradient: string): string {
     <article
       v-for="(promo, index) in promos"
       :key="index"
-      class="group relative flex min-h-[300px] items-center overflow-hidden rounded-2xl md:min-h-[360px]"
+      class="group relative flex items-center overflow-hidden rounded-2xl md:min-h-[360px]"
       :class="[
         gradientClass(promo.gradient),
         promos.length > 1 ? 'md:min-h-[505px]' : '',
       ]"
     >
-      <div class="relative z-10 max-w-[560px] p-8 text-navy md:p-14">
-        <h2 class="mb-3 text-[clamp(26px,3.4vw,44px)] font-extrabold leading-tight">
+      <div class="relative z-10 max-w-[560px] p-6 text-navy md:p-14">
+        <h2 class="mb-3 text-[clamp(24px,3.4vw,44px)] font-extrabold leading-tight">
           {{ promo.headingAr }}
         </h2>
-        <p class="mb-6 text-base leading-relaxed text-bodytext">
+        <p class="mb-5 text-base leading-relaxed text-bodytext md:mb-6">
           {{ promo.bodyAr }}
         </p>
         <NuxtLink

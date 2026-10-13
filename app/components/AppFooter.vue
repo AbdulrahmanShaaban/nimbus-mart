@@ -16,8 +16,8 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
 
 <template>
   <footer class="bg-surface text-navy">
-    <div class="mx-auto max-w-[1330px] px-4 py-12 md:px-6 md:py-16">
-      <div class="mb-10 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+    <div class="mx-auto max-w-[1330px] px-4 py-10 md:px-6 md:py-16">
+      <div class="mb-8 grid gap-8 md:mb-10 md:grid-cols-2 md:gap-10 lg:grid-cols-4">
         <div>
           <NuxtLink to="/" class="mb-4 flex items-center gap-1.5 text-xl font-black text-navy focus-visible:outline-2 focus-visible:outline-brand">
             <span class="h-2.5 w-2.5 rounded-full bg-neon" aria-hidden="true" />
@@ -50,7 +50,7 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
 
         <div>
           <h2 class="mb-4 text-base font-extrabold text-navy">روابط سريعة</h2>
-          <ul class="flex flex-col gap-2.5 text-sm text-bodytext">
+          <ul class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm text-bodytext md:flex md:flex-col">
             <li><NuxtLink to="/products" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">كل المنتجات</NuxtLink></li>
             <li><NuxtLink to="/cart" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">سلة التسوق</NuxtLink></li>
             <li><NuxtLink to="/wishlist" class="text-bodytext transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">المفضلة</NuxtLink></li>
@@ -60,7 +60,7 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
 
         <div>
           <h2 class="mb-4 text-base font-extrabold text-navy">التصنيفات</h2>
-          <ul class="flex flex-col gap-2.5 text-sm text-bodytext">
+          <ul class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm text-bodytext md:flex md:flex-col">
             <li v-for="category in footerCategories" :key="category.slug">
               <NuxtLink
                 :to="`/categories/${category.slug}`"
@@ -96,7 +96,7 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
         </div>
       </div>
 
-      <ul class="mb-10 grid gap-4 rounded-2xl border border-line bg-white p-6 sm:grid-cols-3">
+      <ul class="mb-8 grid gap-3 rounded-2xl border border-line bg-white p-5 sm:grid-cols-3 md:mb-10 md:gap-4 md:p-6">
         <li class="flex items-center gap-3 text-sm font-semibold text-bodytext">
           <CreditCard :size="20" class="shrink-0 text-navy" aria-hidden="true" />
           دفع آمن (بطاقات ومحافظ إلكترونية)

@@ -23,7 +23,7 @@ function slideNext() {
 </script>
 
 <template>
-  <section class="relative h-[70vh] max-h-[491px] w-full overflow-hidden md:h-[491px]">
+  <section class="relative h-[450px] w-full overflow-hidden md:h-[491px]">
     <Swiper
       :modules="[Autoplay, Pagination]"
       :autoplay="{ delay: 4000, disableOnInteraction: false }"
@@ -49,17 +49,17 @@ function slideNext() {
             >
           </div>
           <div
-            class="relative z-10 flex h-full max-w-[640px] flex-col items-start justify-center px-6 text-navy md:px-[8%]"
+            class="relative z-10 flex h-full max-w-[640px] flex-col items-start justify-center px-6 text-navy max-md:justify-start max-md:pt-10 md:px-[8%]"
           >
-            <h1 class="mb-4 text-[clamp(32px,4vw,56px)] font-extrabold leading-[1.3]">
+            <h1 class="mb-3 text-[clamp(28px,4.5vw,56px)] font-extrabold leading-[1.25] md:mb-4 md:leading-[1.3]">
               {{ slide.titleAr }}
             </h1>
-            <p class="mb-6 max-w-[480px] text-lg font-medium leading-relaxed text-bodytext">
+            <p class="mb-5 max-w-[480px] text-sm font-medium leading-relaxed text-bodytext md:mb-6 md:text-lg">
               {{ slide.subtitleAr }}
             </p>
             <NuxtLink
               :to="slide.ctaHref"
-              class="inline-flex items-center gap-2 rounded-xl bg-neon px-8 py-3.5 text-base font-black text-navy transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(227,250,4,0.45)] focus-visible:outline-2 focus-visible:outline-brand"
+              class="inline-flex items-center gap-2 rounded-xl bg-neon px-6 py-3 text-sm font-black text-navy transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(227,250,4,0.45)] focus-visible:outline-2 focus-visible:outline-brand md:px-8 md:py-3.5 md:text-base"
             >
               {{ slide.ctaLabelAr }}
               <ArrowLeft :size="16" aria-hidden="true" />

@@ -15,7 +15,7 @@ withDefaults(
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-3 px-4 py-16 text-center">
+  <div class="flex flex-col items-center justify-center gap-3 px-4 py-10 text-center md:py-16">
     <span class="grid h-16 w-16 place-items-center rounded-full bg-surface text-mutedtext">
       <component :is="icon ?? Inbox" :size="28" aria-hidden="true" />
     </span>

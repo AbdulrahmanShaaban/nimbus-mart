@@ -10,13 +10,13 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="center" class="mb-6 text-center">
-    <h2 class="text-2xl font-extrabold leading-tight text-navy md:text-3xl">
+  <div v-if="center" class="mb-4 text-center md:mb-6">
+    <h2 class="text-xl font-extrabold leading-tight text-navy md:text-3xl">
       {{ title }}
     </h2>
   </div>
-  <div v-else class="mb-6 flex items-baseline justify-between gap-4">
-    <h2 class="text-2xl font-extrabold leading-tight text-navy md:text-3xl">
+  <div v-else class="mb-4 flex items-baseline justify-between gap-4 md:mb-6">
+    <h2 class="text-xl font-extrabold leading-tight text-navy md:text-3xl">
       {{ title }}
     </h2>
     <NuxtLink
