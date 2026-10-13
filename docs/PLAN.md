@@ -1,6 +1,6 @@
 # PLAN — Nimbus Mart
 
-**Status: BUILD COMPLETE + FIDELITY AUDIT DONE + LIVE ON GITHUB & VERCEL (2026-10-12).**
+**Status: BUILD COMPLETE + FIDELITY AUDIT DONE + LIVE ON GITHUB & VERCEL (2026-10-12) + RESPONSIVE FIX DEPLOYED (2026-10-13).**
 Design gate passed (user picked **Preview B** «السوق النابض» v3, Goods&U structural parity).
 Storefront + admin fully implemented against Neon Postgres; verification gates green.
 Fidelity audit vs `https://www.goodsandu.com/ar` completed (all deltas fixed, screenshots saved);
@@ -29,6 +29,24 @@ order clear-cart, register, full admin API surface
 (stats/products/orders/users/audit/settings/currencies/hero-slides/status PATCH),
 admin API blocked for customers (401/403), SSR pages 200, anon protected-page redirects,
 admin/customer SSR access rules.
+
+## Responsive regression + fix (2026-10-13, commit `ea1413d`)
+
+The 10-12 "zero overflow at 390" evidence covered the **admin** layout only. A page-scan of
+every storefront route at 360/390 found the shared `AppHeader` action-group overflowing left
+on **all** storefront pages (guest 16px @390 / 46px @360, +44px more when the admin icon
+showed) → horizontal scroll + clipped cart icon. Fix: mobile row `gap-1.5 px-3`
+(`md:` unchanged), logo `text-lg` + `truncate` safety net, action-group `gap-0 md:gap-2`,
+mobile-only user icon removed (hamburger menu already links account/login), admin icon now
+`md:grid` + added to the mobile menu.
+
+| Gate (after fix) | Result |
+| --- | --- |
+| `documentElement.scrollWidth` at 360/390/768/1440 | equals viewport minus scrollbar on `/`, `/products`, `/checkout`, `/login`, `/cart`, `/categories/mens-shirts`, `/account`, `/wishlist` — zero unclipped offenders |
+| Logo truncation @360/@390 | none (`scrollWidth == clientWidth`, 125/125) |
+| md/desktop header (768/1440) | unchanged — pill + currency + admin icon, row 88px, no overflow |
+| `pnpm lint` / `pnpm typecheck` | EXIT 0 / EXIT 0 |
+| Screenshots | `design/shots/resp-{home,checkout,admin}-390-after.png`, `resp-home-360-after.png` |
 
 ## What was built
 
