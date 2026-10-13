@@ -128,8 +128,8 @@ click verified both directions via CDP.
 | `pnpm test` | 17/17 |
 | `pnpm build` | EXIT 0 (1m55s) |
 | `pnpm exec tsx scripts/smoke.ts` | **62/62** (after cleaning leftover demo-user cart from an interrupted run) |
-| `scripts/i18n-shot.mjs` (CDP, 10 checks) | correct lang/dir/titles on home/products/login/cart/404 in both locales; switcher works both ways; **zero key leaks**; `nm_locale=en` cookie SSR → `ltr`+EN; Accept-Language detection works |
-| Screenshots | `design/shots/i18n-*.png` (AR+EN × 1440/390) — reviewed: CategoryGrid EN names fixed via `pick()`, full RTL Arabic home correct |
+| `scripts/i18n-shot.mjs` (CDP, 12 checks) | correct lang/dir/titles on home/products/login/cart/404 **+ admin dashboard** in both locales; switcher works both ways; **zero key leaks**; `nm_locale=en` cookie SSR → `ltr`+EN; Accept-Language detection works |
+| Screenshots | `design/shots/i18n-*.png` (AR+EN × 1440/390, incl. `i18n-admin-{ar,en}-1440.png` logged in as admin) — reviewed: CategoryGrid EN names fixed via `pick()`, full RTL Arabic home correct, admin fully translated both locales |
 | 404 title | fixed: `products/[slug].vue` now uses `t('error.notFound.title')` when statusCode 404 → "Page not found — Nimbus Mart" |
 
 ## What was built

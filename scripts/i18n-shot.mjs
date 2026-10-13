@@ -170,6 +170,36 @@ await nav(`${BASE}/products/does-not-exist`)
 await check('404-en-1440')
 await screenshot('i18n-404-en-1440')
 
+// ---- Admin EN (login as admin) ----
+await setLocaleCookie('en')
+await nav(`${BASE}/login`)
+console.log('admin-login:', await evalJs(`(() => {
+  const set = (sel, val) => {
+    const el = document.querySelector(sel)
+    if (!el) return false
+    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set
+    setter.call(el, val)
+    el.dispatchEvent(new Event('input', { bubbles: true }))
+    return true
+  }
+  const okE = set('input[type="email"]', 'admin@nimbus.app')
+  const okP = set('input[type="password"]', 'admin1234')
+  const form = document.querySelector('input[type="email"]')?.closest('form')
+  const btn = form?.querySelector('button[type="submit"]')
+  btn?.click()
+  return JSON.stringify({ okE, okP, clicked: !!btn })
+})()`))
+await sleep(2500)
+await nav(`${BASE}/admin`)
+await check('admin-en-1440')
+await screenshot('i18n-admin-en-1440')
+
+// ---- Admin AR ----
+await setLocaleCookie('ar')
+await nav(`${BASE}/admin`)
+await check('admin-ar-1440')
+await screenshot('i18n-admin-ar-1440')
+
 console.log('RESULTS', JSON.stringify(results, null, 2))
 const failed = results.filter(r => r.leaks.length > 0)
 console.log(failed.length === 0 ? 'NO KEY LEAKS' : `LEAKS: ${JSON.stringify(failed)}`)
