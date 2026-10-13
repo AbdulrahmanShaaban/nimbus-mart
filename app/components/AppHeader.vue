@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Search, ShoppingBag, Heart, User, Menu, X, LayoutDashboard, ChevronDown } from '@lucide/vue'
+import { Search, ShoppingBag, Heart, Menu, X, LayoutDashboard, ChevronDown } from '@lucide/vue'
 import type { CategoryDto } from '~/types/api'
 
 const route = useRoute()
@@ -61,7 +61,7 @@ onUnmounted(() => {
 
 <template>
   <header class="sticky top-0 z-50 border-b border-line bg-white">
-    <div class="mx-auto flex h-16 max-w-[1330px] items-center gap-3 px-4 md:h-[88px] md:gap-6 md:px-6">
+    <div class="mx-auto flex h-16 max-w-[1330px] items-center gap-1.5 px-3 md:h-[88px] md:gap-6 md:px-6">
       <button
         type="button"
         class="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:hidden"
@@ -76,10 +76,10 @@ onUnmounted(() => {
 
       <NuxtLink
         to="/"
-        class="flex shrink-0 items-center gap-1.5 text-xl font-black text-navy focus-visible:outline-2 focus-visible:outline-brand md:text-2xl"
+        class="flex min-w-0 items-center gap-1.5 text-lg font-black text-navy focus-visible:outline-2 focus-visible:outline-brand md:text-2xl"
       >
-        <span class="h-2.5 w-2.5 rounded-full bg-neon" aria-hidden="true" />
-        نِمبوس مارت
+        <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-neon" aria-hidden="true" />
+        <span class="truncate">نِمبوس مارت</span>
       </NuxtLink>
 
       <form action="/search" method="get" class="hidden flex-1 md:block" role="search">
@@ -101,7 +101,7 @@ onUnmounted(() => {
         </div>
       </form>
 
-      <div class="ms-auto flex shrink-0 items-center gap-1 md:gap-2">
+      <div class="ms-auto flex shrink-0 items-center gap-0 md:gap-2">
         <NuxtLink
           to="/search"
           class="grid h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:hidden"
@@ -156,16 +156,9 @@ onUnmounted(() => {
           </ul>
         </div>
         <NuxtLink
-          :to="user ? '/account' : '/login'"
-          class="grid h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:hidden"
-          :aria-label="user ? 'حسابي' : 'تسجيل الدخول'"
-        >
-          <User :size="20" aria-hidden="true" />
-        </NuxtLink>
-        <NuxtLink
           v-if="user?.role === 'ADMIN'"
           to="/admin"
-          class="grid h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand"
+          class="hidden h-10 w-10 place-items-center rounded-xl text-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand md:grid"
           aria-label="لوحة التحكم"
         >
           <LayoutDashboard :size="20" aria-hidden="true" />
@@ -218,6 +211,11 @@ onUnmounted(() => {
             class="block rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand"
           >
             {{ category.nameAr }}
+          </NuxtLink>
+        </li>
+        <li v-if="user?.role === 'ADMIN'">
+          <NuxtLink to="/admin" class="block rounded-xl px-3 py-2.5 text-sm font-bold text-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-brand">
+            لوحة التحكم
           </NuxtLink>
         </li>
         <li class="mt-1 border-t border-line pt-2">
