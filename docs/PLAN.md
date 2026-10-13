@@ -48,6 +48,29 @@ mobile-only user icon removed (hamburger menu already links account/login), admi
 | `pnpm lint` / `pnpm typecheck` | EXIT 0 / EXIT 0 |
 | Screenshots | `design/shots/resp-{home,checkout,admin}-390-after.png`, `resp-home-360-after.png` |
 
+## Mobile design polish (2026-10-13, commit `5cdd572`)
+
+User request: "ال responsive design مش حلو خالص" — beyond overflow, improve mobile
+**quality** across all pages. All changes are `<md` only; desktop (768/1440) verified
+unchanged. Design system untouched (Preview B palette/type).
+
+| Area | Change |
+| --- | --- |
+| HeroSwiper | Fixed `h-[450px]` (was `70vh max-h-491`), text top-aligned (`max-md:justify-start max-md:pt-10`), heading `clamp(28px…)`, subtitle `text-sm`, CTA `px-6 py-3 text-sm` — CTA no longer overlaps the product image |
+| AppHeader strip | ChevronDown `hidden md:block` + chips drop `max-w-[96px]` on mobile — no mid-word truncation ("الإلكتروني⌄") |
+| AppFooter | Link + category lists → `grid-cols-2` on mobile, container `py-10`, tighter gaps; payment strip `p-5` |
+| ProductBrowser | Collapsible filter panel on mobile: toggle button (aria-expanded), collapsed by default — catalog grid no longer pushed below the fold |
+| PromoSplit | Removed `min-h-[300px]` dead space (`max-md:min-h-0`), `p-6`, heading clamp `24px` — promos hug content |
+| SectionHeader | Mobile `text-xl` (was `text-2xl`), `mb-4` |
+| EmptyState | `py-10` on mobile |
+| FAB (chat) | `h-12 w-12 bottom-4 end-4` on mobile (was `h-14 bottom-6`) |
+
+Evidence: screenshots `design/shots/polish-{home-390-v1..v4, home-1440, pdp-390,
+pdp-390-v2, products-390, products-390-v2, products-390-v3}.png`;
+`scrollWidth` checks: 360 → 345/360, 390 → 375/390, 768 → 753/768 — zero offenders,
+zero overflow; filter toggle exercised open/closed at 390; `pnpm lint` +
+`pnpm typecheck` EXIT 0.
+
 ## What was built
 
 - **Stack (actual):** Nuxt 4.6.1, Vue 3.5.43, vue-router 5.4.0, TypeScript 5.9.3
