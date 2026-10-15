@@ -3,7 +3,20 @@
     "wishAdd": "Add to wishlist",
     "wishRemove": "Remove from wishlist",
     "viewProduct": "View {title}",
-    "addFailed": "Couldn't add"
+    "addFailed": "Couldn't add",
+    "quickView": "Quick view",
+    "noReviews": "No reviews yet",
+    "recentlyAdded": "Recently added",
+    "moreColors": "+{count} more",
+    "options": "Options"
+  },
+  "qv": {
+    "title": "Quick view",
+    "close": "Close quick view",
+    "fullDetails": "Full details",
+    "selectColor": "Select a color to continue",
+    "selectSize": "Select a size to continue",
+    "loadError": "Couldn't load product details"
   },
   "pb": {
     "filtersShow": "Filter results",
@@ -29,8 +42,8 @@
     "pageOf": "Page {page} of {total}"
   },
   "cd": {
-    "title": "Deals ending soon",
-    "subtitle": "Limited time — hurry before it's gone",
+    "title": "End of stock",
+    "subtitle": "Limited time offer — catch it now",
     "days": "Days",
     "hours": "Hours",
     "minutes": "Mins",

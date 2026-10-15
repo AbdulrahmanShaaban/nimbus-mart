@@ -56,7 +56,7 @@ const products: SeedProduct[] = [
     titleEn: 'Apple iPhone 13 Pro 256GB',
     descriptionAr: 'هاتف ذكي بشاشة Super Retina XDR وكاميرا احترافية.',
     priceCents: 5290000n,
-    images: [`${CDN}/smartphones/iphone-13-pro/thumbnail.webp`],
+    images: [`${CDN}/smartphones/iphone-13-pro/1.webp`],
     variants: [
       { sku: 'IP13P-256-BLK', color: 'أسود', colorHex: '#1A1D23', stock: 12 },
       { sku: 'IP13P-256-GLD', color: 'ذهبي', colorHex: '#E8E4D9', stock: 8 },
@@ -69,7 +69,7 @@ const products: SeedProduct[] = [
     descriptionAr: 'تصميم كلاسيكي بشاشة OLED.',
     priceCents: 1899900n,
     compareAtCents: 2299900n,
-    images: [`${CDN}/smartphones/iphone-x/thumbnail.webp`],
+    images: [`${CDN}/smartphones/iphone-x/1.webp`],
     variants: [
       { sku: 'IPX-64-SLV', color: 'فضي', colorHex: '#C0C0C0', stock: 6 },
       { sku: 'IPX-64-GRY', color: 'رمادي', colorHex: '#6B7280', stock: 4 },
@@ -80,7 +80,7 @@ const products: SeedProduct[] = [
     titleEn: 'Apple iPhone 6',
     descriptionAr: 'هاتف خفيف وأنيق للاستخدام اليومي.',
     priceCents: 899900n,
-    images: [`${CDN}/smartphones/iphone-6/thumbnail.webp`],
+    images: [`${CDN}/smartphones/iphone-6/1.webp`],
     variants: [{ sku: 'IP6-16-GLD', color: 'ذهبي', colorHex: '#D4AF37', stock: 3 }],
   },
   {
@@ -88,7 +88,7 @@ const products: SeedProduct[] = [
     titleEn: 'Oppo A57',
     descriptionAr: 'هاتف اقتصادي بشاشة كبيرة وبطارية تدوم.',
     priceCents: 649900n,
-    images: [`${CDN}/smartphones/oppo-a57/thumbnail.webp`],
+    images: [`${CDN}/smartphones/oppo-a57/1.webp`],
     variants: [{ sku: 'OPPO-A57-BLK', color: 'أسود', colorHex: '#111827', stock: 15 }],
   },
   {
@@ -96,7 +96,7 @@ const products: SeedProduct[] = [
     titleEn: 'Apple AirPods',
     descriptionAr: 'سماعات لاسلكية بجودة صوت نظيفة.',
     priceCents: 429900n,
-    images: [`${CDN}/mobile-accessories/apple-airpods/thumbnail.webp`],
+    images: [`${CDN}/mobile-accessories/apple-airpods/1.webp`],
     variants: [{ sku: 'AIRPODS-STD', stock: 20 }],
   },
   {
@@ -104,7 +104,7 @@ const products: SeedProduct[] = [
     titleEn: 'Apple AirPods Max Silver',
     descriptionAr: 'سماعة رأس لاسلكية فاخرة.',
     priceCents: 1299900n,
-    images: [`${CDN}/mobile-accessories/apple-airpods-max-silver/thumbnail.webp`],
+    images: [`${CDN}/mobile-accessories/apple-airpods-max-silver/1.webp`],
     variants: [{ sku: 'APM-SLV', color: 'فضي', colorHex: '#D1D5DB', stock: 4 }],
   },
   {
@@ -112,7 +112,7 @@ const products: SeedProduct[] = [
     titleEn: 'Amazon Echo Plus',
     descriptionAr: 'مساعد ذكي بصوت عالي.',
     priceCents: 349900n,
-    images: [`${CDN}/mobile-accessories/amazon-echo-plus/thumbnail.webp`],
+    images: [`${CDN}/mobile-accessories/amazon-echo-plus/1.webp`],
     variants: [{ sku: 'ECHO-PLUS', color: 'أسود', colorHex: '#1F2937', stock: 9 }],
   },
   {
@@ -121,7 +121,7 @@ const products: SeedProduct[] = [
     descriptionAr: 'لابتوب احترافي بشاشة Liquid Retina XDR.',
     priceCents: 9499900n,
     compareAtCents: 10999900n,
-    images: [`${CDN}/laptops/apple-macbook-pro-14-inch-space-grey/thumbnail.webp`],
+    images: [`${CDN}/laptops/apple-macbook-pro-14-inch-space-grey/1.webp`],
     variants: [
       { sku: 'MBP14-512', size: '512GB', stock: 5 },
       { sku: 'MBP14-1TB', size: '1TB', stock: 3 },
@@ -132,7 +132,7 @@ const products: SeedProduct[] = [
     titleEn: 'Asus Zenbook Pro Dual Screen Laptop',
     descriptionAr: 'لابتوب بشاشتين للإنتاجية.',
     priceCents: 8450000n,
-    images: [`${CDN}/laptops/asus-zenbook-pro-dual-screen-laptop/thumbnail.webp`],
+    images: [`${CDN}/laptops/asus-zenbook-pro-dual-screen-laptop/1.webp`],
     variants: [{ sku: 'ASUS-ZEN-DUAL', stock: 4 }],
   },
   {
@@ -140,7 +140,7 @@ const products: SeedProduct[] = [
     titleEn: 'Huawei Matebook X Pro',
     descriptionAr: 'لابتوب خفيف بشاشة عالية الدقة.',
     priceCents: 6799900n,
-    images: [`${CDN}/laptops/huawei-matebook-x-pro/thumbnail.webp`],
+    images: [`${CDN}/laptops/huawei-matebook-x-pro/1.webp`],
     variants: [{ sku: 'HW-MBXPRO', stock: 6 }],
   },
   {
@@ -148,7 +148,7 @@ const products: SeedProduct[] = [
     titleEn: 'Lenovo Yoga 920',
     descriptionAr: 'لابتوب 2-in-1 مرن للاستخدام اليومي.',
     priceCents: 5899900n,
-    images: [`${CDN}/laptops/lenovo-yoga-920/thumbnail.webp`],
+    images: [`${CDN}/laptops/lenovo-yoga-920/1.webp`],
     variants: [{ sku: 'LEN-YOGA-920', stock: 2 }],
   },
   {
@@ -156,7 +156,7 @@ const products: SeedProduct[] = [
     titleEn: 'New DELL XPS 13 9300 Laptop',
     descriptionAr: 'لابتوب مدمج للأعمال والدراسة.',
     priceCents: 7299900n,
-    images: [`${CDN}/laptops/new-dell-xps-13-9300-laptop/thumbnail.webp`],
+    images: [`${CDN}/laptops/new-dell-xps-13-9300-laptop/1.webp`],
     variants: [{ sku: 'DELL-XPS-13', stock: 7 }],
   },
   {
@@ -165,7 +165,7 @@ const products: SeedProduct[] = [
     descriptionAr: 'قميص قطن مريح للاستخدام اليومي.',
     priceCents: 40500n,
     compareAtCents: 54000n,
-    images: [`${CDN}/mens-shirts/man-plaid-shirt/thumbnail.webp`],
+    images: [`${CDN}/mens-shirts/man-plaid-shirt/1.webp`],
     variants: [
       { sku: 'PLAID-M-RED', size: 'M', color: 'أحمر', colorHex: '#B91C1C', stock: 14 },
       { sku: 'PLAID-L-RED', size: 'L', color: 'أحمر', colorHex: '#B91C1C', stock: 10 },
@@ -177,7 +177,7 @@ const products: SeedProduct[] = [
     titleEn: 'Men Check Shirt',
     descriptionAr: 'قميص كاجوال بنقشة كلاسيكية.',
     priceCents: 35000n,
-    images: [`${CDN}/mens-shirts/men-check-shirt/thumbnail.webp`],
+    images: [`${CDN}/mens-shirts/men-check-shirt/1.webp`],
     variants: [
       { sku: 'CHK-M', size: 'M', stock: 12 },
       { sku: 'CHK-L', size: 'L', stock: 9 },
@@ -188,7 +188,7 @@ const products: SeedProduct[] = [
     titleEn: 'Man Short Sleeve Shirt',
     descriptionAr: 'قميص صيفي خفيف.',
     priceCents: 28500n,
-    images: [`${CDN}/mens-shirts/man-short-sleeve-shirt/thumbnail.webp`],
+    images: [`${CDN}/mens-shirts/man-short-sleeve-shirt/1.webp`],
     variants: [{ sku: 'SS-M-WHT', size: 'M', color: 'أبيض', colorHex: '#F9FAFB', stock: 11 }],
   },
   {
@@ -196,7 +196,7 @@ const products: SeedProduct[] = [
     titleEn: 'Blue & Black Check Shirt',
     descriptionAr: 'قميص بattern جريء.',
     priceCents: 42000n,
-    images: [`${CDN}/mens-shirts/blue-&-black-check-shirt/thumbnail.webp`],
+    images: [`${CDN}/mens-shirts/blue-&-black-check-shirt/1.webp`],
     variants: [{ sku: 'BBCHK-L', size: 'L', stock: 7 }],
   },
   {
@@ -204,7 +204,7 @@ const products: SeedProduct[] = [
     titleEn: 'Gigabyte Aorus Men Tshirt',
     descriptionAr: 'تيشيرت قطن بطباعة ألعاب.',
     priceCents: 22000n,
-    images: [`${CDN}/mens-shirts/gigabyte-aorus-men-tshirt/thumbnail.webp`],
+    images: [`${CDN}/mens-shirts/gigabyte-aorus-men-tshirt/1.webp`],
     variants: [
       { sku: 'AORUS-M', size: 'M', stock: 16 },
       { sku: 'AORUS-L', size: 'L', stock: 12 },
@@ -216,7 +216,7 @@ const products: SeedProduct[] = [
     descriptionAr: 'فستان أنيق بنقشة تارتان.',
     priceCents: 55000n,
     compareAtCents: 72000n,
-    images: [`${CDN}/tops/tartan-dress/thumbnail.webp`],
+    images: [`${CDN}/tops/tartan-dress/1.webp`],
     variants: [
       { sku: 'TART-S', size: 'S', stock: 6 },
       { sku: 'TART-M', size: 'M', stock: 8 },
@@ -227,7 +227,7 @@ const products: SeedProduct[] = [
     titleEn: 'Gray Dress',
     descriptionAr: 'فستان بسيط لأي مناسبة.',
     priceCents: 48000n,
-    images: [`${CDN}/tops/gray-dress/thumbnail.webp`],
+    images: [`${CDN}/tops/gray-dress/1.webp`],
     variants: [{ sku: 'GRD-M', size: 'M', stock: 9 }],
   },
   {
@@ -235,7 +235,7 @@ const products: SeedProduct[] = [
     titleEn: 'Blue Frock',
     descriptionAr: 'فستان كاجوال أزرق.',
     priceCents: 43000n,
-    images: [`${CDN}/tops/blue-frock/thumbnail.webp`],
+    images: [`${CDN}/tops/blue-frock/1.webp`],
     variants: [{ sku: 'BLF-M', size: 'M', stock: 5 }],
   },
   {
@@ -243,7 +243,7 @@ const products: SeedProduct[] = [
     titleEn: "Black Women's Gown",
     descriptionAr: 'فستان سهرة أنيق.',
     priceCents: 95000n,
-    images: [`${CDN}/womens-dresses/black-women's-gown/thumbnail.webp`],
+    images: [`${CDN}/womens-dresses/black-women's-gown/1.webp`],
     variants: [{ sku: 'GOWN-M', size: 'M', stock: 3 }],
   },
   {
@@ -251,7 +251,7 @@ const products: SeedProduct[] = [
     titleEn: 'Dress Pea',
     descriptionAr: 'تصميم عصري مريح.',
     priceCents: 62000n,
-    images: [`${CDN}/womens-dresses/dress-pea/thumbnail.webp`],
+    images: [`${CDN}/womens-dresses/dress-pea/1.webp`],
     variants: [{ sku: 'PEA-M', size: 'M', stock: 4 }],
   },
   {
@@ -259,7 +259,7 @@ const products: SeedProduct[] = [
     titleEn: 'Chef Knife',
     descriptionAr: 'سكين شيف احترافي.',
     priceCents: 43200n,
-    images: [`${CDN}/kitchen-accessories/knife/thumbnail.webp`],
+    images: [`${CDN}/kitchen-accessories/knife/1.webp`],
     variants: [{ sku: 'KNIFE-01', stock: 22 }],
   },
   {
@@ -267,7 +267,7 @@ const products: SeedProduct[] = [
     titleEn: 'Chopping Board',
     descriptionAr: 'لوح تقطيع عملي للمطبخ.',
     priceCents: 18500n,
-    images: [`${CDN}/kitchen-accessories/chopping-board/thumbnail.webp`],
+    images: [`${CDN}/kitchen-accessories/chopping-board/1.webp`],
     variants: [{ sku: 'BOARD-01', stock: 30 }],
   },
   {
@@ -275,7 +275,7 @@ const products: SeedProduct[] = [
     titleEn: 'Boxed Blender',
     descriptionAr: 'خلاط قوي للعصائر والسلطات.',
     priceCents: 89900n,
-    images: [`${CDN}/kitchen-accessories/boxed-blender/thumbnail.webp`],
+    images: [`${CDN}/kitchen-accessories/boxed-blender/1.webp`],
     variants: [{ sku: 'BLEND-01', stock: 10 }],
   },
   {
@@ -283,7 +283,7 @@ const products: SeedProduct[] = [
     titleEn: 'Microwave Oven',
     descriptionAr: 'جهاز ميكروويف بسعة مناسبة للعائلة.',
     priceCents: 459900n,
-    images: [`${CDN}/kitchen-accessories/microwave-oven/thumbnail.webp`],
+    images: [`${CDN}/kitchen-accessories/microwave-oven/1.webp`],
     variants: [{ sku: 'MW-01', stock: 6 }],
   },
   {
@@ -291,7 +291,7 @@ const products: SeedProduct[] = [
     titleEn: 'Carbon Steel Wok',
     descriptionAr: 'ووك للطبخ السريع.',
     priceCents: 32000n,
-    images: [`${CDN}/kitchen-accessories/carbon-steel-wok/thumbnail.webp`],
+    images: [`${CDN}/kitchen-accessories/carbon-steel-wok/1.webp`],
     variants: [{ sku: 'WOK-01', stock: 14 }],
   },
   {
@@ -299,7 +299,7 @@ const products: SeedProduct[] = [
     titleEn: 'Red Lipstick',
     descriptionAr: 'أحمر شفاه بلون ثابت.',
     priceCents: 12500n,
-    images: [`${CDN}/beauty/red-lipstick/thumbnail.webp`],
+    images: [`${CDN}/beauty/red-lipstick/1.webp`],
     variants: [{ sku: 'LIP-RED', color: 'أحمر', colorHex: '#DC2626', stock: 25 }],
   },
   {
@@ -307,7 +307,7 @@ const products: SeedProduct[] = [
     titleEn: 'Eyeshadow Palette with Mirror',
     descriptionAr: 'باليت ألوان متكامل مع مرآة.',
     priceCents: 95000n,
-    images: [`${CDN}/beauty/eyeshadow-palette-with-mirror/thumbnail.webp`],
+    images: [`${CDN}/beauty/eyeshadow-palette-with-mirror/1.webp`],
     variants: [{ sku: 'EYE-18', stock: 18 }],
   },
   {
@@ -315,7 +315,7 @@ const products: SeedProduct[] = [
     titleEn: 'Red Nail Polish',
     descriptionAr: 'طلاء أظافر عالي الجودة.',
     priceCents: 8500n,
-    images: [`${CDN}/beauty/red-nail-polish/thumbnail.webp`],
+    images: [`${CDN}/beauty/red-nail-polish/1.webp`],
     variants: [{ sku: 'NAIL-RED', color: 'أحمر', colorHex: '#B91C1C', stock: 40 }],
   },
   {
@@ -324,7 +324,7 @@ const products: SeedProduct[] = [
     descriptionAr: 'ماسكارا لرموش أكثر كثافة.',
     priceCents: 15000n,
     compareAtCents: 21000n,
-    images: [`${CDN}/beauty/essence-mascara-lash-princess/thumbnail.webp`],
+    images: [`${CDN}/beauty/essence-mascara-lash-princess/1.webp`],
     variants: [{ sku: 'MASC-01', stock: 28 }],
   },
   {
@@ -333,7 +333,7 @@ const products: SeedProduct[] = [
     descriptionAr: 'عطر منعش للجنسين.',
     priceCents: 320000n,
     compareAtCents: 420000n,
-    images: [`${CDN}/fragrances/calvin-klein-ck-one/thumbnail.webp`],
+    images: [`${CDN}/fragrances/calvin-klein-ck-one/1.webp`],
     variants: [{ sku: 'CKONE-100', stock: 15 }],
   },
   {
@@ -341,7 +341,7 @@ const products: SeedProduct[] = [
     titleEn: 'Chanel Coco Noir Eau De',
     descriptionAr: 'عطر فاخر برائحة دافئة.',
     priceCents: 615000n,
-    images: [`${CDN}/fragrances/chanel-coco-noir-eau-de/thumbnail.webp`],
+    images: [`${CDN}/fragrances/chanel-coco-noir-eau-de/1.webp`],
     variants: [{ sku: 'CHNOIR-100', stock: 8 }],
   },
   {
@@ -349,7 +349,7 @@ const products: SeedProduct[] = [
     titleEn: "Dior J'adore",
     descriptionAr: 'عطر نسائي كلاسيكي.',
     priceCents: 720000n,
-    images: [`${CDN}/fragrances/dior-j'adore/thumbnail.webp`],
+    images: [`${CDN}/fragrances/dior-j'adore/1.webp`],
     variants: [{ sku: 'DIOR-JAD', stock: 5 }],
   },
   {
@@ -357,7 +357,7 @@ const products: SeedProduct[] = [
     titleEn: 'Gucci Bloom Eau de',
     descriptionAr: 'عطر زهري ناعم.',
     priceCents: 680000n,
-    images: [`${CDN}/fragrances/gucci-bloom-eau-de/thumbnail.webp`],
+    images: [`${CDN}/fragrances/gucci-bloom-eau-de/1.webp`],
     variants: [{ sku: 'GUC-BLOOM', stock: 6 }],
   },
   {
@@ -365,7 +365,7 @@ const products: SeedProduct[] = [
     titleEn: 'Rolex Datejust',
     descriptionAr: 'ساعة فاخرة بحزام جلد.',
     priceCents: 12500000n,
-    images: [`${CDN}/mens-watches/rolex-datejust/thumbnail.webp`],
+    images: [`${CDN}/mens-watches/rolex-datejust/1.webp`],
     variants: [
       { sku: 'RLEX-DJ-BLK', color: 'أسود', colorHex: '#1A1A1A', stock: 2 },
       { sku: 'RLEX-DJ-GLD', color: 'ذهبي', colorHex: '#C9A96E', stock: 1 },
@@ -376,7 +376,7 @@ const products: SeedProduct[] = [
     titleEn: 'Longines Master Collection',
     descriptionAr: 'ساعة كلاسيكية بحركةسويسرية.',
     priceCents: 4500000n,
-    images: [`${CDN}/mens-watches/longines-master-collection/thumbnail.webp`],
+    images: [`${CDN}/mens-watches/longines-master-collection/1.webp`],
     variants: [{ sku: 'LNG-MST', stock: 3 }],
   },
   {
@@ -384,7 +384,7 @@ const products: SeedProduct[] = [
     titleEn: 'Brown Leather Belt Watch',
     descriptionAr: 'ساعة يومية بحزام جلد.',
     priceCents: 890000n,
-    images: [`${CDN}/mens-watches/brown-leather-belt-watch/thumbnail.webp`],
+    images: [`${CDN}/mens-watches/brown-leather-belt-watch/1.webp`],
     variants: [{ sku: 'BLW-01', stock: 11 }],
   },
   {
@@ -392,7 +392,7 @@ const products: SeedProduct[] = [
     titleEn: 'Rolex Submariner Watch',
     descriptionAr: 'ساعة غوص أيقونية.',
     priceCents: 15900000n,
-    images: [`${CDN}/mens-watches/rolex-submariner-watch/thumbnail.webp`],
+    images: [`${CDN}/mens-watches/rolex-submariner-watch/1.webp`],
     variants: [{ sku: 'RLEX-SUB', stock: 1 }],
   },
   {
@@ -400,7 +400,7 @@ const products: SeedProduct[] = [
     titleEn: 'Plant Pot',
     descriptionAr: 'أصيص أنيق لكل منزل.',
     priceCents: 7200n,
-    images: [`${CDN}/home-decoration/plant-pot/thumbnail.webp`],
+    images: [`${CDN}/home-decoration/plant-pot/1.webp`],
     variants: [{ sku: 'POT-01', stock: 35 }],
   },
   {
@@ -408,7 +408,7 @@ const products: SeedProduct[] = [
     titleEn: 'Table Lamp',
     descriptionAr: 'إضاءة دافئة لغرفة المعيشة.',
     priceCents: 24900n,
-    images: [`${CDN}/home-decoration/table-lamp/thumbnail.webp`],
+    images: [`${CDN}/home-decoration/table-lamp/1.webp`],
     variants: [{ sku: 'LAMP-01', stock: 17 }],
   },
   {
@@ -416,7 +416,7 @@ const products: SeedProduct[] = [
     titleEn: 'Family Tree Photo Frame',
     descriptionAr: 'إطار صور عائلي.',
     priceCents: 15900n,
-    images: [`${CDN}/home-decoration/family-tree-photo-frame/thumbnail.webp`],
+    images: [`${CDN}/home-decoration/family-tree-photo-frame/1.webp`],
     variants: [{ sku: 'FRAME-FT', stock: 12 }],
   },
   {
@@ -424,7 +424,7 @@ const products: SeedProduct[] = [
     titleEn: 'House Showpiece Plant',
     descriptionAr: 'قطعة ديكور خضراء.',
     priceCents: 19900n,
-    images: [`${CDN}/home-decoration/house-showpiece-plant/thumbnail.webp`],
+    images: [`${CDN}/home-decoration/house-showpiece-plant/1.webp`],
     variants: [{ sku: 'PLANT-DEC', stock: 20 }],
   },
   {
@@ -432,7 +432,7 @@ const products: SeedProduct[] = [
     titleEn: 'Basketball',
     descriptionAr: 'كرة سلة تدريبية.',
     priceCents: 25000n,
-    images: [`${CDN}/sports-accessories/basketball/thumbnail.webp`],
+    images: [`${CDN}/sports-accessories/basketball/1.webp`],
     variants: [{ sku: 'BASK-01', stock: 24 }],
   },
   {
@@ -440,7 +440,7 @@ const products: SeedProduct[] = [
     titleEn: 'Baseball Ball',
     descriptionAr: 'كرة بيسبول تدريبية.',
     priceCents: 12000n,
-    images: [`${CDN}/sports-accessories/baseball-ball/thumbnail.webp`],
+    images: [`${CDN}/sports-accessories/baseball-ball/1.webp`],
     variants: [{ sku: 'BASE-01', stock: 30 }],
   },
   {
@@ -448,7 +448,7 @@ const products: SeedProduct[] = [
     titleEn: 'Nike Air Jordan 1 Red And Black',
     descriptionAr: 'حذاء رياضي أيقوني.',
     priceCents: 750000n,
-    images: [`${CDN}/mens-shoes/nike-air-jordan-1-red-and-black/thumbnail.webp`],
+    images: [`${CDN}/mens-shoes/nike-air-jordan-1-red-and-black/1.webp`],
     variants: [
       { sku: 'AJ1-42', size: '42', stock: 4 },
       { sku: 'AJ1-43', size: '43', stock: 6 },
@@ -460,7 +460,7 @@ const products: SeedProduct[] = [
     titleEn: 'Puma Future Rider Trainers',
     descriptionAr: 'حذاء رياضي مريح.',
     priceCents: 320000n,
-    images: [`${CDN}/mens-shoes/puma-future-rider-trainers/thumbnail.webp`],
+    images: [`${CDN}/mens-shoes/puma-future-rider-trainers/1.webp`],
     variants: [{ sku: 'PUMA-42', size: '42', stock: 8 }],
   },
   {
@@ -469,7 +469,7 @@ const products: SeedProduct[] = [
     descriptionAr: 'نظارة شمسية بكلاسيكية.',
     priceCents: 18000n,
     compareAtCents: 25000n,
-    images: [`${CDN}/sunglasses/black-sun-glasses/thumbnail.webp`],
+    images: [`${CDN}/sunglasses/black-sun-glasses/1.webp`],
     variants: [{ sku: 'SUN-BLK', color: 'أسود', colorHex: '#111827', stock: 26 }],
   },
   {
@@ -477,7 +477,7 @@ const products: SeedProduct[] = [
     titleEn: 'Classic Sun Glasses',
     descriptionAr: 'تصميم كلاسيكي يناسب كل الإطلالات.',
     priceCents: 22000n,
-    images: [`${CDN}/sunglasses/classic-sun-glasses/thumbnail.webp`],
+    images: [`${CDN}/sunglasses/classic-sun-glasses/1.webp`],
     variants: [{ sku: 'SUN-CLS', stock: 19 }],
   },
   {
@@ -485,7 +485,7 @@ const products: SeedProduct[] = [
     titleEn: 'Green and Black Glasses',
     descriptionAr: 'إطار أخضر جريء.',
     priceCents: 16500n,
-    images: [`${CDN}/sunglasses/green-and-black-glasses/thumbnail.webp`],
+    images: [`${CDN}/sunglasses/green-and-black-glasses/1.webp`],
     variants: [{ sku: 'SUN-GRN', color: 'أخضر', colorHex: '#166534', stock: 13 }],
   },
 ]
@@ -593,7 +593,7 @@ async function main() {
         ctaLabelAr: 'تسوق الكوليكشن',
         ctaLabelEn: 'Shop the collection',
         ctaHref: '/categories/mens-shirts',
-        imageUrl: `${CDN}/mens-shirts/man-plaid-shirt/thumbnail.webp`,
+        imageUrl: `${CDN}/mens-shirts/man-plaid-shirt/1.webp`,
         bgStyle: 'BLUE',
         sortOrder: 1,
         enabled: true,
@@ -606,7 +606,7 @@ async function main() {
         ctaLabelAr: 'تسوق الإلكترونيات',
         ctaLabelEn: 'Shop electronics',
         ctaHref: '/categories/electronics',
-        imageUrl: `${CDN}/laptops/apple-macbook-pro-14-inch-space-grey/thumbnail.webp`,
+        imageUrl: `${CDN}/laptops/apple-macbook-pro-14-inch-space-grey/1.webp`,
         bgStyle: 'INK',
         sortOrder: 2,
         enabled: true,
@@ -619,7 +619,7 @@ async function main() {
         ctaLabelAr: 'تسوق الجمال',
         ctaLabelEn: 'Shop beauty',
         ctaHref: '/categories/beauty',
-        imageUrl: `${CDN}/fragrances/calvin-klein-ck-one/thumbnail.webp`,
+        imageUrl: `${CDN}/fragrances/calvin-klein-ck-one/1.webp`,
         bgStyle: 'AMBER',
         sortOrder: 3,
         enabled: true,
@@ -638,7 +638,7 @@ async function main() {
       promoCtaLabelEn: 'Shop now',
       promoCtaHref: '/categories/kitchen',
       promoGradient: 'navy',
-      promoImageUrl: `${CDN}/kitchen-accessories/microwave-oven/thumbnail.webp`,
+      promoImageUrl: `${CDN}/kitchen-accessories/microwave-oven/1.webp`,
       promoSecondHeadingAr: 'صيف أحلى… مع كل اللي تحبه',
       promoSecondHeadingEn: 'A sweeter summer… with everything you love',
       promoSecondBodyAr: 'اكتشف أحدث أدوات الصيف والموضة لموسم الحرارة.',
@@ -647,7 +647,7 @@ async function main() {
       promoSecondCtaLabelEn: 'Shop now',
       promoSecondCtaHref: '/categories/sunglasses',
       promoSecondGradient: 'amber',
-      promoSecondImageUrl: `${CDN}/sunglasses/black-sun-glasses/thumbnail.webp`,
+      promoSecondImageUrl: `${CDN}/sunglasses/black-sun-glasses/1.webp`,
       footerBlurbAr:
         'وجهتكم الأولى لكل ما هو جديد ومتميز. تشكيلة واسعة من الملابس، تجهيزات المطبخ، والأدوات اليومية — توصيل سريع لكل محافظات مصر.',
       footerBlurbEn:

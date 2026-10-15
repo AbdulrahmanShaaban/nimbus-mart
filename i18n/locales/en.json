@@ -67,7 +67,13 @@
     "wishlist": "Wishlist",
     "cart": "Shopping cart",
     "searchProducts": "Search products",
-    "brand": "Nimbus Mart"
+    "brand": "Nimbus Mart",
+    "trackOrder": "Track Order",
+    "notifications": "Notifications",
+    "notificationsEmpty": "No notifications yet",
+    "notificationsSignIn": "Sign in to see your order updates",
+    "notificationsViewOrders": "View all orders",
+    "productOptions": "Category options"
   },
   "footer": {
     "brand": "Nimbus Mart",

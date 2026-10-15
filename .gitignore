@@ -12,3 +12,4 @@ design/reference/goodsandu/rendered.html
 
 .vercel
 .env*
+.tmp-shots/

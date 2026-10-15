@@ -67,7 +67,13 @@
     "wishlist": "المفضلة",
     "cart": "سلة التسوق",
     "searchProducts": "بحث في المنتجات",
-    "brand": "نِمبوس مارت"
+    "brand": "نِمبوس مارت",
+    "trackOrder": "تتبع طلبي",
+    "notifications": "الإشعارات",
+    "notificationsEmpty": "لا توجد إشعارات بعد",
+    "notificationsSignIn": "سجّل الدخول لعرض تحديثات طلباتك",
+    "notificationsViewOrders": "عرض كل الطلبات",
+    "productOptions": "خيارات التصنيفات"
   },
   "footer": {
     "brand": "نِمبوس مارت",

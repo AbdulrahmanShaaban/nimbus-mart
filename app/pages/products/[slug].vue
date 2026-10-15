@@ -59,6 +59,12 @@ const selectedVariant = computed(() =>
   product.value?.variants.find(variant => variant.id === selectedVariantId.value) ?? null,
 )
 
+const isNew = computed(() => {
+  if (!product.value) return false
+  const created = new Date(product.value.createdAt).getTime()
+  return Number.isFinite(created) && Date.now() - created < 30 * 24 * 60 * 60 * 1000
+})
+
 const effectivePriceCents = computed(() => {
   if (!product.value) return '0'
   return selectedVariant.value?.priceCents ?? product.value.priceCents
@@ -79,10 +85,6 @@ const displayImages = computed(() => {
     .map(variant => variant.imageUrl)
     .filter((url): url is string => url !== null)
 })
-
-const currentImage = computed(
-  () => displayImages.value[selectedImageIndex.value] ?? displayImages.value[0] ?? '',
-)
 
 const sizes = computed(() => {
   const seen: string[] = []
@@ -206,35 +208,27 @@ onUnmounted(() => {
       />
 
       <div class="grid gap-8 lg:grid-cols-2">
-        <div>
-          <div class="aspect-square overflow-hidden rounded-2xl border border-line bg-[#FAFAFA]">
-            <img
-              :src="currentImage"
-              :alt="productTitle"
-              class="h-full w-full object-contain p-4"
-            >
-          </div>
-          <div v-if="displayImages.length > 1" class="mt-3 flex gap-2 overflow-x-auto pb-1">
-            <button
-              v-for="(image, index) in displayImages"
-              :key="image"
-              type="button"
-              class="h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-white transition-colors focus-visible:outline-2 focus-visible:outline-brand"
-              :class="index === selectedImageIndex ? 'border-brand' : 'border-line'"
-              :aria-label="t('product.imageLabel', { index: index + 1 })"
-              @click="selectedImageIndex = index"
-            >
-              <img :src="image" :alt="t('product.imageAlt', { title: productTitle, index: index + 1 })" loading="lazy" class="h-full w-full object-cover">
-            </button>
-          </div>
-        </div>
+        <ProductGallery
+          v-model="selectedImageIndex"
+          :images="displayImages"
+          :title="productTitle"
+        />
 
         <div>
           <span class="text-sm font-semibold text-mutedtext">{{ pick(product.category.nameAr, product.category.nameEn) }}</span>
-          <h1 class="mt-1 text-2xl font-extrabold leading-snug text-navy md:text-3xl">
-            {{ productTitle }}
-          </h1>
-          <p v-if="product.titleEn && locale !== 'en'" class="mt-1 text-sm text-mutedtext" dir="ltr" style="text-align: start;">{{ product.titleEn }}</p>
+          <div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <h1 class="text-2xl font-extrabold leading-snug text-navy md:text-3xl">
+              {{ productTitle }}
+            </h1>
+            <span
+              v-if="isNew"
+              class="rounded-full bg-gradient-to-br from-[#0C287B] to-[#1e40af] px-2.5 py-1 text-[10px] font-black text-white"
+              :class="locale === 'en' ? 'uppercase tracking-wide' : ''"
+            >
+              {{ t('pc.recentlyAdded') }}
+            </span>
+          </div>
+          <p v-if="product.titleEn && locale !== 'en'" class="mt-1 text-sm text-mutedtext text-start" dir="ltr">{{ product.titleEn }}</p>
 
           <div class="mt-4 flex flex-wrap items-baseline gap-3">
             <span class="text-2xl font-black text-navy">{{ price }}</span>
@@ -254,7 +248,7 @@ onUnmounted(() => {
                 v-for="size in sizes"
                 :key="size"
                 type="button"
-                class="min-w-11 rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-brand"
+                class="min-h-11 min-w-11 rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-brand"
                 :class="selectedVariant?.size === size ? 'border-navy bg-navy text-white' : 'border-line bg-white text-navy hover:border-navy'"
                 @click="selectSize(size)"
               >
@@ -270,7 +264,7 @@ onUnmounted(() => {
                 v-for="[color, hex] in colors"
                 :key="color"
                 type="button"
-                class="flex items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-brand"
+                class="flex min-h-11 items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-brand"
                 :class="selectedVariant?.color === color ? 'border-navy bg-navy text-white' : 'border-line bg-white text-navy hover:border-navy'"
                 @click="selectColor(color)"
               >
@@ -288,7 +282,7 @@ onUnmounted(() => {
             <QtyStepper v-model="quantity" :max="Math.max(1, selectedVariant?.stock ?? 1)" />
             <button
               type="button"
-              class="flex h-11 flex-1 min-w-40 items-center justify-center gap-2 rounded-xl bg-neon px-6 text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-brand"
+              class="flex h-11 min-w-40 flex-1 items-center justify-center gap-2 rounded-xl bg-neon px-6 text-sm font-black text-brand-alt transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-brand"
               :disabled="!selectedVariantId || !inStock || addState === 'adding'"
               @click="addToCart"
             >
@@ -320,9 +314,8 @@ onUnmounted(() => {
             </button>
           </div>
 
-          <p v-if="selectedVariant" class="mt-3 text-xs text-mutedtext">
-            SKU: <bdi dir="ltr">{{ selectedVariant.sku }}</bdi>
-            · {{ t('product.remaining', { count: selectedVariant.stock }) }}
+          <p v-if="selectedVariant && inStock" class="mt-3 text-xs text-mutedtext">
+            {{ t('product.remaining', { count: selectedVariant.stock }) }}
           </p>
 
           <ul class="mt-6 grid gap-3 rounded-2xl bg-surface p-5 text-sm text-bodytext sm:grid-cols-3">
@@ -340,6 +333,10 @@ onUnmounted(() => {
             </li>
           </ul>
         </div>
+      </div>
+
+      <div class="mt-10">
+        <ProductTabs :product="product" :sku="selectedVariant?.sku ?? null" />
       </div>
 
       <section v-if="product.related.length > 0" class="mt-14">

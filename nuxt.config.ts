@@ -30,6 +30,7 @@ export default defineNuxtConfig({
       },
     ],
     defaultLocale: 'ar',
+    baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://nimbus-mart.vercel.app',
     strategy: 'no_prefix',
     detectBrowserLanguage: {
       useCookie: true,
@@ -46,12 +47,8 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ],
       link: [
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800;900&display=swap',
-        },
+        { rel: 'preconnect', href: 'https://cdn.dummyjson.com' },
+        { rel: 'stylesheet', href: '/fonts/alexandria.css' },
       ],
     },
   },

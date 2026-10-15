@@ -51,6 +51,7 @@ function slideNext() {
 <template>
   <div class="relative">
     <Swiper
+      :key="locale"
       :modules="[Autoplay]"
       :slides-per-view="2"
       :space-between="12"
@@ -69,7 +70,7 @@ function slideNext() {
 
     <button
       type="button"
-      class="nm-row-arrow absolute start-0 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-[0_2px_10px_rgba(0,0,0,0.12)] transition-colors hover:bg-neon focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-40"
+      class="nm-row-arrow absolute start-[-16px] top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-md transition-all duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
       :disabled="!canPrev"
       :aria-label="t('common.prev')"
       @click="slidePrev"
@@ -78,7 +79,7 @@ function slideNext() {
     </button>
     <button
       type="button"
-      class="nm-row-arrow absolute end-0 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-[0_2px_10px_rgba(0,0,0,0.12)] transition-colors hover:bg-neon focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-40"
+      class="nm-row-arrow absolute end-[-16px] top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-md transition-all duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
       :disabled="!canNext"
       :aria-label="t('common.next')"
       @click="slideNext"

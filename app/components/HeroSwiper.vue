@@ -8,7 +8,7 @@ import type { HeroSlideDto } from '~/types/api'
 
 const props = defineProps<{ slides: HeroSlideDto[] }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { pick } = useLocalized()
 
 const swiperInstance = ref<SwiperClass | null>(null)
@@ -38,6 +38,7 @@ const localizedSlides = computed(() =>
 <template>
   <section class="relative h-[450px] w-full overflow-hidden md:h-[491px]">
     <Swiper
+      :key="locale"
       :modules="[Autoplay, Pagination]"
       :autoplay="{ delay: 4000, disableOnInteraction: false }"
       :pagination="{ clickable: true }"
@@ -46,7 +47,7 @@ const localizedSlides = computed(() =>
       class="nm-hero-swiper h-full"
       @swiper="onSwiper"
     >
-      <SwiperSlide v-for="slide in localizedSlides" :key="slide.id" class="h-full">
+      <SwiperSlide v-for="(slide, slideIndex) in localizedSlides" :key="slide.id" class="h-full">
         <div class="nm-hero-light relative h-full w-full overflow-hidden">
           <span
             class="pointer-events-none absolute end-[8%] top-1/2 h-[320px] w-[320px] -translate-y-1/2 rounded-full bg-neon/30 blur-3xl md:h-[420px] md:w-[420px]"
@@ -58,6 +59,9 @@ const localizedSlides = computed(() =>
             <img
               :src="slide.imageUrl"
               alt=""
+              :loading="slideIndex === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="slideIndex === 0 ? 'high' : 'auto'"
+              :decoding="slideIndex === 0 ? 'sync' : 'async'"
               class="h-full max-h-[82%] w-auto max-w-[46%] object-contain drop-shadow-[0_24px_44px_rgba(12,40,123,0.28)] max-md:max-w-[70%]"
             >
           </div>
@@ -85,20 +89,20 @@ const localizedSlides = computed(() =>
     <button
       v-if="localizedSlides.length > 1"
       type="button"
-      class="nm-hero-arrow absolute start-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-[0_2px_10px_rgba(0,0,0,0.12)] transition-colors hover:bg-neon focus-visible:outline-2 focus-visible:outline-brand md:grid"
+      class="nm-hero-arrow absolute start-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-[#555555] shadow-lg backdrop-blur transition-all duration-200 hover:scale-110 hover:text-navy active:scale-95 focus-visible:outline-2 focus-visible:outline-brand md:start-6 md:grid md:h-14 md:w-14"
       :aria-label="t('common.prevSlide')"
       @click="slidePrev"
     >
-      <ChevronRight :size="18" aria-hidden="true" />
+      <ChevronRight :size="24" class="h-6 w-6 md:h-7 md:w-7" aria-hidden="true" />
     </button>
     <button
       v-if="localizedSlides.length > 1"
       type="button"
-      class="nm-hero-arrow absolute end-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-[0_2px_10px_rgba(0,0,0,0.12)] transition-colors hover:bg-neon focus-visible:outline-2 focus-visible:outline-brand md:grid"
+      class="nm-hero-arrow absolute end-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-[#555555] shadow-lg backdrop-blur transition-all duration-200 hover:scale-110 hover:text-navy active:scale-95 focus-visible:outline-2 focus-visible:outline-brand md:end-6 md:grid md:h-14 md:w-14"
       :aria-label="t('common.nextSlide')"
       @click="slideNext"
     >
-      <ChevronLeft :size="18" aria-hidden="true" />
+      <ChevronLeft :size="24" class="h-6 w-6 md:h-7 md:w-7" aria-hidden="true" />
     </button>
   </section>
 </template>

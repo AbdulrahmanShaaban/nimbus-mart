@@ -35,6 +35,8 @@ export interface ProductCardDto {
   categoryNameEn: string | null
   defaultVariantId: string | null
   discountPercent: number | null
+  isNew: boolean
+  colorHexes: string[]
 }
 
 export interface PromoBlockDto {
@@ -96,6 +98,7 @@ export interface ProductDetailDto {
   priceCents: string
   compareAtCents: string | null
   discountPercent: number | null
+  createdAt: string
   category: { slug: string; nameAr: string; nameEn: string | null }
   images: string[]
   variants: ProductVariantDto[]

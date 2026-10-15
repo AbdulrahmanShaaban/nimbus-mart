@@ -38,6 +38,7 @@ export default defineEventHandler(async (event) => {
     priceCents: product.priceCents.toString(),
     compareAtCents: product.compareAtCents?.toString() ?? null,
     discountPercent: discountPercentOf(product.priceCents, product.compareAtCents),
+    createdAt: product.createdAt.toISOString(),
     category: { slug: product.category.slug, nameAr: product.category.nameAr, nameEn: product.category.nameEn },
     images: product.images.map((image) => image.url),
     variants: product.variants.map((variant) => ({

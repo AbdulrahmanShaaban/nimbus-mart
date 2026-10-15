@@ -11,6 +11,21 @@ const { data, pending, error, refresh } = await useAsyncData(
   () => $fetch<HomeContentDto>('/api/content/home'),
 )
 
+useHead(() => {
+  const hero = data.value?.heroSlides[0]
+  if (!hero) return {}
+  return {
+    link: [
+      {
+        rel: 'preload',
+        as: 'image',
+        href: hero.imageUrl,
+        fetchpriority: 'high',
+      },
+    ],
+  }
+})
+
 const content = computed(() => data.value)
 
 type TabKey = 'newest' | 'featured' | 'best'
@@ -31,8 +46,10 @@ const tabItems = computed<ProductCardDto[]>(() => {
   return c.newest
 })
 
-const kitchenPromo = computed(() => content.value?.promo ?? null)
-const summerPromo = computed(() => content.value?.promoSecond ?? null)
+const promos = computed(() => {
+  const rows = [content.value?.promo ?? null, content.value?.promoSecond ?? null]
+  return rows.filter((row): row is NonNullable<typeof row> => row !== null)
+})
 </script>
 
 <template>
@@ -98,10 +115,10 @@ const summerPromo = computed(() => content.value?.promoSecond ?? null)
       </section>
 
       <section
-        v-if="kitchenPromo"
+        v-if="promos.length > 0"
         class="mx-auto max-w-[1330px] px-4 pb-10 md:px-6 md:pb-14"
       >
-        <PromoSplit :promos="[kitchenPromo]" />
+        <PromoCarousel :promos="promos" />
       </section>
 
       <section
@@ -110,13 +127,6 @@ const summerPromo = computed(() => content.value?.promoSecond ?? null)
       >
         <SectionHeader :title="t('home.curated')" center />
         <ProductRow :items="content.featured" autoplay />
-      </section>
-
-      <section
-        v-if="summerPromo"
-        class="mx-auto max-w-[1330px] px-4 pb-10 md:px-6 md:pb-14"
-      >
-        <PromoSplit :promos="[summerPromo]" />
       </section>
 
       <section

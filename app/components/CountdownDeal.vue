@@ -56,7 +56,7 @@ const deadline = ref<number>(0)
 function tick() {
   const remaining = Math.max(0, deadline.value - Date.now())
   const totalSeconds = Math.floor(remaining / 1000)
-  parts.d = String(Math.floor(totalSeconds / 86400)).padStart(3, '0')
+  parts.d = String(Math.floor(totalSeconds / 86400))
   parts.h = String(Math.floor((totalSeconds % 86400) / 3600)).padStart(2, '0')
   parts.m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0')
   parts.s = String(totalSeconds % 60).padStart(2, '0')
@@ -80,16 +80,15 @@ onUnmounted(() => {
         <h2 class="text-2xl font-black text-neon md:text-[28px]">{{ resolvedTitle }}</h2>
         <p class="mt-1 text-sm text-white/80">{{ resolvedSubtitle }}</p>
       </div>
-      <div class="flex items-center gap-2.5" role="timer" :aria-label="t('cd.timeRemaining')">
-        <template v-for="(unit, index) in UNITS" :key="unit.key">
-          <span v-if="index > 0" class="text-xl font-black text-white/40" aria-hidden="true">:</span>
-          <div class="flex flex-col items-center">
-            <span
-              class="grid h-14 w-14 place-items-center rounded-full bg-[#071C55] text-base font-black text-white ring-1 ring-white/15 md:h-16 md:w-16 md:text-lg"
-            >{{ parts[unit.key] }}</span>
-            <span class="mt-1.5 text-center text-[11px] text-white/70">{{ t(unit.labelKey) }}</span>
-          </div>
-        </template>
+      <div class="flex items-center gap-2.5 md:gap-3" role="timer" :aria-label="t('cd.timeRemaining')">
+        <div
+          v-for="unit in UNITS"
+          :key="unit.key"
+          class="flex h-16 w-16 flex-col items-center justify-center rounded-full bg-[#071C55] ring-1 ring-white/15 md:h-[74px] md:w-[74px]"
+        >
+          <span class="text-lg font-black leading-none text-white md:text-xl">{{ parts[unit.key] }}</span>
+          <span class="mt-1 text-[10px] leading-none text-white/70">{{ t(unit.labelKey) }}</span>
+        </div>
       </div>
     </div>
     <slot />

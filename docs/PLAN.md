@@ -1,6 +1,6 @@
 # PLAN — Nimbus Mart
 
-**Status: BUILD COMPLETE + FIDELITY AUDIT DONE + LIVE ON GITHUB & VERCEL (2026-10-12) + RESPONSIVE FIX DEPLOYED (2026-10-13).**
+**Status: BUILD COMPLETE + FIDELITY AUDIT DONE + LIVE ON GITHUB & VERCEL (2026-10-12) + RESPONSIVE FIX DEPLOYED (2026-10-13) + DEEP CLONE-FIDELITY PASS (2026-10-15, pending redeploy — awaiting user confirmation).**
 Design gate passed (user picked **Preview B** «السوق النابض» v3, Goods&U structural parity).
 Storefront + admin fully implemented against Neon Postgres; verification gates green.
 Fidelity audit vs `https://www.goodsandu.com/ar` completed (all deltas fixed, screenshots saved);
@@ -243,6 +243,53 @@ smoke 62/62, `pnpm build` EXIT 0; console clean (only pre-existing lazy-image ad
   `/products/green-black-glasses`, `/search?q=قمص`, `/cart`, `/login` → 200;
   unknown path → 404. SSR content: `lang="ar"` ✓, `dir="rtl"` ✓, real-sales meta
   description ✓, FAB `mailto:support@nimbusmart.eg` ✓, no demo wording ✓.
+
+## Deep clone-fidelity pass + complaint fixes (2026-10-15, this session)
+
+User complaints: incomplete navbar, missing sections/details vs reference, responsiveness,
+performance, admin charts look hand-made/no charts. Reference re-extracted deeper
+(`design/reference/goodsandu/rendered.html` + `motion-spec.md` + `shots/scroll-00..06.png`)
+and every complaint addressed against it.
+
+**Reference-aligned work:**
+- `AppHeader.vue` rewritten: Track Order + notifications bell + More dropdown + mobile
+  drawer (`#nm-mobile-menu`, in-flow panel + `NAV.border-t.border-neon/40` mobile nav),
+  admin link role-gated.
+- `CategoryGrid.vue` tiles → reference spec (`w-[122px] h-[122px] rounded-[20px] p-[10px]`,
+  hover lift/tint, gap 20/32); `HeroSwiper`/`ProductRow`/`PromoCarousel` arrows →
+  reference positions/colors/sizes; all Swipers get `:key="locale"` (rebuild on locale swap).
+- `ProductCard.vue` → reference: plain-text add button (icon removed — motion-spec.md:63),
+  badges physical right (`start-1.5 top-1.5 z-30`), title line-clamp-2, real `(0)` stars,
+  decorative color dots, hover overlay `end-2 top-2 z-20` stack; quick-view modal (Check +
+  "تمت الإضافة" 1.5s, stays open).
+- PDP built out (`ProductGallery`, `ProductTabs`, spec table, related products, share/wishlist).
+- Admin charts (hand-rolled SVG, no new deps): `KpiCard`, `StatsAreaChart` (+table toggle),
+  `StatsDonut` (order-status share), `StatsBarList` (top sellers); low-stock alert list.
+- **Drawer bug fixed:** real clicks didn't open menu — clicked `<path>` inside Menu↔X icon
+  swap detaches mid-dispatch (`isConnected` true→false) so `contains(event.target)` was false
+  → menu instantly re-closed. `onDocClick` now uses `event.composedPath()` + `clickedOutside(root)`.
+
+**Justified deviations (kept deliberate, noted per conventions):**
+- Kept "تصفح التصنيفات / عرض الكل" header row above category strip (reference scroll-00 shows
+  no heading; kept for wayfinding) — with real section data.
+- Promo/hero = live light-gradient text slides (reference uses baked banner images we don't own);
+  navy promo dots on light bg.
+- Locale switch reload-based (`setLocale` + `location.reload()`).
+- Skipped fake "Download App" strip + Goodie chat FAB (no dead controls); support FAB =
+  real `mailto:support@nimbusmart.eg`.
+- Countdown deadline = 3 days (real rolling deadline, not reference's fixed date).
+
+**Verification (this session):** typecheck EXIT 0, lint EXIT 0, `pnpm test` 17/17,
+`pnpm build` EXIT 0 (3m06s, 11.5 MB / 3.32 MB gzip). Browser sweep at 1440 (no overflow,
+console 0 errors/warnings): `/`, `/products`, PDP `/products/man-plaid-shirt`,
+`/categories/mens-shirts`, `/search?q=قميص`, `/cart`, `/checkout`, `/login`, `/account`,
+`/wishlist`, `/admin` dashboard. Mobile 390: home, products (+filters panel), drawer
+(open/close/outside/Escape/link-nav), cart/checkout/account — zero horizontal overflow.
+Interactive proofs: PDP add-to-cart badge 1→2; PDP tabs switch (reviews empty state honest);
+home/product dropdowns open+outside-close; card hover overlay opacity 1/0 correct.
+**LCP home = 2456 ms** (dev server; baseline 2822 ms, target <2.5 s met), LCP element = hero
+image; all product images 200; fonts self-hosted. Screenshots: `design/shots/after-*.png`
+(home AR/EN 1440, promo+drawer+products+filters 390, admin 1440, PDP 1440).
 
 ## Known minor follow-ups (non-blocking)
 

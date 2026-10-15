@@ -4,11 +4,13 @@
     "errorTitle": "Couldn't load the homepage",
     "errorHint": "Something went wrong while fetching the data — please try again.",
     "recommended": "Recommended for you",
-    "curated": "Handpicked selection",
+    "curated": "Modern collection",
     "tabNewest": "New arrivals",
     "tabFeatured": "Featured products",
     "tabBest": "Best sellers",
-    "productGroups": "Product groups"
+    "productGroups": "Product groups",
+    "browseCategories": "Browse categories",
+    "promoAria": "Featured offers"
   },
   "product": {
     "fallbackTitle": "Product",
@@ -17,6 +19,9 @@
     "errorHint": "The product may have been removed or the link is incorrect.",
     "imageLabel": "Image {index}",
     "imageAlt": "{title} — image {index}",
+    "openImage": "View {title} — image {index} larger",
+    "lightbox": "Product image gallery",
+    "lightboxClose": "Close gallery",
     "size": "Size",
     "color": "Color",
     "addedToCart": "Added to cart",
@@ -27,7 +32,17 @@
     "deliveryAll": "Delivery to all governorates",
     "returns": "Returns per terms",
     "securePayment": "Secure payment",
-    "similar": "Related products"
+    "similar": "Related products",
+    "tabDetails": "Product Details",
+    "tabReviews": "Ratings & Reviews",
+    "tabInquiries": "Inquiries",
+    "noReviews": "No reviews yet — be the first to review this product.",
+    "inquireBody": "Have a question about this product? Contact us and we'll get back to you soon.",
+    "seeMore": "See more",
+    "seeLess": "See less",
+    "metaCategory": "Category",
+    "metaSku": "SKU",
+    "metaAdded": "Added date"
   },
   "category": {
     "fallbackName": "Category",

@@ -4,11 +4,13 @@
     "errorTitle": "تعذّر تحميل الصفحة الرئيسية",
     "errorHint": "حدث خطأ أثناء جلب البيانات، حاول مرة أخرى.",
     "recommended": "موصى به لك",
-    "curated": "تشكيلة مختارة",
+    "curated": "تشكيلة عصرية",
     "tabNewest": "وصل حديثاً",
     "tabFeatured": "منتجات مميزة",
     "tabBest": "الأكثر مبيعًا",
-    "productGroups": "مجموعات المنتجات"
+    "productGroups": "مجموعات المنتجات",
+    "browseCategories": "تصفح التصنيفات",
+    "promoAria": "عروض مميزة"
   },
   "product": {
     "fallbackTitle": "المنتج",
@@ -17,6 +19,9 @@
     "errorHint": "ربما تم حذف المنتج أو أن الرابط غير صحيح.",
     "imageLabel": "الصورة {index}",
     "imageAlt": "{title} — صورة {index}",
+    "openImage": "تكبير {title} — الصورة {index}",
+    "lightbox": "معرض صور المنتج",
+    "lightboxClose": "إغلاق المعرض",
     "size": "المقاس",
     "color": "اللون",
     "addedToCart": "تمت الإضافة إلى السلة",
@@ -27,7 +32,17 @@
     "deliveryAll": "توصيل لكل المحافظات",
     "returns": "استرجاع حسب الشروط",
     "securePayment": "دفع آمن",
-    "similar": "منتجات مشابهة"
+    "similar": "منتجات مشابهة",
+    "tabDetails": "تفاصيل المنتج",
+    "tabReviews": "التقييمات والمراجعات",
+    "tabInquiries": "الاستفسارات",
+    "noReviews": "لا توجد تقييمات بعد — كن أول من يقيّم هذا المنتج.",
+    "inquireBody": "لديك سؤال عن هذا المنتج؟ تواصل معنا وسنرد عليك في أقرب وقت.",
+    "seeMore": "عرض المزيد",
+    "seeLess": "عرض أقل",
+    "metaCategory": "التصنيف",
+    "metaSku": "رمز المنتج",
+    "metaAdded": "تاريخ الإضافة"
   },
   "category": {
     "fallbackName": "التصنيف",
