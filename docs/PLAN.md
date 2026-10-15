@@ -291,6 +291,22 @@ home/product dropdowns open+outside-close; card hover overlay opacity 1/0 correc
 image; all product images 200; fonts self-hosted. Screenshots: `design/shots/after-*.png`
 (home AR/EN 1440, promo+drawer+products+filters 390, admin 1440, PDP 1440).
 
+## Footer brand icons (2026-10-15, on user request)
+
+User: replace the generic Lucide placeholders with the real platform/payment logos
+("شيل دول وحط الايقونات الاصلية للتطبيقات"). Trademark use here is nominative
+(identifying the linked platform / accepted payment networks) — fine for the demo.
+
+- Socials (`AppFooter.vue`): WhatsApp / Instagram / Telegram / X now render the real
+  brand glyphs as inline SVG paths (white `currentColor` on the same `#111827` circles —
+  same treatment the reference footer uses for X/TikTok). Same labels, links still `#`.
+- Trust strip: generic `CreditCard` icon → real **Visa** wordmark (#1A1F71 wordmark path)
+  + **Mastercard** mark (red/yellow circles + orange lens) in brand colors; truck/shield
+  unchanged (no brand exists for delivery/returns). Removed now-unused imports.
+- Verified: typecheck/lint EXIT 0; browser 1440 + 390 — logos render correctly, no
+  overflow, console 0 errors/warnings; screenshots
+  `design/shots/after-footer-brandicons-{1440,390}-ar.png`.
+
 ## Known minor follow-ups (non-blocking)
 
 - Chrome advisory: lazy product images lack explicit width/height (containers are
