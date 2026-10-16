@@ -1,6 +1,6 @@
 # PLAN — Nimbus Mart
 
-**Status: BUILD COMPLETE + FIDELITY AUDIT DONE + LIVE ON GITHUB & VERCEL (2026-10-12) + RESPONSIVE FIX DEPLOYED (2026-10-13) + DEEP CLONE-FIDELITY PASS DEPLOYED (2026-10-15) + BRAND-ICON RULE ENFORCED (2026-10-16).**
+**Status: BUILD COMPLETE + FIDELITY AUDIT DONE + LIVE ON GITHUB & VERCEL (2026-10-12) + RESPONSIVE FIX DEPLOYED (2026-10-13) + DEEP CLONE-FIDELITY PASS DEPLOYED (2026-10-15) + FOOTER SOCIALS/TRUST STRIP + PDP BADGES REMOVED (2026-10-16).**
 Design gate passed (user picked **Preview B** «السوق النابض» v3, Goods&U structural parity).
 Storefront + admin fully implemented against Neon Postgres; verification gates green.
 Fidelity audit vs `https://www.goodsandu.com/ar` completed (all deltas fixed, screenshots saved);
@@ -291,27 +291,27 @@ home/product dropdowns open+outside-close; card hover overlay opacity 1/0 correc
 image; all product images 200; fonts self-hosted. Screenshots: `design/shots/after-*.png`
 (home AR/EN 1440, promo+drawer+products+filters 390, admin 1440, PDP 1440).
 
-## Footer brand icons (2026-10-15) — reverted and banned as a rule (2026-10-16)
+## Footer socials & trust strip — removed entirely (2026-10-16, user rule)
 
-On 2026-10-15 (user request) the generic Lucide placeholders were briefly replaced with real
-platform/payment logos (WhatsApp/Instagram/Telegram/X glyphs + Visa/Mastercard marks) and
-deployed as `8587db8`. The user then rejected the result ("شيلها متبنيهاش تاني في المواقع
-مش حلوة خالص وحطها عندك قاعدة"): remove them, never build brand icons into sites again, and
-record it as a standing rule.
+History: brand logos were tried (2026-10-15, `8587db8`), rejected; the generic Lucide
+stand-ins were then judged equally bad ("دا زنا مش شعارات"), and the trust strip was rejected
+twice ("بردو مشلتش البتاعة بنت الأحبة دي"). Final state per user rule: neither the social row
+nor the trust strip exists anywhere.
 
-- `AppFooter.vue` reverted to the exact pre-brand state via
-  `git checkout 0983ec4 -- app/components/AppFooter.vue`: socials back to Lucide
-  `MessageCircle/Camera/Send/AtSign` (`:size="17"`) inside the same `#111827` circles;
-  trust-strip payment item back to generic Lucide `CreditCard` (`:size="20"`); truck/shield
-  unchanged; labels/links unchanged.
+- `AppFooter.vue`: socials `<ul>` (WhatsApp/Instagram/Telegram/X circles) and the
+  payment/delivery/returns trust strip `<ul>` deleted entirely; imports reduced to
+  `Phone, Mail, MapPin`. Footer = brand + blurb, quick links, categories, contact, copyright.
+- `products/[slug].vue`: the same-style badge row (توصيل لكل المحافظات / استرجاع حسب الشروط /
+  دفع آمن with `Truck/RotateCcw/ShieldCheck`) deleted too — it is not in the reference PDP
+  (verified live 2026-10-16), so this also improves clone fidelity.
+- Unused i18n keys left in place (`footer.whatsapp|instagram|telegram|x|securePayment|
+  nationwideDelivery|returnPolicy`, `product.deliveryAll|returns|securePayment`).
 - Rejected-state screenshots kept for history:
   `design/shots/after-footer-brandicons-{1440,390}-ar.png`.
-- **Standing rule:** no third-party brand/app icons or logos in website work (WhatsApp,
-  Instagram, Telegram, X, TikTok, Visa, Mastercard, PayPal, etc.) and no lookalike/simplified
-  recreations — use generic Lucide icons or text. Recorded in `docs/CONVENTIONS.md`
-  ("Icons & components") and global `~/.config/opencode/AGENTS.md` ("Brand & Trademark Rules").
-- Verified: typecheck/lint EXIT 0; browser 1440 + 390 — generic icons render, no overflow,
-  console 0 errors/warnings; live HTML free of brand paths after redeploy.
+- **Standing rule:** no brand icons AND no social-logo stand-in circles / decorative trust
+  strips (see CONVENTIONS "Icons & components" + global AGENTS.md "Brand & Trademark Rules").
+- Verified: typecheck/lint EXIT 0; browser 1440 + 390 footer + PDP — rows gone, no overflow,
+  console clean.
 
 ## Known minor follow-ups (non-blocking)
 

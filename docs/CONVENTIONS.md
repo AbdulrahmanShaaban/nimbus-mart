@@ -33,10 +33,12 @@ Short rules. Project-local source of truth; global skills only where these stay 
 - **Lucide only** (`@lucide/vue` in the app; CDN `lucide` in static previews). **NO emoji in any
   UI** — not in category strips, buttons, empty states, or notifications. If an icon is missing
   from Lucide, use text or a simple CSS shape, never an emoji fallback.
-- **NO third-party brand/app icons or logos — ever** (WhatsApp, Instagram, Telegram, X, TikTok,
-  Facebook, Visa, Mastercard, PayPal, etc.), and no simplified/lookalike recreations. Use the
-  generic Lucide icon or plain text instead (footer socials = generic glyphs; payment trust row =
-  `CreditCard`). Standing user rule (2026-10-16) — see PLAN "Footer brand icons".
+- **NO brand icons, and no social/trust badge rows.** (1) Never brand/app logos or simplified
+  lookalikes (WhatsApp, Instagram, Telegram, X, TikTok, Facebook, Visa, Mastercard, PayPal…).
+  (2) Never circular social-logo stand-in rows, and never payment/delivery/returns "trust
+  badge" strips — the user rejects the whole pattern ("دا زنا مش شعارات"). Footer/PDF show
+  real links and contact info only. Standing user rule (2026-10-16) — see PLAN
+  "Footer socials & trust strip".
 - UI primitives follow the preview: pill buttons for auth/CTA, rounded-full icon buttons (40px),
   product cards `rounded-2xl` with 1px border + hover lift.
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ShoppingBag, Check, TriangleAlert, Heart, ShieldCheck, Truck, RotateCcw } from '@lucide/vue'
+import { ShoppingBag, Check, TriangleAlert, Heart } from '@lucide/vue'
 import { useI18n } from 'vue-i18n'
 import type { ProductDetailDto } from '~/types/api'
 
@@ -317,21 +317,6 @@ onUnmounted(() => {
           <p v-if="selectedVariant && inStock" class="mt-3 text-xs text-mutedtext">
             {{ t('product.remaining', { count: selectedVariant.stock }) }}
           </p>
-
-          <ul class="mt-6 grid gap-3 rounded-2xl bg-surface p-5 text-sm text-bodytext sm:grid-cols-3">
-            <li class="flex items-center gap-2">
-              <Truck :size="17" class="shrink-0 text-brand" aria-hidden="true" />
-              {{ t('product.deliveryAll') }}
-            </li>
-            <li class="flex items-center gap-2">
-              <RotateCcw :size="17" class="shrink-0 text-brand" aria-hidden="true" />
-              {{ t('product.returns') }}
-            </li>
-            <li class="flex items-center gap-2">
-              <ShieldCheck :size="17" class="shrink-0 text-brand" aria-hidden="true" />
-              {{ t('product.securePayment') }}
-            </li>
-          </ul>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MessageCircle, Camera, Send, AtSign, Phone, Mail, MapPin, CreditCard, Truck, ShieldCheck } from '@lucide/vue'
+import { Phone, Mail, MapPin } from '@lucide/vue'
 import { useI18n } from 'vue-i18n'
 import type { FooterContentDto } from '~/types/api'
 
@@ -26,28 +26,6 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
             {{ t('footer.brand') }}
           </NuxtLink>
           <p class="text-sm leading-relaxed text-bodytext">{{ blurb }}</p>
-          <ul class="mt-5 flex gap-3">
-            <li>
-              <a href="#" :aria-label="t('footer.whatsapp')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
-                <MessageCircle :size="17" aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <a href="#" :aria-label="t('footer.instagram')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
-                <Camera :size="17" aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <a href="#" :aria-label="t('footer.telegram')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
-                <Send :size="17" aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <a href="#" :aria-label="t('footer.x')" class="grid h-10 w-10 place-items-center rounded-full bg-[#111827] text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-brand">
-                <AtSign :size="17" aria-hidden="true" />
-              </a>
-            </li>
-          </ul>
         </div>
 
         <div>
@@ -97,21 +75,6 @@ const footerCategories = computed(() => footerData.value?.categories ?? [])
           </ul>
         </div>
       </div>
-
-      <ul class="mb-8 grid gap-3 rounded-2xl border border-line bg-white p-5 sm:grid-cols-3 md:mb-10 md:gap-4 md:p-6">
-        <li class="flex items-center gap-3 text-sm font-semibold text-bodytext">
-          <CreditCard :size="20" class="shrink-0 text-navy" aria-hidden="true" />
-          {{ t('footer.securePayment') }}
-        </li>
-        <li class="flex items-center gap-3 text-sm font-semibold text-bodytext">
-          <Truck :size="20" class="shrink-0 text-navy" aria-hidden="true" />
-          {{ t('footer.nationwideDelivery') }}
-        </li>
-        <li class="flex items-center gap-3 text-sm font-semibold text-bodytext">
-          <ShieldCheck :size="20" class="shrink-0 text-navy" aria-hidden="true" />
-          {{ t('footer.returnPolicy') }}
-        </li>
-      </ul>
 
       <div class="border-t border-line pt-6 text-center text-xs text-mutedtext">
         © {{ new Date().getFullYear() }} {{ t('footer.brand') }} — {{ t('footer.rights') }}
